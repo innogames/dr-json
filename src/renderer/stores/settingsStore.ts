@@ -36,7 +36,7 @@ export class SettingsStore {
     @action
     private reloadSettings() {
         this.settings = new Settings(
-            electronSettings.get('inlineForms'),
+            electronSettings.get('inlineForms') || false,
         );
     }
 
@@ -46,7 +46,7 @@ export class SettingsStore {
     }
 
     get collapsedDirs(): string[] {
-        return electronSettings.get('collapsedDirs');
+        return electronSettings.get('collapsedDirs') || [];
     }
 }
 
