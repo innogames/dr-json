@@ -1,3 +1,4 @@
+import {openFolderExternally} from '@/actions/openFolderExternally';
 import {reload} from '@/actions/reload';
 import {selectFile} from '@/actions/selectFile';
 import {FileTree} from '@/components/common/FileTree';
@@ -28,6 +29,7 @@ export class Sidebar extends React.Component<Props, {}> {
                     <Link title='Refresh' onClick={this.refresh}><Icon value={Icon.RELOAD}/></Link>
                     <Link title='Expand All' onClick={this.expandAll}><Icon value={Icon.EXPAND}/></Link>
                     <Link title='Collapse All' onClick={this.collapseAll}><Icon value={Icon.COLLAPSE}/></Link>
+                    <Link title='Open folder' onClick={this.openFolder}><Icon value={Icon.EXTERNAL_LINK}/></Link>
                 </FileTreeButtons>
                 <FileTree
                     files={this.props.schemaStore.files}
@@ -61,5 +63,9 @@ export class Sidebar extends React.Component<Props, {}> {
         this.props.schemaStore.forEachDir((dir: DataDir) => {
             dir.setCollapsed(true);
         });
+    };
+
+    private openFolder = () => {
+        openFolderExternally();
     };
 }

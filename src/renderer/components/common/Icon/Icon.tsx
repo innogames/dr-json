@@ -28,7 +28,7 @@ export class Icon extends React.Component<Props, {}> {
     static EXPAND           = 'expand';
     static COLLAPSE         = 'collapse';
     static PIN              = 'pin';
-    static EXTERNAL         = 'external';
+    static EXTERNAL_LINK    = 'external-link';
 
     render() {
         let classNames = [

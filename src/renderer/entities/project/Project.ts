@@ -46,6 +46,10 @@ export class Project {
         return this.getConfigDir('schemas');
     }
 
+    get rootFolder(): string {
+        return dirname(this.file);
+    }
+
     get dataFolder(): string {
         return this.getConfigDir('data');
     }
