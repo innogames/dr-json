@@ -36,6 +36,17 @@ export class SchemaStore {
     }
 
     @action
+    updateFile(newFile: DataFile): void {
+        this._files = this.mapFiles(this._files, (file: DataFile) => {
+            if (file.basename == newFile.basename) {
+                return newFile;
+            }
+
+            return file;
+        });
+    }
+
+    @action
     reset(): void {
         this.schemas.clear();
         this._files = [];
@@ -70,6 +81,18 @@ export class SchemaStore {
                 fn(dir);
             }
         }
+    }
+
+    private mapFiles(files: DataFileType[], fn: (file: DataFile) => DataFile): DataFileType[] {
+        return files.map((current: DataFileType) => {
+            if (current.isDir) {
+                let dir: DataDir = current as DataDir;
+                dir.children     = this.mapFiles(dir.children, fn);
+                return dir;
+            } else {
+                return fn(current as DataFile);
+            }
+        });
     }
 }
 

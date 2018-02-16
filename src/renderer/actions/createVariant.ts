@@ -6,6 +6,7 @@ import {readData} from '@/functions/domain/readData';
 import {saveData} from '@/functions/domain/saveData';
 import {editorStore} from '@/stores/editorStore';
 import {projectStore} from '@/stores/projectStore';
+import {schemaStore} from '@/stores/schemaStore';
 
 export function createVariant(file: DataFile, variantId: string, copyEntries: boolean): Promise<void> {
     let promise: Promise<DataEntry[]>;
@@ -27,6 +28,8 @@ function createVariantFile(variantId: string, file: string, entries: DataEntry[]
 
     let currentFile: DataFile = editorStore.currentFile.file;
     const idx: number         = currentFile.addVariant(new FileVariant(variantFile, variantId));
+
+    schemaStore.updateFile(currentFile);
 
     return saveData(variantFile, entries)
         .then(() => {
