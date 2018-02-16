@@ -1,0 +1,28 @@
+@import "../../../config/config";
+
+:local .outside {
+  background-color: $color-primary;
+  color: $color-primary-contrast;
+  height: 100vh;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .main {
+    flex: 1;
+    display: flex;
+
+    .center {
+      flex: 1 0;
+      align-self: center;
+      text-align: center;
+    }
+  }
+
+  .footer {
+    flex: 0;
+    text-align: right;
+    font-size: .6rem;
+    padding: 2px;
+  }
+}

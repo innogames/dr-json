@@ -1,0 +1,14 @@
+@import "../../../config/config";
+
+:local .hintWrapper {
+  flex: 1;
+  display: flex;
+}
+
+:local .hint {
+  flex: 1;
+  text-align: center;
+  align-self: center;
+  font-size: 1.5rem;
+  color: $color-text-light;
+}

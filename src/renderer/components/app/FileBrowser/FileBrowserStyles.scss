@@ -1,0 +1,21 @@
+@import '../../../config/config';
+
+:local .wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+:local .main {
+  flex: 1;
+  display: flex;
+}
+
+:local .footer {
+  flex: 0;
+  font-size: .6rem;
+  padding: 2px;
+  text-align: right;
+  background-color: $color-secondary;
+  color: $color-secondary-contrast;
+}

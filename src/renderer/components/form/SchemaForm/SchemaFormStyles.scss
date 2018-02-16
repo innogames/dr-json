@@ -1,0 +1,223 @@
+@import "../../../config/config";
+@import "../../common/Icon/icomoon/variables";
+
+:local .iconBtn {
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  border: 0;
+  font-size: 1rem;
+  padding: .25rem !important;
+  background-color: $color-bg;
+  outline: none;
+  margin-bottom: .2rem;
+
+  &:disabled {
+    background-color: $color-disabled-bg !important;
+  }
+}
+
+:local .form {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    & > div {
+      flex: 1;
+      overflow-y: scroll;
+      padding: .5rem;
+
+      > fieldset > legend {
+        display: none;
+      }
+
+      fieldset {
+        min-width: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+      }
+
+      legend {
+        display: block;
+        width: 100%;
+        padding: 1rem 0 .5rem 0;
+        margin: 0;
+        font-size: 1.2rem;
+        line-height: inherit;
+      }
+
+      :global(.form-group) {
+        padding-bottom: .5rem;
+
+        p {
+          margin: 0;
+          padding: 0;
+
+          &:global(.field-description) {
+            font-size: .8rem;
+            padding-bottom: .5rem;
+          }
+        }
+      }
+
+      :global(.form-control) {
+        display: block;
+        width: 100%;
+        padding: .25rem;
+        font-size: 1rem;
+        line-height: 1.25;
+        border: 1px solid $color-border;
+        background-image: none;
+        background-color: $color-bg;
+        border-radius: 0;
+      }
+
+      :global .has-error {
+        background-color: $color-danger-bg;
+        border: 1px dotted $color-danger;
+        margin-bottom: .5rem;
+        padding: .5rem;
+      }
+
+      :global(.control-label) {
+        color: $color-text-light;
+        display: block;
+        padding-bottom: 2px;
+      }
+
+      select:not([size]):not([multiple]) {
+        height: 1.8rem;
+      }
+
+      textarea {
+        height: 150px;
+      }
+
+      i:global(.glyphicon) {
+        display: none;
+      }
+
+      :global(.btn-add) {
+        background-color: $color-primary !important;
+        color: $color-primary-contrast !important;
+      }
+
+      :global(.btn-add)::after {
+        content: $icon-plus;
+      }
+      :global(.array-item-move-up)::after {
+        content: $icon-arrow-up;
+      }
+      :global(.array-item-move-down)::after {
+        content: $icon-arrow-down;
+      }
+      :global(.array-item-remove)::after {
+        content: $icon-remove;
+      }
+
+      :global(.array-item) {
+        display: flex;
+
+        :global(.col-xs-9) {
+          flex: 1;
+        }
+
+        :global(.array-item-toolbox) {
+          flex: 0;
+          order: -1;
+          padding-right: .3rem;
+
+          button {
+            @extend .iconBtn;
+            margin-right: .2rem;
+          }
+
+          :global(.btn-default) {
+            background-color: $color-primary;
+            color: $color-primary-contrast;
+          }
+
+          :global(.btn-danger) {
+            background-color: $color-danger !important;
+            color: $color-danger-contrast !important;
+          }
+        }
+      }
+
+      :global(.array-item-add) {
+        margin: 0;
+        padding: 0 0 .5rem 0;
+
+        button {
+          @extend .iconBtn;
+        }
+      }
+    }
+
+    :global .text-danger {
+      color: $color-danger;
+    }
+
+    :global .panel {
+      flex: 0 0 auto;
+      margin: .5rem;
+
+      &.panel-danger {
+        color: $color-danger;
+        border: 1px solid lighten($color-danger, 20%);
+      }
+
+      h3 {
+        margin: 0;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0 0 0 20px;
+      }
+    }
+
+    :global .error-detail {
+      margin: 0;
+      padding: .2rem 0 0 20px;
+    }
+  }
+
+  .buttons {
+    flex: 0 0 auto;
+    border-top: 1px dashed $color-border;
+
+    button[type='submit'] {
+      margin-right: .5rem;
+    }
+  }
+}
+
+:local .error {
+  flex: 1;
+  padding: .5rem 0;
+  color: $color-danger;
+  font-size: 1.2rem;
+
+  p {
+    margin: 0;
+    padding: .5rem 0 0 0;
+    font-size: 1rem;
+  }
+}

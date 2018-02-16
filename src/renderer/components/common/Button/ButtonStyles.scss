@@ -1,0 +1,71 @@
+@import "../../../config/config";
+
+:local .btn {
+  border: none;
+  border-radius: 2px;
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  outline: 0;
+  padding: 0 .5rem;
+  font-size: .8rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: .5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  background-color: $color-bg;
+
+  &:active {
+    background-color: darken($color-bg, 3%);
+  }
+
+  &.primary {
+    color: $color-primary-contrast;
+    background-color: $color-primary;
+
+    &:hover {
+      background-color: lighten($color-primary, 5%);
+    }
+
+    &:active {
+      background-color: lighten($color-primary, 10%);
+    }
+  }
+
+  &.danger {
+    color: $color-danger-contrast;
+    background-color: $color-danger;
+
+    &:hover {
+      background-color: lighten($color-danger, 5%);
+    }
+
+    &:active {
+      background-color: lighten($color-danger, 10%);
+    }
+  }
+
+  .icon {
+    padding-right: .5rem;
+
+    span {
+      padding: 0;
+      display: inline-block;
+    }
+  }
+
+  &.noLabel {
+    text-align: center;
+
+    .icon {
+      padding: 0;
+    }
+  }
+
+  &[disabled] {
+    background-color: $color-disabled-bg !important;
+  }
+}

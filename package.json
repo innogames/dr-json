@@ -1,0 +1,86 @@
+{
+  "name": "dr-json",
+  "description": "Manage JSON files by using JSON Schemas",
+  "author": {
+    "name": "Innogames GmbH"
+  },
+  "version": "0.6.0",
+  "private": true,
+  "build": {
+    "productName": "Dr. Json",
+    "appId": "de.innogames.foe.dr-json",
+    "files": [
+      "dist/renderer"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "build/icons/mac/icon.icns",
+      "target": "dmg"
+    },
+    "dmg": {
+      "icon": "build/icons/mac/icon.icns",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "build/icons/win/icon.ico"
+    }
+  },
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "dev": "electron-webpack dev",
+    "compile": "electron-webpack",
+    "start-compiled": "electron dist/main/main.js",
+    "dist": "yarn compile && electron-builder -mw",
+    "pack": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "create-icons": "electron-icon-maker --input=./static/icon.png --output=./build/"
+  },
+  "dependencies": {
+    "electron-debug": "^1.4.0",
+    "electron-settings": "^3.1.4",
+    "fs-extra": "^4.0.2",
+    "mobx": "^3.3.0",
+    "mobx-react": "^4.3.3",
+    "query-string": "^5.0.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-jsonschema-form": "1.0.0",
+    "react-select": "^1.1.0",
+    "source-map-support": "^0.5.0"
+  },
+  "devDependencies": {
+    "@types/electron-settings": "^3.1.1",
+    "@types/fs-extra": "^4.0.5",
+    "@types/node": "^8.0.31",
+    "@types/query-string": "^5.0.1",
+    "@types/react-dom": "^16.0.1",
+    "@types/react-jsonschema-form": "1.0.1",
+    "@types/react-select": "^1.1.0",
+    "electron": "^1.7.9",
+    "electron-builder": "^19.45.4",
+    "electron-icon-maker": "^0.0.4",
+    "electron-webpack": "^1.11.0",
+    "electron-webpack-ts": "^1.2.0",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "typescript": "^2.5.3",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.8.1"
+  },
+  "electronWebpack": {
+    "title": true
+  }
+}

@@ -1,0 +1,62 @@
+@import "../../../config/config";
+
+:local .tree {
+  ul {
+    list-style: none;
+    padding-left: 5px;
+    margin: 0;
+
+    li {
+      padding-left: 16px;
+      position: relative;
+      box-sizing: border-box;
+      line-height: 1.5rem;
+      white-space: nowrap;
+
+      &:before {
+        content: '';
+        height: 1px;
+        width: 10px;
+        background-color: $color-secondary;
+        position: absolute;
+        top: 10px;
+        left: 0;
+        margin: auto;
+      }
+
+      &::after {
+        content: '';
+        width: 1px;
+        height: 100%;
+        background-color: $color-secondary;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      &:last-child {
+        &::after {
+          height: 10px;
+        }
+      }
+    }
+
+    a {
+      color: $color-primary-contrast !important;
+
+      &.active {
+        color: $color-text !important;
+      }
+    }
+  }
+
+  .folderIcon {
+    color: $color-primary-dark;
+  }
+
+  .fileIcon {
+    font-size: .8rem;
+    color: darken($color-primary-dark, 5%);
+  }
+}

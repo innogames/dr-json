@@ -1,0 +1,35 @@
+@import "../../../config/config";
+
+:local .overlay {
+  position: fixed;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+:local .side {
+  position: fixed;
+  z-index: 1001;
+  min-width: 100px;
+  width: 500px;
+  background-color: $color-bg;
+  box-shadow: -6px 0px 15px -6px #555;
+  display: flex;
+
+  .sizeHandle {
+    flex: 0 0 2px;
+    background-color: $color-border;
+    cursor: col-resize;
+  }
+
+  .content {
+    flex: 1;
+  }
+
+  .headline {
+    margin: 0;
+    padding: .5rem;
+    background-color: $color-primary;
+    color: $color-primary-contrast;
+    font-weight: normal;
+  }
+}

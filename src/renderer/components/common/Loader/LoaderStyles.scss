@@ -1,0 +1,14 @@
+:local .loader {
+  position: absolute;
+  animation: spin 1.6s linear infinite;
+}
+
+:local .text {
+  padding-left: 30px;
+}
+
+@keyframes:local(spin) {
+  100% {
+    transform: rotate(360deg);
+  }
+}

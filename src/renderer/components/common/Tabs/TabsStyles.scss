@@ -1,0 +1,37 @@
+@import "../../../config/config";
+
+:local .tabs {
+  border: 0 solid $color-primary;
+  display: flex;
+  overflow-y: scroll;
+
+  .tab {
+    flex: 0 auto;
+    color: $color-text;
+    padding: .2rem .4rem;
+    border: 2px solid transparent;
+    border-right: 1px solid $color-border;
+    border-left-width: 1px;
+    white-space: nowrap;
+
+    &.active {
+      font-weight: bold;
+    }
+  }
+
+  &.bottom {
+    border-top-width: 1px;
+
+    .tab.active {
+      border-top-color: $color-primary;
+    }
+  }
+
+  &.top {
+    border-bottom-width: 1px;
+
+    .tab.active {
+      border-bottom-color: $color-primary;
+    }
+  }
+}

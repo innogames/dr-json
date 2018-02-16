@@ -1,0 +1,15 @@
+@import "../../../config/config";
+
+:local .welcome {
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+
+  .error {
+    color: $color-danger;
+    background-color: $color-danger-contrast;
+    margin-top: 1rem;
+    padding: .5rem;
+  }
+}

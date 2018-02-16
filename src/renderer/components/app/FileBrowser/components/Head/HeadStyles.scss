@@ -1,0 +1,16 @@
+@import "../../../../../config/config";
+
+:local .head {
+  flex: 0;
+  flex-basis: 50px;
+  background-color: $color-secondary;
+  color: $color-secondary-contrast;
+  font-size: 2rem;
+  padding: 0 10px;
+  display: flex;
+
+  .left {
+    flex: 1;
+    align-self: center;
+  }
+}

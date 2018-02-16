@@ -1,0 +1,14 @@
+
+:local .wrapper {
+  display: flex;
+}
+
+:local .buttons {
+  display: flex;
+  flex-direction: column;
+  padding-left: .5rem;
+
+  button {
+    margin-bottom: .3rem;
+  }
+}

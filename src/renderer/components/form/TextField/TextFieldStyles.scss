@@ -1,0 +1,13 @@
+@import "../../../config/config";
+
+:local .textField {
+  display: block;
+  width: 100%;
+  border: 1px solid $color-border;
+  padding: .3rem;
+  outline: none;
+
+  &:focus {
+    border: 1px solid darken($color-border, 5%);
+  }
+}

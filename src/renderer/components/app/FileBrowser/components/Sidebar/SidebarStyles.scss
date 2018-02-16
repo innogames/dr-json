@@ -1,0 +1,8 @@
+@import "../../../../../config/config";
+
+:local .sidebar {
+  flex: 0 0 250px;
+  overflow: auto;
+  background-color: $color-primary;
+  color: $color-primary-contrast;
+}

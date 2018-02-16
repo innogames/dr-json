@@ -1,0 +1,18 @@
+@import "../../../config/config";
+
+$btnSize: 25px;
+
+:local .buttons {
+  display: flex;
+  background-color: $color-primary-dark;
+  border-bottom: 1px solid $color-secondary;
+
+  & > a {
+    flex: 0 $btnSize;
+    height: $btnSize;
+    text-align: center;
+    color: $color-primary-contrast;
+    padding: .2rem;
+    border-right: 1px solid $color-secondary;
+  }
+}

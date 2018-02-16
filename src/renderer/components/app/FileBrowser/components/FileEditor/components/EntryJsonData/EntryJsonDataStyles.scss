@@ -1,0 +1,55 @@
+@import "../../../../../../../config/config";
+
+$propertiesGap: .5rem;
+
+:local .props {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      text-align: left;
+      vertical-align: top;
+      padding: 0 1rem $propertiesGap 0;
+      white-space: nowrap;
+
+      &:after {
+        content: ':';
+        word-wrap: normal;
+      }
+    }
+
+    td {
+      padding: 0 0 $propertiesGap 0;
+      width: 100%;
+    }
+
+    tr:last-child {
+      th, td {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+:local .arrayValue {
+  padding-bottom: .2rem;
+  margin-bottom: .2rem;
+  border-bottom: 1px dotted $color-border;
+
+  &:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+
+  .arrayIdx {
+    font-size: .7rem;
+    color: $color-text-light;
+    background-color: rgba($color-primary, .1);
+    margin-bottom: 2px;
+  }
+}

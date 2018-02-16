@@ -1,0 +1,14 @@
+import {DataEntry} from '@/entities/editor/DataEntry';
+
+export function searchEntries(entries: DataEntry[], search: string): DataEntry[] {
+    if (!search) {
+        return entries;
+    }
+
+    search = search.toLowerCase();
+
+    return entries.filter((entry: DataEntry) => {
+        const haystack = entry.toJson().replace('\\', '').toLowerCase();
+        return haystack.indexOf(search) >= 0;
+    });
+}

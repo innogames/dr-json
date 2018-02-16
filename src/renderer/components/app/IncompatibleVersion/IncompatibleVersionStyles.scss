@@ -1,0 +1,15 @@
+@import "../../../config/config";
+
+:local .msg {
+  background-color: $color-bg;
+  color: $color-danger;
+  padding: .5rem;
+
+  .err {
+    font-size: 1.2rem;
+  }
+}
+
+:local .download {
+  padding-top: 1rem;
+}

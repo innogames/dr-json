@@ -1,0 +1,48 @@
+@import "../../../../../config/config";
+
+:local .editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .entries {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+:local .inlineForm {
+  border: 2px dashed $color-primary;
+}
+
+:local .sidebar {
+  display: flex;
+  flex-direction: column;
+
+  & > h1 {
+    padding: .5rem;
+    margin: 0;
+    font-weight: normal;
+    font-size: 1.2rem;
+    background-color: $color-primary;
+    color: $color-primary-contrast;
+  }
+}
+
+:local .sidebarForm {
+  flex: 1;
+  display: flex;
+
+  form {
+    flex: 1;
+    display: flex;
+
+    & > :global(.form-group) {
+      flex: 1 auto;
+    }
+  }
+}

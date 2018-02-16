@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "minVersion": {
+      "type": "string"
+    },
+    "directories": {
+      "type": "object",
+      "properties": {
+        "schemas": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        },
+        "variantData": {
+          "type": "string"
+        }
+      }
+    },
+    "variantTypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "variantId": {
+            "type": "string"
+          },
+          "vars": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "variantId",
+          "vars"
+        ]
+      }
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false
+}
