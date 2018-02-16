@@ -1,5 +1,4 @@
 import {ExternalLink} from '@/components/common/ExternalLink';
-import {If} from '@/components/helper/If';
 import {Outside} from '@/components/layout/Outside';
 import {getDownloadUrl} from '@/functions/app/getDownloadUrl';
 import {observer} from 'mobx-react';
@@ -17,8 +16,6 @@ interface Props {
 export class IncompatibleVersion extends React.Component<Props, {}> {
 
     render() {
-        const downloadUrl: string = getDownloadUrl();
-
         return (
             <Outside appVersion={this.props.appVersion}>
                 <h1>Outdated Version</h1>
@@ -31,11 +28,9 @@ export class IncompatibleVersion extends React.Component<Props, {}> {
 
                     (Current installed version: {this.props.appVersion})
 
-                    <If cond={downloadUrl != ''}>
-                        <div className={styles.download}>
-                            <ExternalLink url={downloadUrl}>Click here to download the new version</ExternalLink>
-                        </div>
-                    </If>
+                    <div className={styles.download}>
+                        <ExternalLink url={getDownloadUrl()}>Click here to download the new version</ExternalLink>
+                    </div>
                 </div>
             </Outside>
         );
