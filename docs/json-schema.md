@@ -75,3 +75,9 @@ Each property in the schema must have a **type** (e.g. `string`, `integer`, `num
 Depending on the type you can also have additional configurations. See
 [examples of each type here](https://spacetelescope.github.io/understanding-json-schema/reference/type.html). 
 
+It is also possible to control how the form will look like. [Read here how to modify the form UI](./modify-form-ui.md).
+
+
+## Reuse parts of your schema
+
+[See here how to split up your schema into reusable parts](./split-up-schema.md).

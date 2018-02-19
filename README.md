@@ -1,11 +1,18 @@
-# Documentation
+# What is Dr. Json?
 
-- [Project file (dr.json)](./docs/project-file.md)
-- [JSON Schema files](./docs/json-schema.md)
-- [Modify Form UI](docs/modify-form-ui.md)
-- [Split up schema](docs/split-up-schema.md)
+Dr. Json is a **JSON file editor**. It lets you manage your JSON files based on your JSON Schemas.
 
-# Local installation
+To set it up for your project, you need to:
+
+- Create a folder with all your [JSON Schema files](./docs/json-schema.md).
+- Create a [project file (dr.json)](./docs/project-file.md).
+
+# Installation
+
+Just [download it here](https://github.com/innogames/dr-json/releases) and execute it.
+
+
+# Development
 
 ## Requirements:
 

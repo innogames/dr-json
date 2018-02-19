@@ -1,4 +1,4 @@
-# Split up you JSON Schema
+# Split up your JSON Schema
 
 It is possible to reuse parts of your schema by splitting them up into different files.
 Let's say you have an enum field with a bigger list and you don't want to define this list in each schema.
