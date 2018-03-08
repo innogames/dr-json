@@ -43,6 +43,7 @@
   },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
+    "test": "jest --verbose",
     "electron": "electron dist/compiled/main.js",
     "dev": "webpack --config-name main --mode=development --env.env=dev --env.devServerPort=3000 && concurrently \"webpack-dev-server --config-name renderer --mode=development --env.env=dev --env.devServerPort=3000\" \"wait-on http://localhost:3000 && yarn run electron\"",
     "compile": "webpack --mode=production",
@@ -65,6 +66,7 @@
     "@types/electron-debug": "1.1.0",
     "@types/electron-settings": "3.1.1",
     "@types/fs-extra": "4.0.5",
+    "@types/jest": "22.2.0",
     "@types/node": "8.0.31",
     "@types/query-string": "5.0.1",
     "@types/react-dom": "16.0.4",
@@ -78,10 +80,12 @@
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "file-loader": "1.1.11",
     "html-webpack-plugin": "3.0.6",
+    "jest": "22.4.2",
     "node-sass": "4.8.1",
     "rimraf": "2.6.2",
     "sass-loader": "6.0.7",
     "style-loader": "0.20.3",
+    "ts-jest": "22.4.1",
     "ts-loader": "4.0.1",
     "typescript": "2.7.2",
     "url-loader": "^0.6.2",
@@ -92,5 +96,17 @@
   },
   "electronWebpack": {
     "title": true
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)test)\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ]
   }
 }
