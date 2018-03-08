@@ -1,4 +1,4 @@
-import {filterEmpty} from '../../functions/common/value/array';
+import {isSet} from '../../functions/common/value/isSet';
 import {basename} from '../../functions/common/value/path';
 
 export class FileInfo {
@@ -51,7 +51,7 @@ export class FileInfo {
                 .map((child: FileInfo) => {
                     return child.map(fn);
                 })
-                .filter(filterEmpty);
+                .filter(isSet);
         }
 
         return fn(this, children);
@@ -66,7 +66,7 @@ export class FileInfo {
             .map((child: FileInfo) => {
                 return child.filter(fn) as FileInfo;
             })
-            .filter(filterEmpty);
+            .filter(isSet);
 
         return new FileInfo(this.path, this.isDir, children);
     }
