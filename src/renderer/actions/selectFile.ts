@@ -3,7 +3,7 @@ import {FileContent} from '../entities/editor/FileContent';
 import {OpenFile} from '../entities/editor/OpenFile';
 import {SchemaConfig} from '../entities/json/SchemaConfig';
 import {DataFile} from '../entities/project/DataFile';
-import {errorToString} from '../functions/domain/errorToString';
+import {errorToString} from '../functions/common/errorToString';
 import {loadSchema} from '../functions/domain/loadSchema';
 import {readData} from '../functions/domain/readData';
 import {editorStore} from '../stores/editorStore';

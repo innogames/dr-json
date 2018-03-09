@@ -8,4 +8,8 @@ export class SchemaValidationError {
     ) {
 
     }
+
+    toString(): string {
+        return `${this.dataPath} ${this.message}`.substr(1).trim();
+    }
 }

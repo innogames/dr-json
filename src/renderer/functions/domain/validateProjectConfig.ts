@@ -1,5 +1,5 @@
 import {ProjectConfig} from '../../entities/project/Project';
-import {errorToString} from './errorToString';
+import {errorToString} from '../common/errorToString';
 import {validateJsonBySchema} from './validateJsonBySchema';
 
 const schema = require('../../project.schema.json');
