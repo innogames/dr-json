@@ -1,5 +1,7 @@
 import {app, BrowserWindow, dialog, Event, ipcMain, Menu, shell} from 'electron';
 import {isDev, isMacOS} from '../shared/app/environment';
+import {packageJson} from '../shared/app/package';
+import {openExternal} from '../shared/infrastructure/openExternal';
 const electronSettings = require('electron-settings');
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 import WebContents = Electron.WebContents;
@@ -131,9 +133,7 @@ function createMenu() {
             {
                 label: 'Open Download Page',
                 click: function () {
-                    if (win) {
-                        win.webContents.send('open-download-page');
-                    }
+                    openExternal(packageJson.downloadUrl);
                 },
             },
         ],

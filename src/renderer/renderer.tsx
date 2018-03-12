@@ -7,8 +7,6 @@ import {closeProject} from './actions/closeProject';
 import {openProject} from './actions/openProject';
 import {App} from './components/app/App';
 import {getAppVersion} from './functions/app/getAppVersion';
-import {getDownloadUrl} from './functions/app/getDownloadUrl';
-import {openExternal} from './functions/infrastructure/openExternal';
 import {stores} from './stores';
 
 useStrict(true);
@@ -23,10 +21,6 @@ ipcRenderer.on('close-project', () => {
 
 ipcRenderer.on('toggle-settings-inlineForms', () => {
     stores.settingsStore.toggleInlineForms();
-});
-
-ipcRenderer.on('open-download-page', () => {
-    openExternal(getDownloadUrl());
 });
 
 if (stores.settingsStore.projectFile) {

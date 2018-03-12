@@ -1,4 +1,4 @@
-import {openExternal} from '../functions/infrastructure/openExternal';
+import {openExternal} from '../../shared/infrastructure/openExternal';
 import {projectStore} from '../stores/projectStore';
 
 export function openFolderExternally(): void {

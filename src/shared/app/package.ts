@@ -11,6 +11,10 @@ class PackageJson {
     get version(): string {
         return this.data.version;
     }
+
+    get downloadUrl(): string {
+        return this.data.homepage + '/releases';
+    }
 }
 
 export let packageJson = new PackageJson(jsonData);

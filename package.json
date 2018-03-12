@@ -1,6 +1,7 @@
 {
   "name": "dr-json",
   "description": "Manage JSON files by using JSON Schemas",
+  "homepage": "https://github.com/innogames/dr-json",
   "license": "MIT",
   "author": {
     "name": "Innogames GmbH"
