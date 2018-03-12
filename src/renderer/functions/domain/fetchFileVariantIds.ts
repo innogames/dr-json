@@ -1,6 +1,6 @@
+import {relativePath} from '../../../shared/common/value/path';
 import {REGEX_JSON_FILE} from '../../config/constants';
 import {FileInfo} from '../../entities/fs/FileInfo';
-import {relativePath} from '../common/value/path';
 import {readDir} from '../infrastructure/fs/readDir';
 import {jsonBasename} from './jsonBasename';
 

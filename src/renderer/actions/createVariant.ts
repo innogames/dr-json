@@ -1,6 +1,6 @@
+import {joinPath} from '../../shared/common/value/path';
 import {DataEntry} from '../entities/editor/DataEntry';
 import {DataFile, FileVariant} from '../entities/project/DataFile';
-import {joinPath} from '../functions/common/value/path';
 import {readData} from '../functions/domain/readData';
 import {saveData} from '../functions/domain/saveData';
 import {editorStore} from '../stores/editorStore';

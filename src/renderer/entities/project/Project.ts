@@ -1,4 +1,4 @@
-import {dirname, joinPath} from '../../functions/common/value/path';
+import {dirname, joinPath} from '../../../shared/common/value/path';
 
 export interface VariantTypeConfig {
     name: string,

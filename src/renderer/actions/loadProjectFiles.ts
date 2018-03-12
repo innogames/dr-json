@@ -1,7 +1,7 @@
+import {joinPath, relativePath} from '../../shared/common/value/path';
 import {FileInfo} from '../entities/fs/FileInfo';
 import {DataDir, DataFileType} from '../entities/project/DataDir';
 import {DataFile, FileVariant} from '../entities/project/DataFile';
-import {joinPath, relativePath} from '../functions/common/value/path';
 import {fetchFileVariantIds, FileToVariantIds} from '../functions/domain/fetchFileVariantIds';
 import {jsonBasename} from '../functions/domain/jsonBasename';
 import {loadSchemaFileTree} from '../functions/domain/loadSchemaFileTree';

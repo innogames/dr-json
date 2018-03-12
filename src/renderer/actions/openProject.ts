@@ -1,6 +1,6 @@
+import {errorToString} from '../../shared/common/errorToString';
 import {DataFileType} from '../entities/project/DataDir';
 import {Project, ProjectConfig} from '../entities/project/Project';
-import {errorToString} from '../functions/common/errorToString';
 import {validateProjectConfig} from '../functions/domain/validateProjectConfig';
 import {readJsonFile} from '../functions/infrastructure/fs/readJsonFile';
 import {projectStore} from '../stores/projectStore';

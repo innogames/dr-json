@@ -1,6 +1,6 @@
 import * as fs from 'fs';
+import {joinPath} from '../../../../shared/common/value/path';
 import {FileInfo} from '../../../entities/fs/FileInfo';
-import {joinPath} from '../../common/value/path';
 
 export function readDir(dir: string): Promise<FileInfo> {
     return new Promise((resolve) => {
