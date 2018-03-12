@@ -22,8 +22,8 @@ export class IncompatibleVersion extends React.Component<Props, {}> {
 
                 <div className={styles.msg}>
                     <div className={styles.err}>
-                        Your Project <b>{this.props.projectName}</b> requires {packageJson.appName}
-                        Version <b>{this.props.requiredVersion}</b>
+                        Your Project <b>{this.props.projectName} </b>
+                        requires {packageJson.appName} Version <b>{this.props.requiredVersion}</b>
                     </div>
 
                     (Current installed version: {this.props.appVersion})
