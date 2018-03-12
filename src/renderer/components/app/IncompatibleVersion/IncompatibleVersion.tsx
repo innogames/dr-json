@@ -1,5 +1,6 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
+import {packageJson} from '../../../../shared/app/package';
 import {getDownloadUrl} from '../../../functions/app/getDownloadUrl';
 import {ExternalLink} from '../../common/ExternalLink';
 import {Outside} from '../../layout/Outside';
@@ -22,7 +23,7 @@ export class IncompatibleVersion extends React.Component<Props, {}> {
 
                 <div className={styles.msg}>
                     <div className={styles.err}>
-                        Your Project <b>{this.props.projectName}</b> requires Dr. Json
+                        Your Project <b>{this.props.projectName}</b> requires {packageJson.appName}
                         Version <b>{this.props.requiredVersion}</b>
                     </div>
 

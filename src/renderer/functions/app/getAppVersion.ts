@@ -1,7 +1,6 @@
 import {remote} from 'electron';
 import {isDev} from '../../../shared/app/environment';
-
-const packageJson: any = require('../../../../package.json');
+import {packageJson} from '../../../shared/app/package';
 
 export function getAppVersion(): string {
     if (!isDev()) {

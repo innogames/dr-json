@@ -1,5 +1,6 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
+import {packageJson} from '../../../../shared/app/package';
 import {openSelectProject} from '../../../actions/openSelectProject';
 import {Button} from '../../common/Button';
 import {If} from '../../helper/If';
@@ -18,7 +19,7 @@ export class Welcome extends React.Component<Props, {}> {
     render() {
         return (
             <Outside appVersion={this.props.appVersion} className={styles.welcome}>
-                <h1>Welcome to Dr. Json!</h1>
+                <h1>Welcome to {packageJson.appName}!</h1>
                 <p>
                     Please select the file <strong>dr.json</strong> in your project.
                 </p>

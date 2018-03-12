@@ -169,7 +169,7 @@ function openSelectProjectDialog(webContents: WebContents) {
     dialog.showOpenDialog({
         properties: ['openFile'],
         filters:    [
-            {name: 'Dr Json Project Files', extensions: ['json']},
+            {name: 'Project Files', extensions: ['json']},
         ],
     }, function (files: string[]) {
         if (files) {

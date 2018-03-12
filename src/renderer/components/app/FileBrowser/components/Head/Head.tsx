@@ -1,5 +1,6 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
+import {packageJson} from '../../../../../../shared/app/package';
 import styles from './HeadStyles.scss';
 
 interface Props {
@@ -13,7 +14,7 @@ export class Head extends React.Component<Props, {}> {
         return (
             <div className={styles.head}>
                 <div className={styles.left}>
-                    Dr. Json ({this.props.projectName})
+                    {packageJson.appName} ({this.props.projectName})
                 </div>
             </div>
         );
