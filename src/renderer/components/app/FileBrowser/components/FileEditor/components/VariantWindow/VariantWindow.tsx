@@ -1,12 +1,12 @@
-import {Checkbox} from '@/components/form/Checkbox';
-import {SchemaForm} from '@/components/form/SchemaForm';
-import {Select} from '@/components/form/Select';
-import {SideWindow} from '@/components/layout/SideWindow';
-import {SideWindowHeadline} from '@/components/layout/SideWindow/SideWindowHeadline';
-import {VariantTypeConfig} from '@/entities/project/Project';
-import {replaceVariantIdProps} from '@/functions/domain/replaceVariantIdProps';
 import * as React from 'react';
 import {Option, Options} from 'react-select';
+import {VariantTypeConfig} from '../../../../../../../entities/project/Project';
+import {replaceVariantIdProps} from '../../../../../../../functions/domain/replaceVariantIdProps';
+import {Checkbox} from '../../../../../../form/Checkbox';
+import {SchemaForm} from '../../../../../../form/SchemaForm';
+import {Select} from '../../../../../../form/Select';
+import {SideWindow} from '../../../../../../layout/SideWindow';
+import {SideWindowHeadline} from '../../../../../../layout/SideWindow/SideWindowHeadline';
 import styles from './VariantWindowStyles.scss';
 
 interface Props {
@@ -53,7 +53,7 @@ export class VariantWindow extends React.PureComponent<Props, State> {
                             placeholder='Select Type...'
                             options={this.getOptions()}
                             onChange={this.onTypeChange}
-                            value={this.state.selectedType}
+                            value={this.state.selectedType || undefined}
                         />
                     </div>
 
@@ -97,7 +97,7 @@ export class VariantWindow extends React.PureComponent<Props, State> {
 
     private onTypeChange = (option: Option<string>): void => {
         this.setState(() => ({
-            selectedType: option ? option.value : null,
+            selectedType: option ? option.value as string : null,
         }));
     };
 
@@ -115,9 +115,10 @@ export class VariantWindow extends React.PureComponent<Props, State> {
 
     private onSubmit = (data: any): Promise<void> => {
         if (this.props.onSubmit) {
-            const type: VariantTypeConfig = this.getSelectedType();
-
-            return this.props.onSubmit(replaceVariantIdProps(type.variantId, data), this.state.copyEntries);
+            const type: VariantTypeConfig | null = this.getSelectedType();
+            if (type) {
+                return this.props.onSubmit(replaceVariantIdProps(type.variantId, data), this.state.copyEntries);
+            }
         }
         return Promise.resolve();
     };

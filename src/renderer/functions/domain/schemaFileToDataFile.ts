@@ -1,5 +1,5 @@
-import {joinPath, relativePath} from '@/functions/common/value/path';
-import {jsonBasename} from '@/functions/domain/jsonBasename';
+import {joinPath, relativePath} from '../common/value/path';
+import {jsonBasename} from './jsonBasename';
 
 export function schemaFileToDataFile(schemaFile: string, schemaDir: string, dataDir: string): string {
     let path: string = relativePath(schemaDir, schemaFile);

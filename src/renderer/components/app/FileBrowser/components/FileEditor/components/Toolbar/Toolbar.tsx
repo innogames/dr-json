@@ -1,8 +1,8 @@
-import * as React from 'react';
 import {observer} from 'mobx-react';
-import {TextField} from '@/components/form/TextField';
-import {Button} from '@/components/common/Button';
-import {Icon} from '@/components/common/Icon';
+import * as React from 'react';
+import {Button} from '../../../../../../common/Button';
+import {Icon} from '../../../../../../common/Icon';
+import {TextField} from '../../../../../../form/TextField';
 import styles from './ToolbarStyles.scss';
 
 interface Props {

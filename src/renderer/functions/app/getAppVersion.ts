@@ -1,5 +1,5 @@
-import {isDev} from '@/functions/infrastructure/env';
 import {remote} from 'electron';
+import {isDev} from '../../../shared/app/environment';
 
 const packageJson: any = require('../../../../package.json');
 

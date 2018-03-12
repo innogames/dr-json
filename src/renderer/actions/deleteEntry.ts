@@ -1,7 +1,7 @@
-import {DataEntry} from '@/entities/editor/DataEntry';
-import {readData} from '@/functions/domain/readData';
-import {saveData} from '@/functions/domain/saveData';
-import {editorStore} from '@/stores/editorStore';
+import {DataEntry} from '../entities/editor/DataEntry';
+import {readData} from '../functions/domain/readData';
+import {saveData} from '../functions/domain/saveData';
+import {editorStore} from '../stores/editorStore';
 
 export function deleteEntry(file: string, entryId: string): Promise<void> {
     return new Promise((resolve) => {
@@ -11,7 +11,9 @@ export function deleteEntry(file: string, entryId: string): Promise<void> {
             }))
             .then((entries: DataEntry[]) => saveData(file, entries))
             .then((entries: DataEntry[]) => {
-                editorStore.currentFile.content.set(entries);
+                if (editorStore.currentFile && editorStore.currentFile.content) {
+                    editorStore.currentFile.content.set(entries);
+                }
                 resolve();
             });
     });

@@ -1,23 +1,29 @@
-import {FileBrowser} from '@/components/app/FileBrowser';
-import {IncompatibleVersion} from '@/components/app/IncompatibleVersion';
-import {Welcome} from '@/components/app/Welcome';
-import {Loader} from '@/components/common/Loader/Loader';
-import {Outside} from '@/components/layout/Outside';
-import {Window} from '@/components/layout/Window';
-import {compareVersion} from '@/functions/common/value/version';
-import {ProjectStore} from '@/stores/projectStore';
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
+import {compareVersion} from '../../functions/common/value/version';
+import {ProjectStore} from '../../stores/projectStore';
+import {Loader} from '../common/Loader/Loader';
+import {Outside} from '../layout/Outside';
+import {Window} from '../layout/Window';
+import {FileBrowser} from './FileBrowser';
+import {IncompatibleVersion} from './IncompatibleVersion';
+import {Welcome} from './Welcome';
 
 interface Props {
     appVersion?: string;
+}
 
-    projectStore?: ProjectStore;
+interface Injected {
+    projectStore: ProjectStore;
 }
 
 @inject('projectStore')
 @observer
 export class App extends React.Component<Props, {}> {
+
+    private get injected(): Injected {
+        return this.props as Injected;
+    }
 
     render() {
         return (
@@ -28,28 +34,29 @@ export class App extends React.Component<Props, {}> {
     }
 
     renderChild() {
-        const projectStore: ProjectStore = this.props.projectStore;
+        const projectStore: ProjectStore = this.injected.projectStore;
+        const appVersion                 = this.props.appVersion || '';
 
         if (projectStore.isLoading) {
             return (
-                <Outside appVersion={this.props.appVersion}><Loader/></Outside>
+                <Outside appVersion={appVersion}><Loader/></Outside>
             );
         }
 
         if (!projectStore.hasCurrent) {
-            return <Welcome appVersion={this.props.appVersion} error={projectStore.error}/>;
+            return <Welcome appVersion={appVersion} error={projectStore.error || undefined}/>;
         }
 
-        if (compareVersion(this.props.appVersion, projectStore.current.minVersion) < 0) {
+        if (compareVersion(appVersion, projectStore.current.minVersion) < 0) {
             return (
                 <IncompatibleVersion
                     projectName={projectStore.current.name}
-                    appVersion={this.props.appVersion}
+                    appVersion={appVersion}
                     requiredVersion={projectStore.current.minVersion}
                 />
             );
         }
 
-        return <FileBrowser appVersion={this.props.appVersion} project={projectStore.current}/>;
+        return <FileBrowser appVersion={appVersion} project={projectStore.current!}/>;
     }
 }

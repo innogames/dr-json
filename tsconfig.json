@@ -1,21 +1,24 @@
 {
-  "extends": "./node_modules/electron-webpack/tsconfig-base.json",
   "compilerOptions": {
-    "baseUrl": "./src/renderer",
-    "noImplicitAny": true,
+    "sourceRoot": "./src",
+    "target": "es6",
+    "module": "es2015",
+    "moduleResolution": "node",
     "jsx": "react",
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "pretty": true,
     "removeComments": true,
-    "forceConsistentCasingInFileNames": true,
-    "noUnusedParameters": true,
-    "strictNullChecks": false,
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "sourceMap": true,
+    "strict": true,
+    "strictFunctionTypes": false
   },
-  "exclude": [
-    "node_modules"
+  "include": [
+    "src"
   ]
 }

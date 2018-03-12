@@ -1,10 +1,10 @@
-import {DataEntry} from '@/entities/editor/DataEntry';
-import {normalizeEntry} from '@/functions/domain/normalizeEntry';
-import {readData} from '@/functions/domain/readData';
-import {saveData} from '@/functions/domain/saveData';
-import {editorStore} from '@/stores/editorStore';
+import {DataEntry} from '../entities/editor/DataEntry';
+import {normalizeEntry} from '../functions/domain/normalizeEntry';
+import {readData} from '../functions/domain/readData';
+import {saveData} from '../functions/domain/saveData';
+import {editorStore} from '../stores/editorStore';
 
-export function updateEntry(file: string, entryId: string, newEntry: DataEntry): Promise<void> {
+export function updateEntry(file: string, entryId: string | null, newEntry: DataEntry): Promise<void> {
     return new Promise((resolve) => {
         newEntry = normalizeEntry(newEntry);
 
@@ -14,7 +14,9 @@ export function updateEntry(file: string, entryId: string, newEntry: DataEntry):
             }))
             .then((entries: DataEntry[]) => saveData(file, entries))
             .then((entries: DataEntry[]) => {
-                editorStore.currentFile.content.set(entries);
+                if (editorStore.currentFile && editorStore.currentFile.content) {
+                    editorStore.currentFile.content.set(entries);
+                }
                 resolve();
             });
     });

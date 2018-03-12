@@ -1,20 +1,17 @@
-const {app, BrowserWindow, ipcMain, dialog, Menu, shell} = require('electron');
-const url = require('url');
-const path = require('path');
-const electronDebug = require('electron-debug');
+import {app, BrowserWindow, dialog, Event, ipcMain, Menu, shell} from 'electron';
+import {isDev, isMacOS} from '../shared/app/environment';
 const electronSettings = require('electron-settings');
+import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
+import WebContents = Electron.WebContents;
 
-let win;
-const isDevelopment = process.env.NODE_ENV !== 'production';
-const isMacOS = process.platform === 'darwin';
-
-electronDebug({enabled: isDevelopment});
+let win: BrowserWindow | null;
+const isDevelopment = isDev();
 
 function createWindow() {
     win = new BrowserWindow({width: 1000, height: 800});
 
-    const url = isDevelopment
-        ? `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`
+    const url: string = isDevelopment
+        ? `http://localhost:${process.env.DEV_SERVER_PORT}`
         : `file://${__dirname}/index.html`;
 
     win.loadURL(url);
@@ -24,45 +21,51 @@ function createWindow() {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        win = null
+        win = null;
     });
 
-    //win.webContents.openDevTools();
+    if (isDevelopment) {
+        win.webContents.openDevTools();
+    }
 
     createMenu();
 }
 
 function createMenu() {
-    let template = [
+    let template: MenuItemConstructorOptions[] = [
         {
-            label: 'File',
+            label:   'File',
             submenu: [
                 {
                     label: 'Open Project',
                     click: function () {
-                        openSelectProjectDialog(win.webContents);
-                    }
+                        if (win) {
+                            openSelectProjectDialog(win.webContents);
+                        }
+                    },
                 },
                 {
                     label: 'Close Project',
                     click: function () {
-                        win.webContents.send('close-project');
-                    }
+                        if (win) {
+                            win.webContents.send('close-project');
+                        }
+                    },
                 },
                 {
-                    type: 'separator'
+                    type: 'separator',
                 },
                 {
                     label: 'Quit',
-                    role: 'quit',
-                }
-            ]
-        }
+                    role:  'quit',
+                },
+            ],
+        },
     ];
 
     if (isDevelopment) {
         template.push({
-            label: 'View',
+            label:   'View',
             submenu: [
                 {role: 'reload'},
                 {role: 'forcereload'},
@@ -72,30 +75,32 @@ function createMenu() {
                 {role: 'zoomin'},
                 {role: 'zoomout'},
                 {type: 'separator'},
-                {role: 'togglefullscreen'}
-            ]
+                {role: 'togglefullscreen'},
+            ],
         });
     }
 
     template.push({
-        label: 'Settings',
+        label:   'Settings',
         submenu: [
             {
-                label: 'Inline Forms',
-                type: 'checkbox',
+                label:   'Inline Forms',
+                type:    'checkbox',
                 checked: electronSettings.get('inlineForms'),
-                click: function () {
-                    win.webContents.send('toggle-settings-inlineForms');
-                }
+                click:   function () {
+                    if (win) {
+                        win.webContents.send('toggle-settings-inlineForms');
+                    }
+                },
             },
             {type: 'separator'},
             {
                 label: 'Open Settings Folder',
                 click: function () {
                     shell.showItemInFolder(electronSettings.file());
-                }
-            }
-        ]
+                },
+            },
+        ],
     });
 
     template.push({
@@ -103,28 +108,35 @@ function createMenu() {
     });
 
     template.push({
-        role: 'window',
+        role:    'window',
         submenu: [
             {role: 'minimize'},
-            {role: 'close'}
-        ]
+            {role: 'close'},
+        ],
     });
 
-    if (isMacOS) {
-        template[0].submenu.unshift({type: 'separator'});
-        template[0].submenu.unshift({role: 'about'});
+    if (isMacOS() && template[0] && template[0].submenu) {
+        let submenus = (template[0].submenu as MenuItemConstructorOptions[]);
+
+        template[0].submenu = [
+            {type: 'separator'},
+            {role: 'about'},
+            ...submenus
+        ];
     }
 
     template.push({
-        label: 'Help',
+        label:   'Help',
         submenu: [
             {
                 label: 'Open Download Page',
                 click: function () {
-                    win.webContents.send('open-download-page');
-                }
-            }
-        ]
+                    if (win) {
+                        win.webContents.send('open-download-page');
+                    }
+                },
+            },
+        ],
     });
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
@@ -137,7 +149,7 @@ app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
-        app.quit()
+        app.quit();
     }
 });
 
@@ -145,23 +157,23 @@ app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (win === null) {
-        createWindow()
+        createWindow();
     }
 });
 
-ipcMain.on('open-select-project-dialog', function (event) {
+ipcMain.on('open-select-project-dialog', function (event: Event) {
     openSelectProjectDialog(event.sender);
 });
 
-function openSelectProjectDialog(webContents) {
+function openSelectProjectDialog(webContents: WebContents) {
     dialog.showOpenDialog({
         properties: ['openFile'],
-        filters: [
-            {name: 'Dr Json Project Files', extensions: 'json'}
-        ]
-    }, function (files) {
+        filters:    [
+            {name: 'Dr Json Project Files', extensions: ['json']},
+        ],
+    }, function (files: string[]) {
         if (files) {
             webContents.send('project-selected', files[0]);
         }
-    })
+    });
 }

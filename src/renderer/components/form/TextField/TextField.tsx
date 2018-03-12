@@ -15,6 +15,7 @@ interface Props {
 
 export class TextField extends React.Component<Props, {}> {
 
+    // @ts-ignore: has no initializer
     refs: {
         [key: string]: any;
         input: HTMLInputElement;
@@ -32,7 +33,7 @@ export class TextField extends React.Component<Props, {}> {
                 onKeyPress={this.handleKeyPress.bind(this)}
                 onFocus={this.handleFocus}
                 ref='input'
-                maxLength={this.props.maxLength || null}
+                maxLength={this.props.maxLength || undefined}
             />
         );
     }

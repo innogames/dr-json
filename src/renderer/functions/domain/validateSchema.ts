@@ -1,5 +1,5 @@
-import {SchemaConfig} from '@/entities/json/SchemaConfig';
-import Ajv from 'ajv';
+import {SchemaConfig} from '../../entities/json/SchemaConfig';
+const Ajv = require('ajv');
 
 let ajv = new Ajv();
 

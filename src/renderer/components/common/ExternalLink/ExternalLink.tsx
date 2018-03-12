@@ -1,5 +1,5 @@
-import {openExternal} from '@/functions/infrastructure/openExternal';
 import * as React from 'react';
+import {openExternal} from '../../../functions/infrastructure/openExternal';
 
 interface Props {
     url: string;

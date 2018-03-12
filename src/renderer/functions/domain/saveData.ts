@@ -1,5 +1,5 @@
-import {DataEntry} from '@/entities/editor/DataEntry';
-import {writeJsonFile} from '@/functions/infrastructure/fs/writeJsonFile';
+import {DataEntry} from '../../entities/editor/DataEntry';
+import {writeJsonFile} from '../infrastructure/fs/writeJsonFile';
 
 export function saveData(file: string, entries: DataEntry[]): Promise<DataEntry[]> {
     return new Promise((resolve) => {

@@ -1,9 +1,9 @@
-import {EntryJsonData} from '@/components/app/FileBrowser/components/FileEditor/components/EntryJsonData';
-import {EntryWrapper} from '@/components/app/FileBrowser/components/FileEditor/components/EntryWrapper';
-import {Button} from '@/components/common/Button';
-import {Icon} from '@/components/common/Icon';
-import {DataEntry} from '@/entities/editor/DataEntry';
 import * as React from 'react';
+import {DataEntry} from '../../../../../../../entities/editor/DataEntry';
+import {Button} from '../../../../../../common/Button';
+import {Icon} from '../../../../../../common/Icon';
+import {EntryJsonData} from '../EntryJsonData';
+import {EntryWrapper} from '../EntryWrapper';
 import styles from './EntryStyles.scss';
 
 interface Props {
@@ -17,7 +17,7 @@ export class Entry extends React.PureComponent<Props, {}> {
 
     render() {
         return (
-            <EntryWrapper headline={this.props.entry.id}>
+            <EntryWrapper headline={this.props.entry.id || ''}>
                 <div className={styles.wrapper}>
                     <EntryJsonData entry={this.props.entry}/>
                     <div className={styles.buttons}>

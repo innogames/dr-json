@@ -1,4 +1,4 @@
-import {dirname, joinPath} from '@/functions/common/value/path';
+import {dirname, joinPath} from '../../functions/common/value/path';
 
 export interface VariantTypeConfig {
     name: string,
@@ -19,7 +19,7 @@ export interface ProjectConfig {
         schemas?: string,
         data?: string,
         variantData?: string,
-        [name: string]: string,
+        [name: string]: string | undefined,
     },
     variantTypes?: VariantTypeConfig[]
 }

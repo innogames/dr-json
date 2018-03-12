@@ -1,11 +1,10 @@
-import {OpenFile} from '@/entities/editor/OpenFile';
 import {action, observable} from 'mobx';
-
+import {OpenFile} from '../entities/editor/OpenFile';
 
 export class EditorStore {
-    @observable private openFile: OpenFile;
+    @observable private openFile: OpenFile | null = null;
 
-    get currentFile(): OpenFile {
+    get currentFile(): OpenFile | null {
         return this.openFile;
     }
 

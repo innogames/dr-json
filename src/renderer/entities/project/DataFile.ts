@@ -54,7 +54,7 @@ export class DataFile {
 export class FileVariant {
     constructor(
         public file: string,
-        public id: string = null,
+        public id: string | null = null,
     ) {
     }
 }

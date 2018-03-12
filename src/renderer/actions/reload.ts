@@ -1,10 +1,10 @@
-import {openProject} from '@/actions/openProject';
-import {selectFile} from '@/actions/selectFile';
-import {DataFileType} from '@/entities/project/DataDir';
-import {DataFile} from '@/entities/project/DataFile';
-import {editorStore} from '@/stores/editorStore';
-import {projectStore} from '@/stores/projectStore';
-import {schemaStore} from '@/stores/schemaStore';
+import {DataFileType} from '../entities/project/DataDir';
+import {DataFile} from '../entities/project/DataFile';
+import {editorStore} from '../stores/editorStore';
+import {projectStore} from '../stores/projectStore';
+import {schemaStore} from '../stores/schemaStore';
+import {openProject} from './openProject';
+import {selectFile} from './selectFile';
 
 export function reload(): Promise<void> {
     let selected: string;
@@ -19,7 +19,7 @@ export function reload(): Promise<void> {
     return openProject(projectStore.current.file)
         .then(() => {
             if (selected) {
-                let file: DataFileType = schemaStore.findFile(selected);
+                let file: DataFileType | null = schemaStore.findFile(selected);
                 if (file) {
                     return selectFile(file as DataFile, variantIdx);
                 }

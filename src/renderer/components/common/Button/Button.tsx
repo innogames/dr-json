@@ -1,5 +1,5 @@
-import {Icon} from '@/components/common/Icon';
 import * as React from 'react';
+import {Icon} from '../Icon';
 import styles from './ButtonStyles.scss';
 
 interface Props {

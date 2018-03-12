@@ -9,6 +9,7 @@ class Settings {
 }
 
 export class SettingsStore {
+    // @ts-ignore: has no initializer (but it has one in reloadSettings())
     @observable private settings: Settings;
 
     constructor() {
@@ -25,7 +26,7 @@ export class SettingsStore {
     }
 
     get projectFile(): string {
-        return electronSettings.get('projectFile');
+        return electronSettings.get('projectFile') as string;
     }
 
     toggleInlineForms() {
@@ -36,7 +37,7 @@ export class SettingsStore {
     @action
     private reloadSettings() {
         this.settings = new Settings(
-            electronSettings.get('inlineForms') || false,
+            electronSettings.get('inlineForms') as boolean || false,
         );
     }
 

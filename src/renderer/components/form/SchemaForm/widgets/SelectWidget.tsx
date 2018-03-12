@@ -1,6 +1,6 @@
-import {Select} from '@/components/form/Select';
 import * as React from 'react';
 import {Option, Options} from 'react-select';
+import {Select} from '../../Select';
 
 export function SelectWidget(props: any) {
     // See possible props here: https://github.com/mozilla-services/react-jsonschema-form#custom-widget-components

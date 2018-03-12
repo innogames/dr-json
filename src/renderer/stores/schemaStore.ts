@@ -1,15 +1,15 @@
-import {SchemaConfig} from '@/entities/json/SchemaConfig';
-import {DataDir, DataFileType} from '@/entities/project/DataDir';
-import {DataFile} from '@/entities/project/DataFile';
-import {settingsStore} from '@/stores/settingsStore';
 import {action, observable, reaction, toJS} from 'mobx';
+import {SchemaConfig} from '../entities/json/SchemaConfig';
+import {DataDir, DataFileType} from '../entities/project/DataDir';
+import {DataFile} from '../entities/project/DataFile';
+import {settingsStore} from './settingsStore';
 
 export class SchemaStore {
     @observable private schemas: Map<string, SchemaConfig> = new Map<string, SchemaConfig>();
     @observable private _files: DataFileType[]             = [];
 
     get(file: string): SchemaConfig | null {
-        const config: SchemaConfig = this.schemas.get(file);
+        const config: SchemaConfig | undefined = this.schemas.get(file);
         if (!config) {
             return null;
         }
@@ -59,7 +59,7 @@ export class SchemaStore {
     private findFileRecursive(files: DataFileType[], basename: string): DataFile | null {
         for (let file of files) {
             if (file.isDir) {
-                let found: DataFile = this.findFileRecursive((file as DataDir).children, basename);
+                let found: DataFile | null = this.findFileRecursive((file as DataDir).children, basename);
                 if (found) {
                     return found;
                 }

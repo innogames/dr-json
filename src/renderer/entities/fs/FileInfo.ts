@@ -1,5 +1,5 @@
-import {basename} from '@/functions/common/value/path';
-import {filterEmpty} from '@/functions/common/value/array';
+import {filterEmpty} from '../../functions/common/value/array';
+import {basename} from '../../functions/common/value/path';
 
 export class FileInfo {
     constructor(
@@ -13,16 +13,20 @@ export class FileInfo {
         return basename(this.path);
     }
 
-    public filterFiles(regex: RegExp | string): FileInfo | null {
-        return this.filter((child: FileInfo) => {
+    public filterFiles(regex: RegExp | string): FileInfo {
+        const res: FileInfo | null = this.filter((child: FileInfo) => {
             return child.isDir || !!child.path.match(regex);
         });
+
+        return res || new FileInfo(this.path, this.isDir, []);
     }
 
-    public filterEmptyDirs(): FileInfo | null {
-        return this.filter((child: FileInfo) => {
+    public filterEmptyDirs(): FileInfo {
+        const res: FileInfo | null = this.filter((child: FileInfo) => {
             return !child.isDir || child.children.length > 0;
         });
+
+        return res || new FileInfo(this.path, this.isDir, []);
     }
 
     public getAllFiles(): FileInfo[] {
@@ -39,7 +43,7 @@ export class FileInfo {
         return files;
     }
 
-    public map<R>(fn: (file: FileInfo, children: R[]) => R | null): R {
+    public map<R>(fn: (file: FileInfo, children: R[]) => R): R {
         let children: R[] = [];
 
         if (this.isDir) {
@@ -60,7 +64,7 @@ export class FileInfo {
 
         let children: FileInfo[] = this.children
             .map((child: FileInfo) => {
-                return child.filter(fn);
+                return child.filter(fn) as FileInfo;
             })
             .filter(filterEmpty);
 

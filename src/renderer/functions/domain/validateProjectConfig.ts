@@ -1,8 +1,8 @@
-import {ProjectConfig} from '@/entities/project/Project';
-import {errorToString} from '@/functions/domain/errorToString';
-import {validateJsonBySchema} from '@/functions/domain/validateJsonBySchema';
+import {ProjectConfig} from '../../entities/project/Project';
+import {errorToString} from './errorToString';
+import {validateJsonBySchema} from './validateJsonBySchema';
 
-const schema = require('@/project.schema.json');
+const schema = require('../../project.schema.json');
 
 export function validateProjectConfig(config: ProjectConfig): Promise<ProjectConfig> {
     return validateJsonBySchema(config, schema)

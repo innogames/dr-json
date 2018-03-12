@@ -1,6 +1,6 @@
-import {If} from '@/components/helper/If';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import {If} from '../../helper/If';
 import styles from './SideWindowStyles.scss';
 
 interface Props {
@@ -22,6 +22,7 @@ interface State {
 
 export class SideWindow extends React.PureComponent<Props, State> {
 
+    // @ts-ignore: has no initializer
     private parentNode: HTMLElement;
 
     constructor(props: Props) {
@@ -44,7 +45,7 @@ export class SideWindow extends React.PureComponent<Props, State> {
         document.addEventListener('mouseup', this.handleMouseUp);
         window.addEventListener('resize', this.handleResize);
 
-        this.parentNode = ReactDOM.findDOMNode(this).parentElement;
+        this.parentNode = ReactDOM.findDOMNode(this).parentElement as HTMLElement;
         this.handleResize();
     }
 

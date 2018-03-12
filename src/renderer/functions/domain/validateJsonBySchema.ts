@@ -1,5 +1,5 @@
-import {SchemaValidationError} from '@/entities/json/SchemaValidationError';
-import Ajv from 'ajv';
+import {SchemaValidationError} from '../../entities/json/SchemaValidationError';
+const Ajv = require('ajv');
 
 let ajv = new Ajv();
 

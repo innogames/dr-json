@@ -1,5 +1,5 @@
 import {remote} from 'electron';
-import {deleteEntry} from '@/actions/deleteEntry';
+import {deleteEntry} from './deleteEntry';
 
 export function confirmDeleteEntry(filename: string, entryId: string) {
     remote.dialog.showMessageBox(

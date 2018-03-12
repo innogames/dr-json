@@ -29,7 +29,7 @@ export function readJsonFileIfExists<R>(file: string, defaultValue: R): Promise<
             if (err) {
                 resolve(defaultValue);
             } else {
-                readJsonFile(file).then(resolve);
+                readJsonFile<R>(file).then(resolve);
             }
         });
     });

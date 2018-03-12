@@ -1,5 +1,5 @@
-import {DataFile} from '@/entities/project/DataFile';
 import {action, observable} from 'mobx';
+import {DataFile} from './DataFile';
 
 export type DataFileType = DataDir | DataFile;
 

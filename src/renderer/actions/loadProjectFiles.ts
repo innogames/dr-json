@@ -1,24 +1,24 @@
-import {FileInfo} from '@/entities/fs/FileInfo';
-import {DataDir, DataFileType} from '@/entities/project/DataDir';
-import {DataFile, FileVariant} from '@/entities/project/DataFile';
-import {joinPath, relativePath} from '@/functions/common/value/path';
-import {fetchFileVariantIds, FileToVariantIds} from '@/functions/domain/fetchFileVariantIds';
-import {jsonBasename} from '@/functions/domain/jsonBasename';
-import {loadSchemaFileTree} from '@/functions/domain/loadSchemaFileTree';
-import {schemaFileToDataFile} from '@/functions/domain/schemaFileToDataFile';
-import {readJsonFileSync} from '@/functions/infrastructure/fs/readJsonFile';
-import {settingsStore} from '@/stores/settingsStore';
+import {FileInfo} from '../entities/fs/FileInfo';
+import {DataDir, DataFileType} from '../entities/project/DataDir';
+import {DataFile, FileVariant} from '../entities/project/DataFile';
+import {joinPath, relativePath} from '../functions/common/value/path';
+import {fetchFileVariantIds, FileToVariantIds} from '../functions/domain/fetchFileVariantIds';
+import {jsonBasename} from '../functions/domain/jsonBasename';
+import {loadSchemaFileTree} from '../functions/domain/loadSchemaFileTree';
+import {schemaFileToDataFile} from '../functions/domain/schemaFileToDataFile';
+import {readJsonFileSync} from '../functions/infrastructure/fs/readJsonFile';
+import {settingsStore} from '../stores/settingsStore';
 
 export function loadProjectFiles(schemaDir: string, dataDir: string, variantDir: string): Promise<DataFileType[]> {
     return Promise.all<FileInfo, FileToVariantIds>([
         loadSchemaFileTree(schemaDir),
         fetchFileVariantIds(variantDir),
     ]).then(([schemaTree, fileVariantIds]) => {
-        return (schemaTree
-            .map<DataFileType>((file: FileInfo, children): DataFileType => {
+        return (
+            schemaTree.map<DataFileType>((file: FileInfo, children): DataFileType => {
                 return createFileObj(file, children, fileVariantIds, schemaDir, dataDir, variantDir);
-            }) as DataDir)
-            .children;
+            }) as DataDir
+        ).children;
     });
 }
 

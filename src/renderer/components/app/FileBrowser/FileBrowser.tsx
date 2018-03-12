@@ -1,12 +1,12 @@
-import {ContentHint} from '@/components/common/ContentHint';
-import {ErrorHint} from '@/components/common/ErrorHint';
-import {Loader} from '@/components/common/Loader/Loader';
-import {OpenFile} from '@/entities/editor/OpenFile';
-import {Project} from '@/entities/project/Project';
-import {EditorStore} from '@/stores/editorStore';
-import {SettingsStore} from '@/stores/settingsStore';
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
+import {OpenFile} from '../../../entities/editor/OpenFile';
+import {Project} from '../../../entities/project/Project';
+import {EditorStore} from '../../../stores/editorStore';
+import {SettingsStore} from '../../../stores/settingsStore';
+import {ContentHint} from '../../common/ContentHint';
+import {ErrorHint} from '../../common/ErrorHint';
+import {Loader} from '../../common/Loader/Loader';
 import {FileEditor} from './components/FileEditor';
 import {Head} from './components/Head';
 import {Sidebar} from './components/Sidebar';
@@ -14,15 +14,22 @@ import styles from './FileBrowserStyles.scss';
 
 interface Props {
     appVersion?: string;
-    project?: Project;
+    project: Project;
+}
 
-    editorStore?: EditorStore;
-    settingsStore?: SettingsStore;
+interface Injected {
+    editorStore: EditorStore;
+    settingsStore: SettingsStore;
 }
 
 @inject('editorStore', 'settingsStore')
 @observer
 export class FileBrowser extends React.Component<Props, {}> {
+
+    private get injected(): Injected {
+        // @ts-ignore: can not be converted
+        return this.props as Injected;
+    }
 
     render() {
         return (
@@ -41,7 +48,7 @@ export class FileBrowser extends React.Component<Props, {}> {
     }
 
     private renderContent() {
-        const openFile: OpenFile = this.props.editorStore.currentFile;
+        const openFile: OpenFile | null = this.injected.editorStore.currentFile;
         if (!openFile) {
             return (
                 <ContentHint>
@@ -63,7 +70,7 @@ export class FileBrowser extends React.Component<Props, {}> {
             <FileEditor
                 openFile={openFile}
                 variantTypes={this.props.project.variantTypes}
-                showFormInline={this.props.settingsStore.get().inlineForms}
+                showFormInline={this.injected.settingsStore.get().inlineForms}
             />
         );
     }

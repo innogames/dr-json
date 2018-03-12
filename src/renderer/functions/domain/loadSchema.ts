@@ -1,7 +1,7 @@
-import {SchemaConfig} from '@/entities/json/SchemaConfig';
-import {resolveSchema} from '@/functions/domain/resolveSchema';
-import {validateSchema} from '@/functions/domain/validateSchema';
-import {readJsonFile} from '@/functions/infrastructure/fs/readJsonFile';
+import {SchemaConfig} from '../../entities/json/SchemaConfig';
+import {readJsonFile} from '../infrastructure/fs/readJsonFile';
+import {resolveSchema} from './resolveSchema';
+import {validateSchema} from './validateSchema';
 
 export function loadSchema(file: string, schemaFolder: string): Promise<SchemaConfig> {
     return readJsonFile<SchemaConfig>(file)

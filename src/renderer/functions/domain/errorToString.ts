@@ -1,4 +1,4 @@
-import {SchemaValidationError} from '@/entities/json/SchemaValidationError';
+import {SchemaValidationError} from '../../entities/json/SchemaValidationError';
 
 export function errorToString(error: any): string {
     if (error instanceof Error) {

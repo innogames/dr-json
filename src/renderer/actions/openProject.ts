@@ -1,13 +1,13 @@
-import {closeProject} from '@/actions/closeProject';
-import {loadProjectFiles} from '@/actions/loadProjectFiles';
-import {DataFileType} from '@/entities/project/DataDir';
-import {Project, ProjectConfig} from '@/entities/project/Project';
-import {errorToString} from '@/functions/domain/errorToString';
-import {readJsonFile} from '@/functions/infrastructure/fs/readJsonFile';
-import {validateProjectConfig} from '@/functions/domain/validateProjectConfig';
-import {projectStore} from '@/stores/projectStore';
-import {schemaStore} from '@/stores/schemaStore';
-import {settingsStore} from '@/stores/settingsStore';
+import {DataFileType} from '../entities/project/DataDir';
+import {Project, ProjectConfig} from '../entities/project/Project';
+import {errorToString} from '../functions/domain/errorToString';
+import {validateProjectConfig} from '../functions/domain/validateProjectConfig';
+import {readJsonFile} from '../functions/infrastructure/fs/readJsonFile';
+import {projectStore} from '../stores/projectStore';
+import {schemaStore} from '../stores/schemaStore';
+import {settingsStore} from '../stores/settingsStore';
+import {closeProject} from './closeProject';
+import {loadProjectFiles} from './loadProjectFiles';
 
 export function openProject(projectFile: string): Promise<void> {
     closeProject();

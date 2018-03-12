@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ReactSelect, {Option, Options} from 'react-select';
+import ReactSelect, {OnChangeHandler, Option, Options} from 'react-select';
 
 require('./SelectStyles.scss');
 
@@ -23,7 +23,7 @@ export class Select extends React.Component<Props, {}> {
                 placeholder={this.props.placeholder || ''}
                 disabled={this.props.disabled}
                 options={this.props.options || []}
-                onChange={this.props.onChange}
+                onChange={this.props.onChange as OnChangeHandler}
                 noResultsText={this.props.placeholder}
                 clearable={this.props.clearable}
                 onOpen={this.onOpen}

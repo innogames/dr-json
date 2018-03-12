@@ -1,10 +1,10 @@
-import {Icon} from '@/components/common/Icon';
-import {Link} from '@/components/common/Link';
-import {If} from '@/components/helper/If';
-import {DataDir, DataFileType} from '@/entities/project/DataDir';
-import {DataFile} from '@/entities/project/DataFile';
 import {observer} from 'mobx-react';
 import * as React from 'react';
+import {DataDir, DataFileType} from '../../../entities/project/DataDir';
+import {DataFile} from '../../../entities/project/DataFile';
+import {If} from '../../helper/If';
+import {Icon} from '../Icon';
+import {Link} from '../Link';
 import styles from './FileTreeStyles.scss';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 }
 
 @observer
-export class FileTree extends React.Component<Props, {}> {
+export class FileTree extends React.Component<Props> {
 
     render() {
         return (
@@ -33,7 +33,7 @@ export class FileTree extends React.Component<Props, {}> {
     };
 
     private renderFile = (file: DataFile): JSX.Element => {
-        let className: string;
+        let className: string = '';
         let icon: string = Icon.FILE_O;
 
         if (this.props.selected && file.basename == this.props.selected.basename) {

@@ -45,7 +45,7 @@ export class Tab extends React.PureComponent<Props, {}> {
 
     private scrollToTab(): void {
         const tabNode: HTMLElement = ReactDOM.findDOMNode(this) as HTMLElement;
-        const parent: HTMLElement  = tabNode.parentElement;
+        const parent: HTMLElement  = tabNode.parentElement as HTMLElement;
         if (tabNode && parent) {
             parent.scrollLeft = tabNode.offsetLeft - parent.offsetLeft;
         }

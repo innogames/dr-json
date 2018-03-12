@@ -1,26 +1,30 @@
-import {openFolderExternally} from '@/actions/openFolderExternally';
-import {reload} from '@/actions/reload';
-import {selectFile} from '@/actions/selectFile';
-import {FileTree} from '@/components/common/FileTree';
-import {FileTreeButtons} from '@/components/common/FileTreeButtons';
-import {Icon} from '@/components/common/Icon';
-import {Link} from '@/components/common/Link';
-import {DataDir} from '@/entities/project/DataDir';
-import {DataFile} from '@/entities/project/DataFile';
-import {EditorStore} from '@/stores/editorStore';
-import {SchemaStore} from '@/stores/schemaStore';
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
+import {openFolderExternally} from '../../../../../actions/openFolderExternally';
+import {reload} from '../../../../../actions/reload';
+import {selectFile} from '../../../../../actions/selectFile';
+import {DataDir} from '../../../../../entities/project/DataDir';
+import {DataFile} from '../../../../../entities/project/DataFile';
+import {EditorStore} from '../../../../../stores/editorStore';
+import {SchemaStore} from '../../../../../stores/schemaStore';
+import {FileTree} from '../../../../common/FileTree';
+import {FileTreeButtons} from '../../../../common/FileTreeButtons';
+import {Icon} from '../../../../common/Icon';
+import {Link} from '../../../../common/Link';
 import styles from './SidebarStyles.scss';
 
-interface Props {
-    schemaStore?: SchemaStore;
-    editorStore?: EditorStore;
+interface Injected {
+    schemaStore: SchemaStore;
+    editorStore: EditorStore;
 }
 
 @inject('schemaStore', 'editorStore')
 @observer
-export class Sidebar extends React.Component<Props, {}> {
+export class Sidebar extends React.Component<{}, {}> {
+
+    private get injected(): Injected {
+        return this.props as Injected;
+    }
 
     render() {
         return (
@@ -32,8 +36,8 @@ export class Sidebar extends React.Component<Props, {}> {
                     <Link title='Open folder' onClick={this.openFolder}><Icon value={Icon.EXTERNAL_LINK}/></Link>
                 </FileTreeButtons>
                 <FileTree
-                    files={this.props.schemaStore.files}
-                    selected={this.props.editorStore.currentFile ? this.props.editorStore.currentFile.file : null}
+                    files={this.injected.schemaStore.files}
+                    selected={this.injected.editorStore.currentFile ? this.injected.editorStore.currentFile.file : undefined}
                     onSelectFile={this.onSelectFile}
                     onSelectDir={this.onSelectDir}
                 />
@@ -54,13 +58,13 @@ export class Sidebar extends React.Component<Props, {}> {
     };
 
     private expandAll = () => {
-        this.props.schemaStore.forEachDir((dir: DataDir) => {
+        this.injected.schemaStore.forEachDir((dir: DataDir) => {
             dir.setCollapsed(false);
         });
     };
 
     private collapseAll = () => {
-        this.props.schemaStore.forEachDir((dir: DataDir) => {
+        this.injected.schemaStore.forEachDir((dir: DataDir) => {
             dir.setCollapsed(true);
         });
     };

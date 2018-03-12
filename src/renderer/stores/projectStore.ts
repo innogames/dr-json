@@ -1,10 +1,10 @@
-import {Project} from '@/entities/project/Project';
 import {action, observable} from 'mobx';
+import {Project} from '../entities/project/Project';
 
 export class ProjectStore {
-    @observable private project: Project | null;
-    @observable isLoading: boolean;
-    @observable error: string | null;
+    @observable private project: Project | null = null;
+    @observable isLoading: boolean              = false;
+    @observable error: string | null            = null;
 
     @action
     setLoading(): void {

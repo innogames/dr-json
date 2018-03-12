@@ -1,8 +1,8 @@
-import {ExternalLink} from '@/components/common/ExternalLink';
-import {Outside} from '@/components/layout/Outside';
-import {getDownloadUrl} from '@/functions/app/getDownloadUrl';
 import {observer} from 'mobx-react';
 import * as React from 'react';
+import {getDownloadUrl} from '../../../functions/app/getDownloadUrl';
+import {ExternalLink} from '../../common/ExternalLink';
+import {Outside} from '../../layout/Outside';
 
 import styles from './IncompatibleVersionStyles.scss';
 

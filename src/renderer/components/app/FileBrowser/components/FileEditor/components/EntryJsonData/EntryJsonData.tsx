@@ -1,5 +1,5 @@
-import {DataEntry} from '@/entities/editor/DataEntry';
 import * as React from 'react';
+import {DataEntry} from '../../../../../../../entities/editor/DataEntry';
 import styles from './EntryJsonDataStyles.scss';
 
 interface Props {

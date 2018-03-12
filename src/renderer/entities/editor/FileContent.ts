@@ -1,5 +1,5 @@
-import {DataEntry} from '@/entities/editor/DataEntry';
 import {action, observable} from 'mobx';
+import {DataEntry} from './DataEntry';
 
 export class FileContent {
     @observable private entries: DataEntry[] = [];
@@ -12,10 +12,10 @@ export class FileContent {
         return this.entries;
     }
 
-    getById(entryId: string): DataEntry {
+    getById(entryId: string): DataEntry | null {
         return this.entries.find((entry: DataEntry) => {
-            return entry.id === entryId;
-        });
+                return entry.id === entryId;
+            }) || null;
     }
 
     @action

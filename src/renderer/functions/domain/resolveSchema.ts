@@ -1,6 +1,6 @@
-import {SchemaConfig} from '@/entities/json/SchemaConfig';
-import {readJsonFileSync} from '@/functions/infrastructure/fs/readJsonFile';
-import {dirname, getAbsolutePath} from '@/functions/common/value/path';
+import {SchemaConfig} from '../../entities/json/SchemaConfig';
+import {dirname, getAbsolutePath} from '../common/value/path';
+import {readJsonFileSync} from '../infrastructure/fs/readJsonFile';
 
 export function resolveSchema(schema: SchemaConfig, currentFile: string, schemaFolder: string): Promise<SchemaConfig> {
     return new Promise((resolve, reject) => {

@@ -1,5 +1,5 @@
-import {DataEntry} from '@/entities/editor/DataEntry';
-import {readJsonFileIfExists} from '@/functions/infrastructure/fs/readJsonFile';
+import {DataEntry} from '../../entities/editor/DataEntry';
+import {readJsonFileIfExists} from '../infrastructure/fs/readJsonFile';
 
 export function readData(file: string): Promise<DataEntry[]> {
     return readJsonFileIfExists<any[]>(file, [])

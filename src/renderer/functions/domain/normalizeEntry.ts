@@ -1,8 +1,8 @@
-import {DataEntry} from '@/entities/editor/DataEntry';
-import {mapObj} from '@/functions/common/value/object';
+import {DataEntry} from '../../entities/editor/DataEntry';
+import {mapObj} from '../common/value/object';
 
 export function normalizeEntry(entry: DataEntry): DataEntry {
-    return new DataEntry(entry.id.trim(), normalizeValue(entry.data));
+    return new DataEntry(entry.id ? entry.id.trim() : null, normalizeValue(entry.data));
 }
 
 function normalizeValue(value: any): any {

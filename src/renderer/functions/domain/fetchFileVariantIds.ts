@@ -1,8 +1,8 @@
-import {REGEX_JSON_FILE} from '@/config/constants';
-import {FileInfo} from '@/entities/fs/FileInfo';
-import {readDir} from '@/functions/infrastructure/fs/readDir';
-import {relativePath} from '@/functions/common/value/path';
-import {jsonBasename} from '@/functions/domain/jsonBasename';
+import {REGEX_JSON_FILE} from '../../config/constants';
+import {FileInfo} from '../../entities/fs/FileInfo';
+import {relativePath} from '../common/value/path';
+import {readDir} from '../infrastructure/fs/readDir';
+import {jsonBasename} from './jsonBasename';
 
 export type FileToVariantIds = Map<string, string[]>;
 
@@ -18,7 +18,7 @@ export function fetchFileVariantIds(variantDir: string): Promise<FileToVariantId
                 const variantId: string = variantDir.filename;
 
                 getVariantFiles(variantDir).forEach((filename: string) => {
-                    let variantIds: string[] = map.has(filename) ? map.get(filename) : [];
+                    let variantIds: string[] = map.has(filename) ? map.get(filename) as string[] : [];
                     map.set(filename, [...variantIds, variantId]);
                 });
             });

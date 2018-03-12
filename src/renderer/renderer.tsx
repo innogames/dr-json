@@ -1,15 +1,15 @@
-import {closeProject} from '@/actions/closeProject';
-import {openProject} from '@/actions/openProject';
-import {App} from '@/components/app/App';
-import {getDownloadUrl} from '@/functions/app/getDownloadUrl';
-import {getAppVersion} from '@/functions/app/getAppVersion';
-import {openExternal} from '@/functions/infrastructure/openExternal';
-import {stores} from '@/stores';
 import {ipcRenderer} from 'electron';
 import {useStrict} from 'mobx';
 import {Provider} from 'mobx-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import {closeProject} from './actions/closeProject';
+import {openProject} from './actions/openProject';
+import {App} from './components/app/App';
+import {getAppVersion} from './functions/app/getAppVersion';
+import {getDownloadUrl} from './functions/app/getDownloadUrl';
+import {openExternal} from './functions/infrastructure/openExternal';
+import {stores} from './stores';
 
 useStrict(true);
 

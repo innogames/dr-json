@@ -1,4 +1,4 @@
-import {compareNumber, toInt} from '@/functions/common/value/number';
+import {compareNumber, toInt} from './number';
 
 export function compareVersion(version1: string, version2: string): number {
     const v1Parts: number[] = splitVersion(version1);

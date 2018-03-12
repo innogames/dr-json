@@ -1,11 +1,11 @@
 import {action, observable} from 'mobx';
 
 export class DataEntry {
-    id: string;
+    id: string | null;
     data: any;
-    @observable editMode: boolean;
+    @observable editMode: boolean = false;
 
-    constructor(id: string, data: any) {
+    constructor(id: string | null, data: any) {
         this.id   = id;
         this.data = data;
     }

@@ -1,17 +1,17 @@
-import {DataEntry} from '@/entities/editor/DataEntry';
-import {FileContent} from '@/entities/editor/FileContent';
-import {DataFile} from '@/entities/project/DataFile';
 import {action, observable} from 'mobx';
+import {DataFile} from '../project/DataFile';
+import {DataEntry} from './DataEntry';
+import {FileContent} from './FileContent';
 
 export class OpenFile {
     @observable private _file: DataFile;
-    @observable private _isLoading: boolean = false;
-    @observable private _content: FileContent;
-    @observable private _error: string;
-    @observable private _searchText: string;
-    @observable private _createMode: boolean;
-    @observable private _createModeEntry: DataEntry;
-    @observable private _addVariantMode: boolean;
+    @observable private _isLoading: boolean                = false;
+    @observable private _content: FileContent | null       = null;
+    @observable private _error: string | null              = null;
+    @observable private _searchText: string                = '';
+    @observable private _createMode: boolean               = false;
+    @observable private _createModeEntry: DataEntry | null = null;
+    @observable private _addVariantMode: boolean           = false;
 
     constructor(file: DataFile) {
         this._file      = file;
@@ -31,7 +31,7 @@ export class OpenFile {
     }
 
     get error(): string {
-        return this._error;
+        return this._error || '';
     }
 
     @action
@@ -73,7 +73,7 @@ export class OpenFile {
     }
 
     @action
-    openCreateMode(byEntry: DataEntry = null) {
+    openCreateMode(byEntry: DataEntry | null = null) {
         this._createMode = true;
 
         if (byEntry) {

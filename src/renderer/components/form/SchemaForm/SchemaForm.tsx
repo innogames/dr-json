@@ -1,11 +1,11 @@
-import {Button} from '@/components/common/Button';
 import * as React from 'react';
 import Form from 'react-jsonschema-form';
+import {Button} from '../../common/Button';
 import styles from './SchemaFormStyles.scss';
 import {SelectWidget} from './widgets/SelectWidget';
 
 // import icon component so icon font is available
-require('@/components/common/Icon');
+require('../../common/Icon');
 
 const widgets = {
     SelectWidget: SelectWidget,
@@ -23,7 +23,7 @@ interface Props {
 }
 
 interface State {
-    error: Error;
+    error: Error | null;
 }
 
 export class SchemaForm extends React.PureComponent<Props, State> {
