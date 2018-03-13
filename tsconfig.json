@@ -15,8 +15,7 @@
     "removeComments": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
-    "strictFunctionTypes": false
+    "strict": true
   },
   "include": [
     "src"

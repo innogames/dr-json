@@ -8,7 +8,7 @@ interface Props {
     value?: string;
     placeholder?: string;
     disabled?: boolean;
-    onChange?: (value: Option | Options) => void;
+    onChange?: (value: Option<any> | Options<any>) => void;
     options?: Options;
     sort?: boolean;
     clearable?: boolean;

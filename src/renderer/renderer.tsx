@@ -1,5 +1,5 @@
 import {ipcRenderer} from 'electron';
-import {useStrict} from 'mobx';
+import {configure} from 'mobx';
 import {Provider} from 'mobx-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -9,7 +9,9 @@ import {App} from './components/app/App';
 import {getAppVersion} from './functions/app/getAppVersion';
 import {stores} from './stores';
 
-useStrict(true);
+configure({
+    enforceActions: true
+});
 
 ipcRenderer.on('project-selected', (_event: any, path: string) => {
     openProject(path);
