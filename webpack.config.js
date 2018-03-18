@@ -3,6 +3,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CheckDependencyRulesPlugin = require('dependency-rules-webpack-plugin');
 
 const outDir = path.resolve(__dirname, 'dist', 'compiled');
 
@@ -87,6 +88,22 @@ function baseConfig(isDev, devServerPort, name) {
         devtool: isDev ? 'source-map' : 'nosources-source-map',
 
         plugins: [
+            new CheckDependencyRulesPlugin({
+                rules: [
+                    {
+                        module: '/src/main',
+                        deny: ['/src/renderer']
+                    },
+                    {
+                        module: '/src/renderer',
+                        deny: ['/src/main']
+                    },
+                    {
+                        module: '/src/shared',
+                        deny: ['/src/main', '/src/renderer']
+                    },
+                ]
+            }),
             new webpack.NamedModulesPlugin(),
             extractSass,
             new webpack.DefinePlugin({
