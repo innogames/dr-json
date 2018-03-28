@@ -1,8 +1,8 @@
+import {jsonFile} from '../../../shared/infrastructure/jsonFile';
 import {DataEntry} from '../../entities/editor/DataEntry';
-import {readJsonFileIfExists} from '../infrastructure/fs/readJsonFile';
 
 export function readData(file: string): Promise<DataEntry[]> {
-    return readJsonFileIfExists<any[]>(file, [])
+    return jsonFile.readIfExists<any[]>(file, [])
         .then((entries: any[]) => {
             if (!Array.isArray(entries)) {
                 throw new Error(`data file should be an array, but is of type ${typeof entries} (${file})`);

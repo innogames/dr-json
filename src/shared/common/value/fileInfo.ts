@@ -1,5 +1,5 @@
-import {isSet} from '../../../shared/common/value/isSet';
-import {basename} from '../../../shared/common/value/path';
+import {isSet} from './isSet';
+import {basename} from './path';
 
 export class FileInfo {
     constructor(

@@ -1,6 +1,6 @@
 import {dirname, getAbsolutePath} from '../../../shared/common/value/path';
+import {jsonFile} from '../../../shared/infrastructure/jsonFile';
 import {SchemaConfig} from '../../entities/json/SchemaConfig';
-import {readJsonFileSync} from '../infrastructure/fs/readJsonFile';
 
 export function resolveSchema(schema: SchemaConfig, currentFile: string, schemaFolder: string): Promise<SchemaConfig> {
     return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ function mapData(schema: any, uiSchema: any, currentFile: string, schemaFolder: 
     if (schema.$ref && schema.$ref.indexOf('#') !== 0) {
         refFile = getAbsolutePath(schema.$ref, schemaFolder, dirname(currentFile));
 
-        const refData: any = readJsonFileSync(refFile);
+        const refData: any = jsonFile.readSync(refFile);
 
         schema = {...refData, ...schema};
         delete schema.$ref;

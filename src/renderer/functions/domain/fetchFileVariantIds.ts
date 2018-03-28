@@ -1,13 +1,13 @@
 import {relativePath} from '../../../shared/common/value/path';
+import {filesystem} from '../../../shared/infrastructure/filesystem';
 import {REGEX_JSON_FILE} from '../../config/constants';
-import {FileInfo} from '../../entities/fs/FileInfo';
-import {readDir} from '../infrastructure/fs/readDir';
+import {FileInfo} from '../../../shared/common/value/fileInfo';
 import {jsonBasename} from './jsonBasename';
 
 export type FileToVariantIds = Map<string, string[]>;
 
 export function fetchFileVariantIds(variantDir: string): Promise<FileToVariantIds> {
-    return readDir(variantDir)
+    return filesystem.readDir(variantDir)
         .then((fileInfo: FileInfo) => {
             return fileInfo.filterFiles(REGEX_JSON_FILE).filterEmptyDirs().children;
         })

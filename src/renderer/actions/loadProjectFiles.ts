@@ -1,12 +1,12 @@
 import {joinPath, relativePath} from '../../shared/common/value/path';
-import {FileInfo} from '../entities/fs/FileInfo';
+import {jsonFile} from '../../shared/infrastructure/jsonFile';
+import {FileInfo} from '../../shared/common/value/fileInfo';
 import {DataDir, DataFileType} from '../entities/project/DataDir';
 import {DataFile, FileVariant} from '../entities/project/DataFile';
 import {fetchFileVariantIds, FileToVariantIds} from '../functions/domain/fetchFileVariantIds';
 import {jsonBasename} from '../functions/domain/jsonBasename';
 import {loadSchemaFileTree} from '../functions/domain/loadSchemaFileTree';
 import {schemaFileToDataFile} from '../functions/domain/schemaFileToDataFile';
-import {readJsonFileSync} from '../functions/infrastructure/fs/readJsonFile';
 import {settingsStore} from '../stores/settingsStore';
 
 export function loadProjectFiles(schemaDir: string, dataDir: string, variantDir: string): Promise<DataFileType[]> {
@@ -61,7 +61,7 @@ function createFileObj(
 
 function getSchemaName(file: FileInfo): string {
     try {
-        const data: any = readJsonFileSync(file.path);
+        const data: any = jsonFile.readSync(file.path);
         return data.title || jsonBasename(file.filename);
     } catch (error) {
         console.error(`Failed to read schema file "${file.path}": ${error}`);
