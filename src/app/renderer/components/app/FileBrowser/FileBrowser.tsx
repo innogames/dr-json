@@ -1,7 +1,7 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
-import {OpenFile} from '../../../entities/editor/OpenFile';
-import {Project} from '../../../entities/project/Project';
+import {OpenFile} from '../../../../../domain/entities/editor/OpenFile';
+import {Project} from '../../../../../domain/entities/project/Project';
 import {EditorStore} from '../../../stores/editorStore';
 import {SettingsStore} from '../../../stores/settingsStore';
 import {ContentHint} from '../../common/ContentHint';

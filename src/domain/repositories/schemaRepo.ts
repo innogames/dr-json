@@ -1,16 +1,34 @@
-import {dirname, getAbsolutePath} from '../../../../common/value/path';
-import {jsonFile} from '../../../../infrastructure/jsonFile';
-import {SchemaConfig} from '../../entities/json/SchemaConfig';
+import {SchemaConfig} from '../entities/json/SchemaConfig';
+import {FileInfo} from '../../common/value/fileInfo';
+import {dirname, getAbsolutePath} from '../../common/value/path';
+import {filesystem} from '../../infrastructure/filesystem';
+import {jsonFile} from '../../infrastructure/jsonFile';
+import {jsonSchemaValidator} from '../services/jsonSchemaValidator';
 
-export function resolveSchema(schema: SchemaConfig, currentFile: string, schemaFolder: string): Promise<SchemaConfig> {
-    return new Promise((resolve, reject) => {
-        if (!schema.schema) {
-            reject(`schema must contain a schema property in ${currentFile}`);
-            return;
-        }
+class SchemaRepo {
+    public load(file: string, schemaFolder: string): Promise<SchemaConfig> {
+        return jsonFile.read<SchemaConfig>(file)
+            .then((schema: SchemaConfig) => this.resolveSchema(schema, file, schemaFolder))
+            .then((schema: SchemaConfig) => jsonSchemaValidator.validateSchema(schema));
+    }
 
-        resolve(mapData(schema.schema, {}, currentFile, schemaFolder));
-    });
+    public loadFileTree(schemaDir: string): Promise<FileInfo> {
+        return filesystem.readDir(schemaDir)
+            .then((fileInfo: FileInfo) => {
+                return fileInfo.filterFiles(/\.schema\.json$/).filterEmptyDirs();
+            });
+    }
+
+    public resolveSchema(schema: SchemaConfig, currentFile: string, schemaFolder: string): Promise<SchemaConfig> {
+        return new Promise((resolve, reject) => {
+            if (!schema.schema) {
+                reject(`schema must contain a schema property in ${currentFile}`);
+                return;
+            }
+
+            resolve(mapData(schema.schema, {}, currentFile, schemaFolder));
+        });
+    }
 }
 
 function mapData(schema: any, uiSchema: any, currentFile: string, schemaFolder: string): SchemaConfig {
@@ -56,3 +74,5 @@ function mapData(schema: any, uiSchema: any, currentFile: string, schemaFolder: 
         uiSchema,
     };
 }
+
+export const schemaRepo = new SchemaRepo();

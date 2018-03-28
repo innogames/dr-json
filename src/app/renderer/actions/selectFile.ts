@@ -1,10 +1,10 @@
 import {errorToString} from '../../../common/errorToString';
-import {DataEntry} from '../entities/editor/DataEntry';
-import {OpenFile} from '../entities/editor/OpenFile';
-import {SchemaConfig} from '../entities/json/SchemaConfig';
-import {DataFile} from '../entities/project/DataFile';
-import {loadSchema} from '../functions/domain/loadSchema';
-import {readData} from '../functions/domain/readData';
+import {dataRepo} from '../../../domain/repositories/dataRepo';
+import {schemaRepo} from '../../../domain/repositories/schemaRepo';
+import {DataEntry} from '../../../domain/entities/editor/DataEntry';
+import {OpenFile} from '../../../domain/entities/editor/OpenFile';
+import {SchemaConfig} from '../../../domain/entities/json/SchemaConfig';
+import {DataFile} from '../../../domain/entities/project/DataFile';
 import {editorStore} from '../stores/editorStore';
 import {projectStore} from '../stores/projectStore';
 import {schemaStore} from '../stores/schemaStore';
@@ -16,11 +16,11 @@ export function selectFile(file: DataFile, variantIdx: number = 0): Promise<void
     editorStore.open(openFile);
 
     return Promise.all<void, DataEntry[]>([
-        loadSchema(file.schemaFile, projectStore.current.schemaFolder)
+        schemaRepo.load(file.schemaFile, projectStore.current.schemaFolder)
             .then((schema: SchemaConfig) => {
                 schemaStore.add(file.schemaFile, schema);
             }),
-        readData(file.currentVariant.file),
+        dataRepo.load(file.currentVariant.file),
     ])
         .then(([_, entries]) => {
             openFile.setFileLoaded(entries);

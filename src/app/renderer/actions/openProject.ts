@@ -1,8 +1,8 @@
 import {errorToString} from '../../../common/errorToString';
+import {projectConfigValidator} from '../../../domain/services/projectConfigValidator';
 import {jsonFile} from '../../../infrastructure/jsonFile';
-import {DataFileType} from '../entities/project/DataDir';
-import {Project, ProjectConfig} from '../entities/project/Project';
-import {validateProjectConfig} from '../functions/domain/validateProjectConfig';
+import {DataFileType} from '../../../domain/entities/project/DataDir';
+import {Project, ProjectConfig} from '../../../domain/entities/project/Project';
 import {projectStore} from '../stores/projectStore';
 import {schemaStore} from '../stores/schemaStore';
 import {settingsStore} from '../stores/settingsStore';
@@ -15,7 +15,7 @@ export function openProject(projectFile: string): Promise<void> {
     projectStore.setLoading();
 
     return jsonFile.read<ProjectConfig>(projectFile)
-        .then(validateProjectConfig)
+        .then(projectConfigValidator.validate)
         .then((config: ProjectConfig) => {
             settingsStore.setProjectFile(projectFile);
 

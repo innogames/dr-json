@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Option, Options} from 'react-select';
-import {VariantTypeConfig} from '../../../../../../../entities/project/Project';
-import {replaceVariantIdProps} from '../../../../../../../functions/domain/replaceVariantIdProps';
+import {VariantTypeConfig} from '../../../../../../../../../domain/entities/project/Project';
 import {Checkbox} from '../../../../../../form/Checkbox';
 import {SchemaForm} from '../../../../../../form/SchemaForm';
 import {Select} from '../../../../../../form/Select';
@@ -117,9 +116,20 @@ export class VariantWindow extends React.PureComponent<Props, State> {
         if (this.props.onSubmit) {
             const type: VariantTypeConfig | null = this.getSelectedType();
             if (type) {
-                return this.props.onSubmit(replaceVariantIdProps(type.variantId, data), this.state.copyEntries);
+                return this.props.onSubmit(
+                    this.replaceVariantIdPlaceholders(type.variantId, data),
+                    this.state.copyEntries,
+                );
             }
         }
         return Promise.resolve();
     };
+
+    private replaceVariantIdPlaceholders(variantId: string, props: any): string {
+        Object.keys(props).forEach((prop: string) => {
+            variantId = variantId.replace(`{${prop}}`, props[prop]);
+        });
+
+        return variantId;
+    }
 }

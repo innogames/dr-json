@@ -1,15 +1,14 @@
-import {DataEntry} from '../entities/editor/DataEntry';
-import {readData} from '../functions/domain/readData';
-import {saveData} from '../functions/domain/saveData';
+import {dataRepo} from '../../../domain/repositories/dataRepo';
+import {DataEntry} from '../../../domain/entities/editor/DataEntry';
 import {editorStore} from '../stores/editorStore';
 
 export function deleteEntry(file: string, entryId: string): Promise<void> {
     return new Promise((resolve) => {
-        readData(file)
+        dataRepo.load(file)
             .then((entries: DataEntry[]) => entries.filter((entry: DataEntry) => {
                 return entry.id != entryId;
             }))
-            .then((entries: DataEntry[]) => saveData(file, entries))
+            .then((entries: DataEntry[]) => dataRepo.save(file, entries))
             .then((entries: DataEntry[]) => {
                 if (editorStore.currentFile) {
                     editorStore.currentFile.setEntries(entries);

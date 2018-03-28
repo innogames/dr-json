@@ -1,7 +1,7 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
-import {DataDir, DataFileType} from '../../../entities/project/DataDir';
-import {DataFile} from '../../../entities/project/DataFile';
+import {DataDir, DataFileType} from '../../../../../domain/entities/project/DataDir';
+import {DataFile} from '../../../../../domain/entities/project/DataFile';
 import {If} from '../../helper/If';
 import {Icon} from '../Icon';
 import {Link} from '../Link';

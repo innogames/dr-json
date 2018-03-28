@@ -1,7 +1,7 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
-import {DataEntry} from '../../../../../../../entities/editor/DataEntry';
-import {SchemaConfig} from '../../../../../../../entities/json/SchemaConfig';
+import {DataEntry} from '../../../../../../../../../domain/entities/editor/DataEntry';
+import {SchemaConfig} from '../../../../../../../../../domain/entities/json/SchemaConfig';
 import {EditorStore} from '../../../../../../../stores/editorStore';
 import {SchemaStore} from '../../../../../../../stores/schemaStore';
 import {SchemaForm} from '../../../../../../form/SchemaForm';

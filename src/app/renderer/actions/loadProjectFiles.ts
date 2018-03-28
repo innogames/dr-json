@@ -1,18 +1,18 @@
-import {joinPath, relativePath} from '../../../common/value/path';
-import {jsonFile} from '../../../infrastructure/jsonFile';
 import {FileInfo} from '../../../common/value/fileInfo';
-import {DataDir, DataFileType} from '../entities/project/DataDir';
-import {DataFile, FileVariant} from '../entities/project/DataFile';
-import {fetchFileVariantIds, FileToVariantIds} from '../functions/domain/fetchFileVariantIds';
-import {jsonBasename} from '../functions/domain/jsonBasename';
-import {loadSchemaFileTree} from '../functions/domain/loadSchemaFileTree';
-import {schemaFileToDataFile} from '../functions/domain/schemaFileToDataFile';
+import {joinPath, relativePath} from '../../../common/value/path';
+import {schemaRepo} from '../../../domain/repositories/schemaRepo';
+import {FileToVariantIds, variantRepo} from '../../../domain/repositories/variantRepo';
+import {jsonFile} from '../../../infrastructure/jsonFile';
+import {DataDir, DataFileType} from '../../../domain/entities/project/DataDir';
+import {DataFile, FileVariant} from '../../../domain/entities/project/DataFile';
+import {jsonBasename} from '../../../domain/helpers/jsonBasename';
+import {schemaFileToDataFile} from '../../../domain/helpers/schemaFileToDataFile';
 import {settingsStore} from '../stores/settingsStore';
 
 export function loadProjectFiles(schemaDir: string, dataDir: string, variantDir: string): Promise<DataFileType[]> {
     return Promise.all<FileInfo, FileToVariantIds>([
-        loadSchemaFileTree(schemaDir),
-        fetchFileVariantIds(variantDir),
+        schemaRepo.loadFileTree(schemaDir),
+        variantRepo.fetchFileVariantIds(variantDir),
     ]).then(([schemaTree, fileVariantIds]) => {
         return (
             schemaTree.map<DataFileType>((file: FileInfo, children): DataFileType => {

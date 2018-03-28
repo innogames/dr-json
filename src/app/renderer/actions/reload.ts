@@ -1,5 +1,5 @@
-import {DataFileType} from '../entities/project/DataDir';
-import {DataFile} from '../entities/project/DataFile';
+import {DataFileType} from '../../../domain/entities/project/DataDir';
+import {DataFile} from '../../../domain/entities/project/DataFile';
 import {editorStore} from '../stores/editorStore';
 import {projectStore} from '../stores/projectStore';
 import {schemaStore} from '../stores/schemaStore';

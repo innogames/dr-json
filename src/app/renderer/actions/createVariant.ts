@@ -1,8 +1,7 @@
 import {joinPath} from '../../../common/value/path';
-import {DataEntry} from '../entities/editor/DataEntry';
-import {DataFile, FileVariant} from '../entities/project/DataFile';
-import {readData} from '../functions/domain/readData';
-import {saveData} from '../functions/domain/saveData';
+import {dataRepo} from '../../../domain/repositories/dataRepo';
+import {DataEntry} from '../../../domain/entities/editor/DataEntry';
+import {DataFile, FileVariant} from '../../../domain/entities/project/DataFile';
 import {editorStore} from '../stores/editorStore';
 import {projectStore} from '../stores/projectStore';
 import {schemaStore} from '../stores/schemaStore';
@@ -12,7 +11,7 @@ export function createVariant(file: DataFile, variantId: string, copyEntries: bo
     let promise: Promise<DataEntry[]>;
 
     if (copyEntries) {
-        promise = readData(file.defaultVariant.file);
+        promise = dataRepo.load(file.defaultVariant.file);
     } else {
         promise = Promise.resolve([]);
     }
@@ -35,7 +34,7 @@ function createVariantFile(variantId: string, file: string, entries: DataEntry[]
 
     schemaStore.updateFile(currentFile);
 
-    return saveData(variantFile, entries)
+    return dataRepo.save(variantFile, entries)
         .then(() => {
             return selectFile(currentFile as DataFile, idx);
         });
