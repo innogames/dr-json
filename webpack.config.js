@@ -91,16 +91,24 @@ function baseConfig(isDev, devServerPort, name) {
             new CheckDependencyRulesPlugin({
                 rules: [
                     {
-                        module: '/src/main',
-                        deny: ['/src/renderer']
+                        module: '/src/app/main',
+                        deny: ['/src/app/renderer']
                     },
                     {
-                        module: '/src/renderer',
-                        deny: ['/src/main']
+                        module: '/src/app/renderer',
+                        deny: ['/src/app/main']
                     },
                     {
-                        module: '/src/shared',
-                        deny: ['/src/main', '/src/renderer']
+                        module: '/src/app/shared',
+                        deny: ['/src/app/main', '/src/app/renderer']
+                    },
+                    {
+                        module: '/src/common',
+                        deny: ['/src/app', '/src/infrastructure']
+                    },
+                    {
+                        module: '/src/infrastructure',
+                        deny: ['/src/app']
                     },
                 ]
             }),
@@ -121,7 +129,7 @@ function baseConfig(isDev, devServerPort, name) {
 
 function mainConfig(isDev, devServerPort) {
     return {
-        entry: './src/main/main.ts',
+        entry: './src/app/main/main.ts',
         target: 'electron-main',
         ...baseConfig(isDev, devServerPort, 'main'),
     };
@@ -129,13 +137,13 @@ function mainConfig(isDev, devServerPort) {
 
 function rendererConfig(isDev, devServerPort) {
     let config = {
-        entry: './src/renderer/renderer.tsx',
+        entry: './src/app/renderer/renderer.tsx',
         target: 'electron-renderer',
         ...baseConfig(isDev, devServerPort, 'renderer'),
     };
 
     config.plugins.push(new HtmlWebpackPlugin({
-        template: 'src/renderer/renderer.html',
+        template: './src/app/renderer/renderer.html',
     }));
 
     if (isDev && devServerPort) {
