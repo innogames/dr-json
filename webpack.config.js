@@ -110,6 +110,10 @@ function baseConfig(isDev, devServerPort, name) {
                         module: '/src/infrastructure',
                         deny: ['/src/app']
                     },
+                    {
+                        module: '/src/domain',
+                        deny: ['/src/app']
+                    },
                 ]
             }),
             new webpack.NamedModulesPlugin(),
