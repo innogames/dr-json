@@ -52,7 +52,7 @@ export class FileEditor extends React.Component<Props, {}> {
     }
 
     render() {
-        let entries: DataEntry[] = this.props.openFile.content ? this.props.openFile.content.getAll() : [];
+        let entries: DataEntry[] = this.props.openFile.entries;
         entries                  = searchEntries(entries, this.props.openFile.searchText);
 
         return (
@@ -196,8 +196,8 @@ export class FileEditor extends React.Component<Props, {}> {
     };
 
     private onClickAdd = (): void => {
-        if (!this.props.showFormInline && this.props.openFile.content) {
-            this.props.openFile.content.getAll().forEach((entry: DataEntry) => {
+        if (!this.props.showFormInline) {
+            this.props.openFile.entries.forEach((entry: DataEntry) => {
                 entry.toggleEditMode(false);
             });
         }

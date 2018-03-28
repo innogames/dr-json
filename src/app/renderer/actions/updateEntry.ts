@@ -14,8 +14,8 @@ export function updateEntry(file: string, entryId: string | null, newEntry: Data
             }))
             .then((entries: DataEntry[]) => saveData(file, entries))
             .then((entries: DataEntry[]) => {
-                if (editorStore.currentFile && editorStore.currentFile.content) {
-                    editorStore.currentFile.content.set(entries);
+                if (editorStore.currentFile) {
+                    editorStore.currentFile.setEntries(entries);
                 }
                 resolve();
             });

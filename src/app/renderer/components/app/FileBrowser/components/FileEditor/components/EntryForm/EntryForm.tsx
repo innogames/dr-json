@@ -57,8 +57,7 @@ export class EntryForm extends React.Component<Props, {}> {
         if (entryId
             && isCreateMode
             && this.injected.editorStore.currentFile
-            && this.injected.editorStore.currentFile.content
-            && this.injected.editorStore.currentFile.content.getById(entryId)
+            && this.injected.editorStore.currentFile.getEntryById(entryId)
         ) {
             errors.id.addError(`ID "${entryId}" already exists`);
         }

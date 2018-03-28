@@ -11,8 +11,8 @@ export function deleteEntry(file: string, entryId: string): Promise<void> {
             }))
             .then((entries: DataEntry[]) => saveData(file, entries))
             .then((entries: DataEntry[]) => {
-                if (editorStore.currentFile && editorStore.currentFile.content) {
-                    editorStore.currentFile.content.set(entries);
+                if (editorStore.currentFile) {
+                    editorStore.currentFile.setEntries(entries);
                 }
                 resolve();
             });

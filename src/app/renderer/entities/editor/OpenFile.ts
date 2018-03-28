@@ -1,12 +1,11 @@
 import {action, observable} from 'mobx';
 import {DataFile} from '../project/DataFile';
 import {DataEntry} from './DataEntry';
-import {FileContent} from './FileContent';
 
 export class OpenFile {
     @observable private _file: DataFile;
     @observable private _isLoading: boolean                = false;
-    @observable private _content: FileContent | null       = null;
+    @observable private _entries: DataEntry[]              = [];
     @observable private _error: string | null              = null;
     @observable private _searchText: string                = '';
     @observable private _createMode: boolean               = false;
@@ -22,8 +21,8 @@ export class OpenFile {
         return this._file;
     }
 
-    get content(): FileContent | null {
-        return this._content;
+    get entries(): DataEntry[] {
+        return this._entries;
     }
 
     get isLoading(): boolean {
@@ -34,25 +33,36 @@ export class OpenFile {
         return this._error || '';
     }
 
+    getEntryById(entryId: string): DataEntry | null {
+        return this._entries.find((entry: DataEntry) => {
+                return entry.id === entryId;
+            }) || null;
+    }
+
     @action
     setLoading(): void {
         this._isLoading  = true;
-        this._content    = null;
+        this._entries    = [];
         this._error      = '';
         this._searchText = '';
         this.closeCreateMode();
     }
 
     @action
-    setFileLoaded(content: FileContent): void {
+    setFileLoaded(entries: DataEntry[]): void {
         this._isLoading = false;
-        this._content   = content;
+        this._entries   = entries;
     }
 
     @action
     setError(error: string): void {
         this._isLoading = false;
         this._error     = error;
+    }
+
+    @action
+    setEntries(entries: DataEntry[]) {
+        this._entries = entries;
     }
 
     get searchText(): string {

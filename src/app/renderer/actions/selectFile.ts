@@ -1,6 +1,5 @@
 import {errorToString} from '../../../common/errorToString';
 import {DataEntry} from '../entities/editor/DataEntry';
-import {FileContent} from '../entities/editor/FileContent';
 import {OpenFile} from '../entities/editor/OpenFile';
 import {SchemaConfig} from '../entities/json/SchemaConfig';
 import {DataFile} from '../entities/project/DataFile';
@@ -24,7 +23,7 @@ export function selectFile(file: DataFile, variantIdx: number = 0): Promise<void
         readData(file.currentVariant.file),
     ])
         .then(([_, entries]) => {
-            openFile.setFileLoaded(new FileContent(entries));
+            openFile.setFileLoaded(entries);
         })
         .catch((error: any) => {
             openFile.setError(errorToString(error));

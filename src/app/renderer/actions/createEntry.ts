@@ -11,8 +11,8 @@ export function createEntry(file: string, entry: DataEntry): Promise<void> {
         readData(file)
             .then((entries: DataEntry[]) => saveData(file, [...entries, entry]))
             .then((entries: DataEntry[]) => {
-                if (editorStore.currentFile && editorStore.currentFile.content) {
-                    editorStore.currentFile.content.set(entries);
+                if (editorStore.currentFile) {
+                    editorStore.currentFile.setEntries(entries);
                 }
                 resolve();
             });
