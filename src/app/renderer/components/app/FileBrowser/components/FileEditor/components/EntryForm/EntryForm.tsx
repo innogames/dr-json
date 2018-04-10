@@ -1,5 +1,6 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
+import {trimNested} from '../../../../../../../../../common/value/trimNested';
 import {DataEntry} from '../../../../../../../../../domain/entities/editor/DataEntry';
 import {SchemaConfig} from '../../../../../../../../../domain/entities/json/SchemaConfig';
 import {EditorStore} from '../../../../../../../stores/editorStore';
@@ -67,7 +68,8 @@ export class EntryForm extends React.Component<Props, {}> {
 
     private onSubmit = (data: any) => {
         const entryId: string | null = this.props.entry ? this.props.entry.id : null;
-        let entry: DataEntry         = new DataEntry(data.id, data);
+        const newId: string | null   = data.id ? data.id.trim() : null;
+        let entry: DataEntry         = new DataEntry(newId, trimNested(data));
 
         if (this.props.onSubmit) {
             return this.props.onSubmit(entryId, entry);
