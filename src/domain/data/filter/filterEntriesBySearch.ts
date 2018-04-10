@@ -1,6 +1,6 @@
-import {DataEntry} from '../entities/editor/DataEntry';
+import {DataEntry} from '../../entities/editor/DataEntry';
 
-export function searchEntries(entries: DataEntry[], search: string): DataEntry[] {
+export function filterEntriesBySearch(entries: DataEntry[], search: string): DataEntry[] {
     if (!search) {
         return entries;
     }

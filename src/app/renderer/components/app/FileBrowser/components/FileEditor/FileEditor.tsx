@@ -12,7 +12,7 @@ import {DataEntry} from '../../../../../../../domain/entities/editor/DataEntry';
 import {OpenFile} from '../../../../../../../domain/entities/editor/OpenFile';
 import {FileVariant} from '../../../../../../../domain/entities/project/DataFile';
 import {VariantTypeConfig} from '../../../../../../../domain/entities/project/Project';
-import {searchEntries} from '../../../../../../../domain/data/searchEntries';
+import {filterEntriesBySearch} from '../../../../../../../domain/data/filter/filterEntriesBySearch';
 import {ContentHint} from '../../../../common/ContentHint';
 import {Tab, Tabs, TabsPosition} from '../../../../common/Tabs';
 import {If} from '../../../../helper/If';
@@ -53,7 +53,7 @@ export class FileEditor extends React.Component<Props, {}> {
 
     render() {
         let entries: DataEntry[] = this.props.openFile.entries;
-        entries                  = searchEntries(entries, this.props.openFile.searchText);
+        entries                  = filterEntriesBySearch(entries, this.props.openFile.searchText);
 
         return (
             <div className={styles.editor}>
