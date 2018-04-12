@@ -2,7 +2,7 @@ import {ProjectConfig} from '../entities/project/Project';
 import {errorToString} from '../../common/errorToString';
 import {jsonSchemaValidator} from './jsonSchemaValidator';
 
-const schema = require('../../../project.schema.json');
+const schema = require('../../../schemas/project-file-schema.json');
 
 class ProjectConfigValidator {
     public validate(config: ProjectConfig): Promise<ProjectConfig> {

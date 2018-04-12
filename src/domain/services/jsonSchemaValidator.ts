@@ -1,17 +1,37 @@
-import {SchemaConfig} from '../entities/json/SchemaConfig';
 import {SchemaValidationError} from '../entities/json/SchemaValidationError';
-const Ajv = require('ajv');
+
+const schemaSchema = require('../../../schemas/data-schema.json');
+const Ajv          = require('ajv');
 
 let ajv = new Ajv();
 
+let schemaValidator: any;
+try {
+    schemaValidator = ajv.compile(schemaSchema);
+} catch (error) {
+    throw new Error(`data-schema.schema.json is invalid: ${error}`);
+}
+
 class JsonSchemaValidator {
 
-    public validate<D = any, S = any>(data: D, schema: S): Promise<D> {
-        return new Promise((resolve, reject) => {
-            let validate = ajv.compile(schema);
+    public validate = <D = any, S = any>(data: D, schema: S): Promise<D> => {
+        const validateFn = ajv.compile(schema);
 
-            if (!validate(data)) {
-                reject(validate.errors.map((err: any) => {
+        return this.runValidator<D>(validateFn, data);
+    };
+
+    public validateSchema = (schema: any): Promise<any> => {
+        return this.runValidator(schemaValidator, schema)
+            .then((schema: any) => {
+                this.validateRequiredField(schema.schema, 'schema');
+                return schema;
+            });
+    };
+
+    private runValidator<D = any>(validateFn: any, data: D): Promise<D> {
+        return new Promise((resolve, reject) => {
+            if (!validateFn(data)) {
+                reject(validateFn.errors.map((err: any) => {
                     return new SchemaValidationError(
                         err.dataPath,
                         err.keyword,
@@ -26,21 +46,6 @@ class JsonSchemaValidator {
             resolve(data);
         });
     }
-
-    public validateSchema(schema: SchemaConfig): Promise<SchemaConfig> {
-        return new Promise((resolve) => {
-            ajv.compile(schema.schema);
-
-            if (!schema.schema.properties.id) {
-                throw new Error('each schema must have an "id" property defined');
-            }
-
-            this.validateRequiredField(schema.schema, 'schema');
-
-            resolve(schema);
-        });
-    }
-
 
     private validateRequiredField(schema: any, path: string): void {
         if (schema.type == 'object') {

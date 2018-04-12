@@ -1,0 +1,204 @@
+{
+  "$id": "https://raw.githubusercontent.com/innogames/dr-json/v0.8.0/schemas/data-schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Schema for all *.schema.json files inside the schemas folder",
+  "definitions": {
+    "schemaArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/definitions/schema"}
+    },
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "positiveIntegerDefault0": {
+      "allOf": [{"$ref": "#/definitions/positiveInteger"}, {"default": 0}]
+    },
+    "simpleTypes": {
+      "enum": ["array", "boolean", "integer", "null", "number", "object", "string"]
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "default": {},
+        "multipleOf": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "exclusiveMaximum": {
+          "type": "number"
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "exclusiveMinimum": {
+          "type": "number"
+        },
+        "maxLength": {"$ref": "#/definitions/positiveInteger"},
+        "minLength": {"$ref": "#/definitions/positiveIntegerDefault0"},
+        "pattern": {
+          "type": "string",
+          "format": "regex"
+        },
+        "additionalItems": {
+          "anyOf": [
+            {"type": "boolean"},
+            {"$ref": "#/definitions/schema"}
+          ],
+          "default": {}
+        },
+        "items": {
+          "anyOf": [
+            {"$ref": "#/definitions/schema"},
+            {"$ref": "#/definitions/schemaArray"}
+          ],
+          "default": {}
+        },
+        "maxItems": {"$ref": "#/definitions/positiveInteger"},
+        "minItems": {"$ref": "#/definitions/positiveIntegerDefault0"},
+        "uniqueItems": {
+          "type": "boolean",
+          "default": false
+        },
+        "maxProperties": {"$ref": "#/definitions/positiveInteger"},
+        "minProperties": {"$ref": "#/definitions/positiveIntegerDefault0"},
+        "required": {"$ref": "#/definitions/stringArray"},
+        "additionalProperties": {
+          "anyOf": [
+            {"type": "boolean"},
+            {"$ref": "#/definitions/schema"}
+          ],
+          "default": {}
+        },
+        "definitions": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/schema"},
+          "default": {}
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/schema"},
+          "default": {}
+        },
+        "patternProperties": {
+          "type": "object",
+          "additionalProperties": {"$ref": "#/definitions/schema"},
+          "default": {}
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {"$ref": "#/definitions/schema"},
+              {"$ref": "#/definitions/stringArray"}
+            ]
+          }
+        },
+        "enum": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "type": {
+          "$ref": "#/definitions/simpleTypes"
+        },
+        "format": {"type": "string"},
+        "$ref": {"type": "string"},
+        "ui:help": {"type": "string"},
+        "ui:widget": {
+          "type": "string",
+          "enum": ["radio", "select", "textarea", "password", "color", "updown", "range", "hidden", "file", "checkboxes"]
+        },
+        "ui:disabled": {"type": "boolean", "default": true},
+        "ui:readonly": {"type": "boolean", "default": true},
+        "ui:order": {"type": "array", "items": {"type": "string"}},
+        "ui:placeholder": {"type": "string"},
+        "ui:options": {
+          "type": "object",
+          "properties": {
+            "orderable": {"type": "boolean", "default": true},
+            "addable": {"type": "boolean", "default": true},
+            "removable": {"type": "boolean", "default": true},
+            "rows": {"type": "integer", "default": 0},
+            "inline": {"type": "boolean", "default": true},
+            "label": {"type": "boolean", "default": false}
+          },
+          "additionalProperties": false
+        }
+      },
+      "dependencies": {
+        "exclusiveMaximum": ["maximum"],
+        "exclusiveMinimum": ["minimum"]
+      },
+      "default": {}
+    }
+  },
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "schema": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "enum": ["object"]
+            },
+            "properties": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "$ref": "#/definitions/schema"
+                }
+              },
+              "additionalProperties": {"$ref": "#/definitions/schema"},
+              "required": ["id"],
+              "default": {}
+            },
+            "required": {"$ref": "#/definitions/stringArray"},
+            "additionalProperties": {
+              "anyOf": [
+                {"type": "boolean"},
+                {"$ref": "#/definitions/schema"}
+              ],
+              "default": {}
+            }
+          },
+          "required": ["title", "type", "properties"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "$ref": {
+              "type": "string"
+            }
+          },
+          "required": ["$ref"]
+        }
+      ]
+    }
+  },
+  "required": ["title", "schema"]
+}

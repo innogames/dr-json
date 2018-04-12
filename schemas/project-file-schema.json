@@ -1,4 +1,7 @@
 {
+  "$id": "https://raw.githubusercontent.com/innogames/dr-json/v0.8.0/schemas/project-file-schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Schema for dr.json project file",
   "type": "object",
   "properties": {
     "name": {

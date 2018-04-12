@@ -1,15 +1,15 @@
-import {SchemaConfig} from '../entities/json/SchemaConfig';
 import {FileInfo} from '../../common/value/fileInfo';
 import {dirname, getAbsolutePath} from '../../common/value/path';
 import {filesystem} from '../../infrastructure/filesystem';
 import {jsonFile} from '../../infrastructure/jsonFile';
+import {SchemaConfig} from '../entities/json/SchemaConfig';
 import {jsonSchemaValidator} from '../services/jsonSchemaValidator';
 
 class SchemaRepo {
     public load(file: string, schemaFolder: string): Promise<SchemaConfig> {
         return jsonFile.read<SchemaConfig>(file)
-            .then((schema: SchemaConfig) => this.resolveSchema(schema, file, schemaFolder))
-            .then((schema: SchemaConfig) => jsonSchemaValidator.validateSchema(schema));
+            .then(jsonSchemaValidator.validateSchema)
+            .then((schema: SchemaConfig) => this.resolveSchema(schema, file, schemaFolder));
     }
 
     public loadFileTree(schemaDir: string): Promise<FileInfo> {
