@@ -1,8 +1,8 @@
+import {DataEntry, EntryId} from '../../../domain/entities/editor/DataEntry';
 import {dataRepo} from '../../../domain/repositories/dataRepo';
-import {DataEntry} from '../../../domain/entities/editor/DataEntry';
 import {editorStore} from '../stores/editorStore';
 
-export function deleteEntry(file: string, entryId: string): Promise<void> {
+export function deleteEntry(file: string, entryId: EntryId): Promise<void> {
     return new Promise((resolve) => {
         dataRepo.load(file)
             .then((entries: DataEntry[]) => entries.filter((entry: DataEntry) => {

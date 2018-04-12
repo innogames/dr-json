@@ -1,7 +1,7 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
-import {trimNested} from '../../../../../../../../../common/value/trimNested';
-import {DataEntry} from '../../../../../../../../../domain/entities/editor/DataEntry';
+import {trim} from '../../../../../../../../../common/value/trim';
+import {DataEntry, EntryId} from '../../../../../../../../../domain/entities/editor/DataEntry';
 import {SchemaConfig} from '../../../../../../../../../domain/entities/json/SchemaConfig';
 import {EditorStore} from '../../../../../../../stores/editorStore';
 import {SchemaStore} from '../../../../../../../stores/schemaStore';
@@ -11,7 +11,7 @@ interface Props {
     schemaFile: string;
     className: string;
     entry?: DataEntry;
-    onSubmit?: (entryId: string | null, entry: DataEntry) => Promise<void>;
+    onSubmit?: (entryId: EntryId | null, entry: DataEntry) => Promise<void>;
 }
 
 interface Injected {
@@ -67,9 +67,9 @@ export class EntryForm extends React.Component<Props, {}> {
     };
 
     private onSubmit = (data: any) => {
-        const entryId: string | null = this.props.entry ? this.props.entry.id : null;
-        const newId: string | null   = data.id ? data.id.trim() : null;
-        let entry: DataEntry         = new DataEntry(newId, trimNested(data));
+        const entryId: EntryId | null = this.props.entry ? this.props.entry.id : null;
+
+        let entry: DataEntry = new DataEntry(trim(data.id), trim(data, true));
 
         if (this.props.onSubmit) {
             return this.props.onSubmit(entryId, entry);

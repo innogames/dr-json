@@ -1,7 +1,9 @@
 import {action, observable} from 'mobx';
 
+export type EntryId = string | number;
+
 export class DataEntry {
-    id: string | null;
+    id: EntryId | null;
     data: any;
     @observable editMode: boolean = false;
 

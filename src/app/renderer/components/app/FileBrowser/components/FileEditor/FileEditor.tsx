@@ -8,7 +8,7 @@ import {openCreateEntry} from '../../../../../actions/openCreateEntry';
 import {searchInFile} from '../../../../../actions/searchInFile';
 import {selectFile} from '../../../../../actions/selectFile';
 import {updateEntry} from '../../../../../actions/updateEntry';
-import {DataEntry} from '../../../../../../../domain/entities/editor/DataEntry';
+import {DataEntry, EntryId} from '../../../../../../../domain/entities/editor/DataEntry';
 import {OpenFile} from '../../../../../../../domain/entities/editor/OpenFile';
 import {FileVariant} from '../../../../../../../domain/entities/project/DataFile';
 import {VariantTypeConfig} from '../../../../../../../domain/entities/project/Project';
@@ -110,7 +110,7 @@ export class FileEditor extends React.Component<Props, {}> {
     private renderEntry = (entry: DataEntry, idx: number) => {
         if (entry.editMode && this.props.showFormInline) {
             return (
-                <EntryWrapper key={idx} headline={entry.id || ''}>
+                <EntryWrapper key={idx} headline={entry.id as string || ''}>
                     {this.renderEditForm(entry, styles.inlineForm)}
                 </EntryWrapper>
             );
@@ -216,11 +216,11 @@ export class FileEditor extends React.Component<Props, {}> {
         openCreateEntry(entry);
     };
 
-    private onSubmitEditForm = (entryId: string | null, entry: DataEntry): Promise<void> => {
+    private onSubmitEditForm = (entryId: EntryId | null, entry: DataEntry): Promise<void> => {
         return updateEntry(this.props.openFile.file.currentVariant.file, entryId, entry);
     };
 
-    private onSubmitCreateForm = (_entryId: string | null, entry: DataEntry): Promise<void> => {
+    private onSubmitCreateForm = (_entryId: EntryId | null, entry: DataEntry): Promise<void> => {
         return createEntry(this.props.openFile.file.currentVariant.file, entry)
             .then(() => {
                 if (!this.props.showFormInline) {

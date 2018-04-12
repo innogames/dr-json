@@ -17,7 +17,7 @@ export class Entry extends React.PureComponent<Props, {}> {
 
     render() {
         return (
-            <EntryWrapper headline={this.props.entry.id || ''}>
+            <EntryWrapper headline={this.props.entry.id as string || ''}>
                 <div className={styles.wrapper}>
                     <EntryJsonData entry={this.props.entry}/>
                     <div className={styles.buttons}>
