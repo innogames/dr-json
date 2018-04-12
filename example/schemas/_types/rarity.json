@@ -1,0 +1,9 @@
+{
+  "title": "Rarity",
+  "type": "string",
+  "enum": [
+    "common",
+    "uncommon",
+    "rare"
+  ]
+}

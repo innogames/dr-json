@@ -1,0 +1,30 @@
+{
+  "title": "Weapons",
+  "schema": {
+    "title": "Weapon",
+    "type": "object",
+    "properties": {
+      "id": {
+        "title": "ID",
+        "type": "string"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "strength": {
+        "title": "Strength Value",
+        "type": "integer"
+      },
+      "rarity": {
+        "$ref": "/_types/rarity.json"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "strength",
+      "rarity"
+    ]
+  }
+}

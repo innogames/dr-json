@@ -1,0 +1,26 @@
+[
+    {
+        "id": "woodenSword",
+        "name": "Wooden Sword",
+        "strength": 1,
+        "rarity": "common"
+    },
+    {
+        "id": "ironSword",
+        "name": "Iron Sword",
+        "strength": 3,
+        "rarity": "common"
+    },
+    {
+        "id": "diamondSword",
+        "name": "Diamond Sword",
+        "strength": 5,
+        "rarity": "uncommon"
+    },
+    {
+        "id": "lightsaber",
+        "name": "Lightsaber",
+        "strength": 10,
+        "rarity": "rare"
+    }
+]

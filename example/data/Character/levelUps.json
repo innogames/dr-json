@@ -1,0 +1,27 @@
+[
+    {
+        "id": 5,
+        "unlockAbilities": [
+            "evade"
+        ]
+    },
+    {
+        "id": 7,
+        "unlockAbilities": [
+            "doubleJump"
+        ]
+    },
+    {
+        "id": 10,
+        "unlockAbilities": [
+            "blockHardAttacks"
+        ]
+    },
+    {
+        "id": 20,
+        "unlockAbilities": [
+            "doubleAttack",
+            "lastStand"
+        ]
+    }
+]

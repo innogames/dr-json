@@ -1,0 +1,31 @@
+{
+  "title": "Level-Ups",
+  "schema": {
+    "title": "Level-Up",
+    "type": "object",
+    "properties": {
+      "id": {
+        "title": "Level",
+        "type": "integer"
+      },
+      "unlockAbilities": {
+        "title": "Unlock Abilities",
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "enum": [
+            "blockHardAttacks",
+            "doubleAttack",
+            "doubleJump",
+            "evade",
+            "lastStand"
+          ]
+        }
+      }
+    },
+    "required": [
+      "id"
+    ]
+  }
+}

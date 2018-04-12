@@ -1,0 +1,20 @@
+[
+    {
+        "id": "rags",
+        "name": "Rags",
+        "defense": 0,
+        "rarity": "common"
+    },
+    {
+        "id": "lightArmor",
+        "name": "Light Armor",
+        "defense": 1,
+        "rarity": "uncommon"
+    },
+    {
+        "id": "mythrilChainmail",
+        "name": "Mythril Chainmail",
+        "defense": 10,
+        "rarity": "rare"
+    }
+]

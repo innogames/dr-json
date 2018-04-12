@@ -1,0 +1,30 @@
+{
+  "title": "Armors",
+  "schema": {
+    "title": "Armor",
+    "type": "object",
+    "properties": {
+      "id": {
+        "title": "ID",
+        "type": "string"
+      },
+      "name": {
+        "title": "Name",
+        "type": "string"
+      },
+      "defense": {
+        "title": "Defense Value",
+        "type": "integer"
+      },
+      "rarity": {
+        "$ref": "/_types/rarity.json"
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "defense",
+      "rarity"
+    ]
+  }
+}

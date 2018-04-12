@@ -1,0 +1,39 @@
+{
+  "name": "Example Project",
+  "minVersion": "0.7",
+  "directories": {
+    "schemas": "schemas",
+    "data": "data",
+    "variantData": "variantData"
+  },
+  "variantTypes": [
+    {
+      "name": "Difficulty",
+      "variantId": "difficulty_{mode}",
+      "vars": {
+        "mode": {
+          "title": "Mode",
+          "type": "string",
+          "enum": [
+            "easy",
+            "hard"
+          ]
+        }
+      }
+    },
+    {
+      "name": "AB Test",
+      "variantId": "ab_{testName}.{testGroup}",
+      "vars": {
+        "testName": {
+          "title": "Test Name",
+          "type": "string"
+        },
+        "testGroup": {
+          "title": "Test Group",
+          "type": "string"
+        }
+      }
+    }
+  ]
+}
