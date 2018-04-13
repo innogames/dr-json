@@ -22,7 +22,7 @@ export class Reload {
         }
 
         return this.openProject.execute(this.projectState.project.file)
-            .then((): Promise<void> => {
+            .then(() => {
                 if (selected) {
                     let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(selected);
                     if (file) {

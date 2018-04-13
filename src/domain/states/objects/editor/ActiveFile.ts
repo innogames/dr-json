@@ -1,6 +1,5 @@
 import {action, observable} from 'mobx';
 import {SchemaFile} from '../fileTree/SchemaFile';
-import {DataFile} from '../project/DataFile';
 import {DataEntries} from './DataEntries';
 import {DataEntry} from './DataEntry';
 
@@ -8,7 +7,7 @@ export class ActiveFile {
     @observable private _file: SchemaFile;
     @observable private _isLoading: boolean                = false;
     @observable private _error: any                        = null;
-    @observable private _entries: DataEntries;
+    @observable private _entries: DataEntries              = new DataEntries();
     @observable private _searchText: string                = '';
     @observable private _createMode: boolean               = false;
     @observable private _createModeEntry: DataEntry | null = null;
@@ -49,7 +48,7 @@ export class ActiveFile {
     @action
     setLoading(): void {
         this._isLoading  = true;
-        this._entries    = null;
+        this._entries    = new DataEntries();
         this._error      = null;
         this._searchText = '';
         this.closeCreateMode();

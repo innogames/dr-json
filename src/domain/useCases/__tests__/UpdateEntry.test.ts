@@ -20,7 +20,7 @@ beforeEach(() => {
                 new DataEntry('two', {key: 'value2'}),
             ]));
         }),
-        save: jest.fn().mockImplementation((file: string, entries: DataEntry[]) => {
+        save: jest.fn().mockImplementation((_file: string, entries: DataEntry[]) => {
             return new DataEntries(entries);
         }),
     })));
@@ -32,15 +32,13 @@ describe('UpdateEntry', () => {
     it('updates entry', () => {
         editorState.open(new ActiveFile(new SchemaFile('', '', '', '', [])));
 
-        const file = new SchemaFile('My File', 'file.json', 'schema.json', 'data.json', []);
-
         const newEntry: DataEntry = new DataEntry('three', {key: 'value3'});
 
-        return useCase.execute(file, 'one', newEntry)
+        return useCase.execute('file', 'one', newEntry)
             .then(() => {
-                expect(editorState.currentFile.entries.all.length).toBe(2);
-                expect(editorState.currentFile.entries.getById('two').data.key).toBe('value2');
-                expect(editorState.currentFile.entries.getById('three').data.key).toBe('value3');
+                expect(editorState.currentFile!.entries.all.length).toBe(2);
+                expect(editorState.currentFile!.entries.getById('two')!.data.key).toBe('value2');
+                expect(editorState.currentFile!.entries.getById('three')!.data.key).toBe('value3');
 
                 expect(dataRepo.save).toBeCalled();
             });

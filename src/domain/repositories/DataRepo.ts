@@ -20,7 +20,7 @@ export class DataRepo {
                         throw new Error(`entry should have an id property in ${file} at index #${idx}`);
                     }
 
-                    return new DataEntry(entry.id, data);
+                    return new DataEntry(data.id, data);
                 });
 
                 return new DataEntries(entries);

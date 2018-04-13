@@ -30,11 +30,11 @@ describe('SelectFile', () => {
 
         return useCase.execute(file)
             .then(() => {
-                expect(editorState.currentFile.file).toBe(file);
-                expect(editorState.currentFile.isLoading).toBe(false);
-                expect(editorState.currentFile.error).toBeNull();
-                expect(editorState.currentFile.entries.getById('one').data.key).toBe('value1');
-                expect(editorState.currentFile.entries.getById('two').data.key).toBe('value2');
+                expect(editorState.currentFile!.file).toBe(file);
+                expect(editorState.currentFile!.isLoading).toBe(false);
+                expect(editorState.currentFile!.error).toBeNull();
+                expect(editorState.currentFile!.entries.getById('one')!.data.key).toBe('value1');
+                expect(editorState.currentFile!.entries.getById('two')!.data.key).toBe('value2');
             });
     });
 });

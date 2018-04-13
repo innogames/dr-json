@@ -20,7 +20,7 @@ beforeEach(() => {
                 new DataEntry('two', {key: 'value2'}),
             ]));
         }),
-        save: jest.fn().mockImplementation((file: string, entries: DataEntry[]) => {
+        save: jest.fn().mockImplementation((_file: string, entries: DataEntry[]) => {
             return new DataEntries(entries);
         }),
     })));
@@ -32,12 +32,10 @@ describe('DeleteEntry', () => {
     it('deletes entry', () => {
         editorState.open(new ActiveFile(new SchemaFile('', '', '', '', [])));
 
-        const file = new SchemaFile('My File', 'file.json', 'schema.json', 'data.json', []);
-
-        return useCase.execute(file, 'one')
+        return useCase.execute('file', 'one')
             .then(() => {
-                expect(editorState.currentFile.entries.all.length).toBe(1);
-                expect(editorState.currentFile.entries.getById('two').data.key).toBe('value2');
+                expect(editorState.currentFile!.entries.all.length).toBe(1);
+                expect(editorState.currentFile!.entries.getById('two')!.data.key).toBe('value2');
 
                 expect(dataRepo.save).toBeCalled();
             });

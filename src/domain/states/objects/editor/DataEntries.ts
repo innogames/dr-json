@@ -4,7 +4,7 @@ import {DataEntry, EntryId} from './DataEntry';
 export class DataEntries {
     @observable private _entries: DataEntry[] = [];
 
-    constructor(entries: DataEntry[]) {
+    constructor(entries: DataEntry[] = []) {
         this._entries = entries;
     }
 
