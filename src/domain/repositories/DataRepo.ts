@@ -1,5 +1,6 @@
-import {DataEntry} from '../../app/renderer/entities/editor/DataEntry';
 import {FilesystemInterface} from '../context/fs/FilesystemInterface';
+import {DataEntries} from '../states/objects/editor/DataEntries';
+import {DataEntry} from '../states/objects/editor/DataEntry';
 
 export class DataRepo {
     constructor(
@@ -7,20 +8,22 @@ export class DataRepo {
     ) {
     }
 
-    public load(file: string): Promise<DataEntry[]> {
+    public load(file: string): Promise<DataEntries> {
         return this.filesystem.readJsonIfExists<any[]>(file, [])
-            .then((entries: any[]) => {
-                if (!Array.isArray(entries)) {
-                    throw new Error(`data file should be an array, but is of type ${typeof entries} (${file})`);
+            .then((jsonContent: any[]) => {
+                if (!Array.isArray(jsonContent)) {
+                    throw new Error(`data file should be an array, but is of type ${typeof jsonContent} (${file})`);
                 }
 
-                return entries.map((entry: any, idx: number) => {
-                    if (!entry || !entry.id) {
+                const entries: DataEntry[] = jsonContent.map((data: any, idx: number) => {
+                    if (!data || !data.id) {
                         throw new Error(`entry should have an id property in ${file} at index #${idx}`);
                     }
 
-                    return new DataEntry(entry.id, entry);
+                    return new DataEntry(entry.id, data);
                 });
+
+                return new DataEntries(entries);
             });
     }
 

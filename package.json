@@ -44,7 +44,7 @@
   },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "test": "jest --verbose",
+    "test": "jest",
     "electron": "electron dist/compiled/main.js",
     "dev": "webpack --config-name main --mode=development --env.env=dev --env.devServerPort=3000 && concurrently \"webpack-dev-server --config-name renderer --mode=development --env.env=dev --env.devServerPort=3000\" \"wait-on http://localhost:3000 && yarn run electron\"",
     "compile": "webpack --mode=production",

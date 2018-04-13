@@ -1,17 +1,19 @@
 import {SettingsRepo} from '../repositories/SettingsRepo';
+import {EditorState} from '../states/EditorState';
 import {ProjectState} from '../states/ProjectState';
 
 export class CloseProject {
 
     constructor(
         private projectState: ProjectState,
+        private editorState: EditorState,
         private settingsRepo: SettingsRepo,
     ) {
     }
 
     execute(): Promise<void> {
         this.projectState.setClosed();
-        //TODO: editorState.closeAll()
+        this.editorState.closeAll();
         return this.settingsRepo.saveLastProjectFile(null);
     }
 }
