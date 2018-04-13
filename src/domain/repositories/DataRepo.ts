@@ -27,11 +27,11 @@ export class DataRepo {
             });
     }
 
-    public save(file: string, entries: DataEntry[]): Promise<DataEntry[]> {
+    public save(file: string, entries: DataEntry[]): Promise<DataEntries> {
         return new Promise((resolve) => {
             return this.filesystem.writeJson(file, entries.map((entry: DataEntry) => entry.data))
                 .then(() => {
-                    resolve(entries);
+                    resolve(new DataEntries(entries));
                 });
         });
     }

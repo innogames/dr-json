@@ -8,7 +8,7 @@ export class DataEntries {
         this._entries = entries;
     }
 
-    get entries(): DataEntry[] {
+    get all(): DataEntry[] {
         return this._entries;
     }
 
