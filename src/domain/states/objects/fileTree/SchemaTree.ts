@@ -1,4 +1,5 @@
 import {SchemaDir} from './SchemaDir';
+import {SchemaFile} from './SchemaFile';
 import {SchemaTreeItem} from './SchemaTreeItem';
 
 type ItemMapper = (item: SchemaTreeItem) => SchemaTreeItem;
@@ -11,6 +12,10 @@ export class SchemaTree {
 
     public map(fn: ItemMapper): SchemaTree {
         return new SchemaTree(this.mapChildren(this.children, fn));
+    }
+
+    public getFile(basename: string): SchemaFile | null {
+        return this.findFileRecursive(this.children, basename);
     }
 
     private mapChildren(children: SchemaTreeItem[], fn: ItemMapper): SchemaTreeItem[] {
@@ -28,5 +33,20 @@ export class SchemaTree {
 
             return fn(child);
         });
+    }
+
+    private findFileRecursive(children: SchemaTreeItem[], basename: string): SchemaFile | null {
+        for (let child of children) {
+            if (child instanceof SchemaDir) {
+                let found: SchemaFile | null = this.findFileRecursive((child as SchemaDir).children, basename);
+                if (found) {
+                    return found;
+                }
+            } else if (child.basename == basename) {
+                return child as SchemaFile;
+            }
+        }
+
+        return null;
     }
 }
