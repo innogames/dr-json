@@ -1,10 +1,14 @@
-import {DataEntry} from '../entities/editor/DataEntry';
-import {jsonFile} from '../../infrastructure/jsonFile';
+import {DataEntry} from '../../app/renderer/entities/editor/DataEntry';
+import {FilesystemInterface} from '../context/fs/FilesystemInterface';
 
-class DataRepo {
+export class DataRepo {
+    constructor(
+        private filesystem: FilesystemInterface,
+    ) {
+    }
 
     public load(file: string): Promise<DataEntry[]> {
-        return jsonFile.readIfExists<any[]>(file, [])
+        return this.filesystem.readJsonIfExists<any[]>(file, [])
             .then((entries: any[]) => {
                 if (!Array.isArray(entries)) {
                     throw new Error(`data file should be an array, but is of type ${typeof entries} (${file})`);
@@ -22,12 +26,10 @@ class DataRepo {
 
     public save(file: string, entries: DataEntry[]): Promise<DataEntry[]> {
         return new Promise((resolve) => {
-            return jsonFile.write(file, entries.map((entry: DataEntry) => entry.data))
+            return this.filesystem.writeJson(file, entries.map((entry: DataEntry) => entry.data))
                 .then(() => {
                     resolve(entries);
                 });
         });
     }
 }
-
-export const dataRepo = new DataRepo();

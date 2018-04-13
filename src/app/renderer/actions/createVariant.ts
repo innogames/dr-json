@@ -1,7 +1,7 @@
 import {joinPath} from '../../../common/value/path';
-import {dataRepo} from '../../../domain/repositories/dataRepo';
-import {DataEntry} from '../../../domain/entities/editor/DataEntry';
-import {DataFile, FileVariant} from '../../../domain/entities/project/DataFile';
+import {dataRepo} from '../../../domain/repositories/DataRepo';
+import {DataEntry} from '../entities/editor/DataEntry';
+import {DataFile, FileVariant} from '../entities/project/DataFile';
 import {editorStore} from '../stores/editorStore';
 import {projectStore} from '../stores/projectStore';
 import {schemaStore} from '../stores/schemaStore';

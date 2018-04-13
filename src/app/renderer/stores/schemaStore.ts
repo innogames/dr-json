@@ -1,7 +1,7 @@
 import {action, observable, reaction, toJS} from 'mobx';
 import {SchemaConfig} from '../../../domain/entities/json/SchemaConfig';
-import {DataDir, DataFileType} from '../../../domain/entities/project/DataDir';
-import {DataFile} from '../../../domain/entities/project/DataFile';
+import {DataDir, DataFileType} from '../entities/project/DataDir';
+import {DataFile} from '../entities/project/DataFile';
 import {settingsStore} from './settingsStore';
 
 export class SchemaStore {

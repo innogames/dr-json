@@ -1,5 +1,5 @@
 import {action, observable} from 'mobx';
-import {Project} from '../../../domain/entities/project/Project';
+import {Project} from '../entities/project/Project';
 
 export class ProjectStore {
     @observable private project: Project | null = null;

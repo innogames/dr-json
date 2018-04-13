@@ -1,5 +1,5 @@
 import 'jest';
-import {FileInfo} from '../fileInfo';
+import {FileInfo} from '../FileInfo';
 
 describe('FileInfo', () => {
     describe('filename', () => {

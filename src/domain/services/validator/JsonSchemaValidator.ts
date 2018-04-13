@@ -1,6 +1,7 @@
-import {SchemaValidationError} from '../entities/json/SchemaValidationError';
+import {SchemaConfig} from '../../entities/json/SchemaConfig';
+import {SchemaValidationError} from '../../entities/json/SchemaValidationError';
 
-const schemaSchema = require('../../../schemas/data-schema.json');
+const schemaSchema = require('../../../../schemas/data-schema.json');
 const Ajv          = require('ajv');
 
 let ajv = new Ajv();
@@ -12,7 +13,7 @@ try {
     throw new Error(`data-schema.schema.json is invalid: ${error}`);
 }
 
-class JsonSchemaValidator {
+export class JsonSchemaValidator {
 
     public validate = <D = any, S = any>(data: D, schema: S): Promise<D> => {
         const validateFn = ajv.compile(schema);
@@ -20,9 +21,9 @@ class JsonSchemaValidator {
         return this.runValidator<D>(validateFn, data);
     };
 
-    public validateSchema = (schema: any): Promise<any> => {
+    public validateSchema = (schema: SchemaConfig): Promise<SchemaConfig> => {
         return this.runValidator(schemaValidator, schema)
-            .then((schema: any) => {
+            .then((schema: SchemaConfig) => {
                 this.validateRequiredField(schema.schema, 'schema');
                 return schema;
             });
@@ -73,5 +74,3 @@ class JsonSchemaValidator {
         }
     }
 }
-
-export const jsonSchemaValidator = new JsonSchemaValidator();

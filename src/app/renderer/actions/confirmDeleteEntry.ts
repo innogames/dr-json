@@ -1,5 +1,5 @@
 import {remote} from 'electron';
-import {EntryId} from '../../../domain/entities/editor/DataEntry';
+import {EntryId} from '../entities/editor/DataEntry';
 import {deleteEntry} from './deleteEntry';
 
 export function confirmDeleteEntry(filename: string, entryId: EntryId) {

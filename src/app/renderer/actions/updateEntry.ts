@@ -1,5 +1,5 @@
-import {DataEntry, EntryId} from '../../../domain/entities/editor/DataEntry';
-import {dataRepo} from '../../../domain/repositories/dataRepo';
+import {DataEntry, EntryId} from '../entities/editor/DataEntry';
+import {dataRepo} from '../../../domain/repositories/DataRepo';
 import {editorStore} from '../stores/editorStore';
 
 export function updateEntry(file: string, entryId: EntryId | null, newEntry: DataEntry): Promise<void> {

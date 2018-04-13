@@ -1,5 +1,5 @@
 import {action, observable} from 'mobx';
-import {OpenFile} from '../../../domain/entities/editor/OpenFile';
+import {OpenFile} from '../entities/editor/OpenFile';
 
 export class EditorStore {
     @observable private openFile: OpenFile | null = null;
