@@ -30,7 +30,7 @@ export class SchemaFile extends SchemaTreeItem {
     }
 
     @action
-    public addVariant(variant: SchemaFileVariant): number {
+    public addVariant(variant: SchemaFileVariant): void {
         this._variants.push(variant);
         this.sortVariants();
     }

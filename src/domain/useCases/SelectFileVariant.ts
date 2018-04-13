@@ -16,7 +16,7 @@ export class SelectFileVariant {
         let activeFile: ActiveFile = new ActiveFile(file.basename, variantId);
         this.editorState.open(activeFile);
 
-        const dataFile: string = file.getVariantFileById(variantId);
+        const dataFile: string | null = file.getVariantFileById(variantId);
         if (!dataFile) {
             throw new Error(`tried to select not existing variant "${variantId}" in ${file.basename}`);
         }

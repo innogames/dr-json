@@ -5,7 +5,6 @@ import {DataEntries} from '../../states/objects/editor/DataEntries';
 import {DataEntry} from '../../states/objects/editor/DataEntry';
 import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
 import {SchemaFileVariant} from '../../states/objects/fileTree/SchemaFileVariant';
-import {SelectFile} from '../SelectFile';
 import {SelectFileVariant} from '../SelectFileVariant';
 
 let useCase: SelectFileVariant;

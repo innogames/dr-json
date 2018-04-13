@@ -32,7 +32,7 @@ beforeEach(() => {
         }),
     })));
 
-    selectFileVariant = new (jest.fn<SelectFile>(() => ({
+    selectFileVariant = new (jest.fn<SelectFileVariant>(() => ({
         execute: jest.fn().mockImplementation(() => {
             return Promise.resolve();
         }),
