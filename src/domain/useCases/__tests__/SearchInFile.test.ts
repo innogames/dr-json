@@ -1,7 +1,6 @@
 import 'jest';
 import {EditorState} from '../../states/EditorState';
 import {ActiveFile} from '../../states/objects/editor/ActiveFile';
-import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
 import {SearchInFile} from '../SearchInFile';
 
 let useCase: SearchInFile;
@@ -17,7 +16,7 @@ describe('SearchInFile', () => {
     it('searches in current file', () => {
         const search: string = 'foo';
 
-        editorState.open(new ActiveFile(new SchemaFile('', '', '', '', [])));
+        editorState.open(new ActiveFile('file.json'));
 
         return useCase.execute(search)
             .then(() => {

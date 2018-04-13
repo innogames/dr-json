@@ -1,10 +1,10 @@
 import {action, observable} from 'mobx';
-import {SchemaFile} from '../fileTree/SchemaFile';
 import {DataEntries} from './DataEntries';
 import {DataEntry} from './DataEntry';
 
 export class ActiveFile {
-    @observable private _file: SchemaFile;
+    @observable private _filename: string;
+    @observable private _variantId: string | null          = null;
     @observable private _isLoading: boolean                = false;
     @observable private _error: any                        = null;
     @observable private _entries: DataEntries              = new DataEntries();
@@ -12,13 +12,18 @@ export class ActiveFile {
     @observable private _createMode: boolean               = false;
     @observable private _createModeEntry: DataEntry | null = null;
 
-    constructor(file: SchemaFile) {
-        this._file      = file;
+    constructor(filename: string, variantId: string | null = null) {
+        this._filename  = filename;
+        this._variantId = variantId;
         this._isLoading = true;
     }
 
-    get file(): SchemaFile {
-        return this._file;
+    get filename(): string {
+        return this._filename;
+    }
+
+    get variantId(): string | null {
+        return this._variantId;
     }
 
     get isLoading(): boolean {

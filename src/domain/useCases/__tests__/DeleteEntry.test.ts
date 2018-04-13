@@ -4,7 +4,6 @@ import {EditorState} from '../../states/EditorState';
 import {ActiveFile} from '../../states/objects/editor/ActiveFile';
 import {DataEntries} from '../../states/objects/editor/DataEntries';
 import {DataEntry} from '../../states/objects/editor/DataEntry';
-import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
 import {DeleteEntry} from '../DeleteEntry';
 
 let useCase: DeleteEntry;
@@ -30,7 +29,7 @@ beforeEach(() => {
 
 describe('DeleteEntry', () => {
     it('deletes entry', () => {
-        editorState.open(new ActiveFile(new SchemaFile('', '', '', '', [])));
+        editorState.open(new ActiveFile('file.json'));
 
         return useCase.execute('file', 'one')
             .then(() => {

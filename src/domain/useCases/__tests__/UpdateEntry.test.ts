@@ -4,7 +4,6 @@ import {EditorState} from '../../states/EditorState';
 import {ActiveFile} from '../../states/objects/editor/ActiveFile';
 import {DataEntries} from '../../states/objects/editor/DataEntries';
 import {DataEntry} from '../../states/objects/editor/DataEntry';
-import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
 import {UpdateEntry} from '../UpdateEntry';
 
 let useCase: UpdateEntry;
@@ -30,7 +29,7 @@ beforeEach(() => {
 
 describe('UpdateEntry', () => {
     it('updates entry', () => {
-        editorState.open(new ActiveFile(new SchemaFile('', '', '', '', [])));
+        editorState.open(new ActiveFile('file.json'));
 
         const newEntry: DataEntry = new DataEntry('three', {key: 'value3'});
 

@@ -1,3 +1,4 @@
+import {action} from 'mobx';
 import {SchemaFileVariant} from './SchemaFileVariant';
 import {SchemaTreeItem} from './SchemaTreeItem';
 
@@ -18,6 +19,20 @@ export class SchemaFile extends SchemaTreeItem {
 
     get variants(): SchemaFileVariant[] {
         return this._variants;
+    }
+
+    public getVariantFileById(variantId: string): string | null {
+        const variant: SchemaFileVariant | undefined = this._variants.find((v: SchemaFileVariant) => {
+            return v.variantId == variantId;
+        });
+
+        return variant ? variant.variantFile : null;
+    }
+
+    @action
+    public addVariant(variant: SchemaFileVariant): number {
+        this._variants.push(variant);
+        this.sortVariants();
     }
 
     private sortVariants() {
