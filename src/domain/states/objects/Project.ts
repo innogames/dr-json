@@ -1,4 +1,4 @@
-import {dirname, joinPath} from '../../../common/value/path';
+import {dirname, joinPath} from '../../helpers/value/path';
 import {SchemaTree} from './fileTree/SchemaTree';
 import {ProjectConfig} from './ProjectConfig';
 

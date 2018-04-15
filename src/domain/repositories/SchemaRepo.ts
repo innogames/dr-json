@@ -1,9 +1,9 @@
-import {dirname, getAbsolutePath, joinPath, relativePath} from '../../common/value/path';
+import {dirname, getAbsolutePath, joinPath, relativePath} from '../helpers/value/path';
 import {FileInfo} from '../context/fs/FileInfo';
 import {FilesystemInterface} from '../context/fs/FilesystemInterface';
-import {SchemaConfig} from '../entities/json/SchemaConfig';
+import {SchemaConfig} from '../context/schema/SchemaConfig';
 import {jsonBasename} from '../helpers/jsonBasename';
-import {JsonSchemaValidator} from '../services/validator/JsonSchemaValidator';
+import {JsonSchemaValidator} from '../context/schema/JsonSchemaValidator';
 import {SchemaDir} from '../states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../states/objects/fileTree/SchemaFile';
 import {SchemaFileVariant} from '../states/objects/fileTree/SchemaFileVariant';

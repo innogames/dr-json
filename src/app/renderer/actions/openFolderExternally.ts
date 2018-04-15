@@ -1,7 +1,6 @@
-import {openExternal} from '../../../infrastructure/openExternal';
+import {shell} from 'electron';
 import {projectStore} from '../stores/projectStore';
 
 export function openFolderExternally(): void {
-    openExternal(`file://${projectStore.current.rootFolder}`);
+    shell.openExternal(`file://${projectStore.current.rootFolder}`);
 }
-

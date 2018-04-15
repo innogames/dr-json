@@ -1,5 +1,5 @@
 import {action, observable, reaction, toJS} from 'mobx';
-import {SchemaConfig} from '../../../domain/entities/json/SchemaConfig';
+import {SchemaConfig} from '../../../domain/context/schema/SchemaConfig';
 import {DataDir, DataFileType} from '../entities/project/DataDir';
 import {DataFile} from '../entities/project/DataFile';
 import {settingsStore} from './settingsStore';

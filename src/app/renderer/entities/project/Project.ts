@@ -1,4 +1,4 @@
-import {dirname, joinPath} from '../../../../common/value/path';
+import {dirname, joinPath} from '../../../../domain/helpers/value/path';
 
 export interface VariantTypeConfig {
     name: string,

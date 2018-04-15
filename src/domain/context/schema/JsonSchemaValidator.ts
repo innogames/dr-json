@@ -1,5 +1,5 @@
-import {SchemaConfig} from '../../entities/json/SchemaConfig';
-import {SchemaValidationError} from '../../entities/json/SchemaValidationError';
+import {SchemaConfig} from './SchemaConfig';
+import {SchemaValidationError} from './SchemaValidationError';
 
 const schemaSchema = require('../../../../schemas/data-schema.json');
 const Ajv          = require('ajv');

@@ -2,7 +2,7 @@ import 'jest';
 import {ProjectRepo} from '../../repositories/ProjectRepo';
 import {SchemaRepo} from '../../repositories/SchemaRepo';
 import {SettingsRepo} from '../../repositories/SettingsRepo';
-import {ProjectConfigValidator} from '../../services/validator/ProjectConfigValidator';
+import {ProjectConfigValidator} from '../../context/config/ProjectConfigValidator';
 import {SchemaDir} from '../../states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
 import {SchemaTree} from '../../states/objects/fileTree/SchemaTree';

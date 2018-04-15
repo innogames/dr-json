@@ -1,5 +1,5 @@
+import {shell} from 'electron';
 import * as React from 'react';
-import {openExternal} from '../../../../../infrastructure/openExternal';
 
 interface Props {
     url: string;
@@ -18,6 +18,8 @@ export class ExternalLink extends React.PureComponent<Props, {}> {
 
     private onClick = (e: any) => {
         e.preventDefault();
-        openExternal(this.props.url);
+        if (this.props.url) {
+            shell.openExternal(this.props.url);
+        }
     };
 }

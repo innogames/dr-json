@@ -12,7 +12,7 @@ import {DataEntry, EntryId} from '../../../../../entities/editor/DataEntry';
 import {OpenFile} from '../../../../../entities/editor/OpenFile';
 import {FileVariant} from '../../../../../entities/project/DataFile';
 import {VariantTypeConfig} from '../../../../../entities/project/Project';
-import {filterEntriesBySearch} from '../../../../../../../domain/context/data/filter/filterEntriesBySearch';
+import {filterEntriesBySearch} from '../../../../../../../domain/context/data/filterEntriesBySearch';
 import {ContentHint} from '../../../../common/ContentHint';
 import {Tab, Tabs, TabsPosition} from '../../../../common/Tabs';
 import {If} from '../../../../helper/If';

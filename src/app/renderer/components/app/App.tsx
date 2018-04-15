@@ -1,6 +1,6 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
-import {compareVersion} from '../../../../common/value/version';
+import {compareVersion} from '../../../../domain/helpers/value/version';
 import {ProjectStore} from '../../stores/projectStore';
 import {Loader} from '../common/Loader/Loader';
 import {Outside} from '../layout/Outside';

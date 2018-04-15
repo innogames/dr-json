@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import {FileInfo} from '../domain/context/fs/FileInfo';
-import {joinPath} from '../common/value/path';
+import {joinPath} from '../domain/helpers/value/path';
 
 class Filesystem {
 

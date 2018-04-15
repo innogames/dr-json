@@ -1,5 +1,5 @@
 import {toJS} from 'mobx';
-import {joinPath} from '../../common/value/path';
+import {joinPath} from '../helpers/value/path';
 import {DataRepo} from '../repositories/DataRepo';
 import {DataEntries} from '../states/objects/editor/DataEntries';
 import {SchemaFile} from '../states/objects/fileTree/SchemaFile';

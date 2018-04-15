@@ -1,6 +1,6 @@
-import {errorToString} from '../../../common/errorToString';
+import {errorToString} from '../../helpers/errorToString';
 import {ProjectConfig} from '../../states/objects/ProjectConfig';
-import {JsonSchemaValidator} from './JsonSchemaValidator';
+import {JsonSchemaValidator} from '../schema/JsonSchemaValidator';
 
 const schema = require('../../../../schemas/project-file-schema.json');
 
