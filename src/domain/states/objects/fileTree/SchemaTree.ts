@@ -18,6 +18,10 @@ export class SchemaTree {
         return this.findFileRecursive(this.children, basename);
     }
 
+    public forEachDir(fn: (dir: SchemaDir) => void): void {
+        this.forEachDirRecursive(this.children, fn);
+    }
+
     private mapChildren(children: SchemaTreeItem[], fn: ItemMapper): SchemaTreeItem[] {
         return children.map((child: SchemaTreeItem) => {
             if (child instanceof SchemaDir) {
@@ -48,5 +52,15 @@ export class SchemaTree {
         }
 
         return null;
+    }
+
+    private forEachDirRecursive(children: SchemaTreeItem[], fn: (dir: SchemaDir) => void): void {
+        for (let child of children) {
+            if (child instanceof SchemaDir) {
+                const dir: SchemaDir = child as SchemaDir;
+                this.forEachDirRecursive(dir.children, fn);
+                fn(dir);
+            }
+        }
     }
 }

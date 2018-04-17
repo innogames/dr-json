@@ -1,24 +1,31 @@
 import {action, observable} from 'mobx';
+import {GlobalSettings} from './objects/settings/GlobalSettings';
+import {ProjectSettings} from './objects/settings/ProjectSettings';
 
 export class SettingsState {
-    @observable private _inlineForms: boolean    = false;
-    @observable private _collapsedDirs: string[] = [];
-
-    get inlineForms(): boolean {
-        return this._inlineForms;
+    @observable private _globalSettings: GlobalSettings = {
+        inlineForms: false,
     };
 
-    get collapsedDirs(): string[] {
-        return this._collapsedDirs;
+    @observable private _projectSettings: ProjectSettings = {
+        collapsedDirs: [],
+    };
+
+    get globalSettings(): GlobalSettings {
+        return this._globalSettings;
+    };
+
+    get projectSettings(): ProjectSettings {
+        return this._projectSettings;
     };
 
     @action
-    toggleInlineForms() {
-        this._inlineForms = !this._inlineForms;
+    setGlobalSettings(settings: GlobalSettings) {
+        this._globalSettings = settings;
     }
 
     @action
-    setCollapsedDirs(dirs: string[]) {
-        this._collapsedDirs = dirs;
+    setProjectSettings(settings: ProjectSettings) {
+        this._projectSettings = settings;
     }
 }

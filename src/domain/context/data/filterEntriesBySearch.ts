@@ -1,4 +1,4 @@
-import {DataEntry} from '../../../app/renderer/entities/editor/DataEntry';
+import {DataEntry} from '../../states/objects/editor/DataEntry';
 
 export function filterEntriesBySearch(entries: DataEntry[], search: string): DataEntry[] {
     if (!search) {

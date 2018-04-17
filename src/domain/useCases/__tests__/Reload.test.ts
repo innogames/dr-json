@@ -64,7 +64,7 @@ describe('Reload', () => {
         return useCase.execute()
             .then(() => {
                 expect(openProject.execute).toBeCalledWith(projectFile);
-                expect(selectFile.execute).toBeCalledWith(file);
+                expect(selectFile.execute).toBeCalledWith(file.basename);
                 expect(selectFileVariant.execute).not.toBeCalled();
             });
     });
@@ -87,7 +87,7 @@ describe('Reload', () => {
             .then(() => {
                 expect(openProject.execute).toBeCalledWith(projectFile);
                 expect(selectFile.execute).not.toBeCalled();
-                expect(selectFileVariant.execute).toBeCalledWith(file, selectedVariantId);
+                expect(selectFileVariant.execute).toBeCalledWith(file.basename, selectedVariantId);
             });
     });
 });

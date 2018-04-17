@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {DataEntry} from '../../../../../../../entities/editor/DataEntry';
+import {DataEntry} from '../../../../../../../../../domain/states/objects/editor/DataEntry';
 import {Button} from '../../../../../../common/Button';
 import {Icon} from '../../../../../../common/Icon';
 import {EntryJsonData} from '../EntryJsonData';

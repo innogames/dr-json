@@ -31,9 +31,9 @@ export class Reload {
                     let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(selectedFile);
                     if (file) {
                         if (selectedVariantId && file.getVariantFileById(selectedVariantId)) {
-                            return this.selectFileVariant.execute(file, selectedVariantId);
+                            return this.selectFileVariant.execute(file.basename, selectedVariantId);
                         } else {
-                            return this.selectFile.execute(file);
+                            return this.selectFile.execute(file.basename);
                         }
                     }
                 }

@@ -1,6 +1,6 @@
+import {SettingsStorageInterface} from '../context/settings/SettingsStorageInterface';
 import {GlobalSettings} from '../states/objects/settings/GlobalSettings';
 import {ProjectSettings} from '../states/objects/settings/ProjectSettings';
-const electronSettings = require('electron-settings');
 
 interface ProjectSetting {
     projectName: string;
@@ -10,22 +10,31 @@ interface ProjectSetting {
 
 export class SettingsRepo {
 
+    constructor(
+        private storage: SettingsStorageInterface,
+    ) {
+    }
+
     public saveLastProjectFile(projectFile: string | null): Promise<void> {
-        electronSettings.set('projectFile', projectFile);
+        this.storage.save('projectFile', projectFile);
         return Promise.resolve();
     }
 
-    public loadLastPojectFile(): Promise<string | null> {
-        return Promise.resolve(electronSettings.get('projectFile') as string);
+    public loadLastProjectFile(): Promise<string | null> {
+        return Promise.resolve(this.storage.load<string | null>('projectFile', null));
     }
 
     public saveGlobalSettings(settings: GlobalSettings): Promise<void> {
-        electronSettings.set('globalSettings', settings);
+        this.storage.save('globalSettings', settings);
         return Promise.resolve();
     }
 
     public loadGlobalSettings(): Promise<GlobalSettings> {
-        return Promise.resolve((electronSettings.get('globalSettings') || {}) as GlobalSettings);
+        const settings: GlobalSettings = this.storage.load<GlobalSettings>('globalSettings', {
+            inlineForms: false,
+        });
+
+        return Promise.resolve(settings);
     }
 
     public saveProjectSettings(projectName: string, projectFile: string, settings: ProjectSettings): Promise<void> {
@@ -38,12 +47,12 @@ export class SettingsRepo {
             settings:    settings,
         });
 
-        electronSettings.set('projectSettings', allSettings);
+        this.storage.save('projectSettings', allSettings);
 
         return Promise.resolve();
     }
 
-    public loadProjectSettings(projectFile: string): Promise<ProjectSettings | null> {
+    public loadProjectSettings(projectFile: string): Promise<ProjectSettings> {
         let allSettings: ProjectSetting[] = this.loadAllProjectSettings();
 
         for (let setting of allSettings) {
@@ -52,11 +61,29 @@ export class SettingsRepo {
             }
         }
 
-        return Promise.resolve(null);
+        return Promise.resolve({
+            collapsedDirs: [],
+        });
+    }
+
+    public updateGlobalSettings(update: (settings: GlobalSettings) => GlobalSettings): Promise<void> {
+        return this.loadGlobalSettings()
+            .then(update)
+            .then((settings: GlobalSettings) => this.saveGlobalSettings(settings));
+    }
+
+    public updateProjectSettings(
+        projectName: string,
+        projectFile: string,
+        update: (settings: ProjectSettings) => ProjectSettings,
+    ): Promise<void> {
+        return this.loadProjectSettings(projectFile)
+            .then(update)
+            .then((settings: ProjectSettings) => this.saveProjectSettings(projectName, projectFile, settings));
     }
 
     private loadAllProjectSettings(): ProjectSetting[] {
-        let allSettings: ProjectSetting[] = electronSettings.get('projectSettings');
+        let allSettings: ProjectSetting[] = this.storage.load<ProjectSetting[]>('projectSettings', []);
 
         if (!Array.isArray(allSettings)) {
             allSettings = [];

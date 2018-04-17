@@ -1,7 +1,7 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
 import {compareVersion} from '../../../../domain/helpers/value/version';
-import {ProjectStore} from '../../stores/projectStore';
+import {ProjectState} from '../../../../domain/states/ProjectState';
 import {Loader} from '../common/Loader/Loader';
 import {Outside} from '../layout/Outside';
 import {Window} from '../layout/Window';
@@ -14,10 +14,10 @@ interface Props {
 }
 
 interface Injected {
-    projectStore: ProjectStore;
+    projectState: ProjectState;
 }
 
-@inject('projectStore')
+@inject('projectState')
 @observer
 export class App extends React.Component<Props, {}> {
 
@@ -34,29 +34,29 @@ export class App extends React.Component<Props, {}> {
     }
 
     renderChild() {
-        const projectStore: ProjectStore = this.injected.projectStore;
+        const projectState: ProjectState = this.injected.projectState;
         const appVersion                 = this.props.appVersion || '';
 
-        if (projectStore.isLoading) {
+        if (projectState.isLoading) {
             return (
                 <Outside appVersion={appVersion}><Loader/></Outside>
             );
         }
 
-        if (!projectStore.hasCurrent) {
-            return <Welcome appVersion={appVersion} error={projectStore.error || undefined}/>;
+        if (!projectState.hasProject) {
+            return <Welcome appVersion={appVersion} error={projectState.error || undefined}/>;
         }
 
-        if (compareVersion(appVersion, projectStore.current.minVersion) < 0) {
+        if (compareVersion(appVersion, projectState.project.config.minVersion) < 0) {
             return (
                 <IncompatibleVersion
-                    projectName={projectStore.current.name}
+                    projectName={projectState.project.config.name}
                     appVersion={appVersion}
-                    requiredVersion={projectStore.current.minVersion}
+                    requiredVersion={projectState.project.config.minVersion}
                 />
             );
         }
 
-        return <FileBrowser appVersion={appVersion} project={projectStore.current!}/>;
+        return <FileBrowser appVersion={appVersion} project={projectState.project}/>;
     }
 }

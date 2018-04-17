@@ -1,18 +1,20 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
-import {DataDir, DataFileType} from '../../../entities/project/DataDir';
-import {DataFile} from '../../../entities/project/DataFile';
+import {SchemaDir} from '../../../../../domain/states/objects/fileTree/SchemaDir';
+import {SchemaFile} from '../../../../../domain/states/objects/fileTree/SchemaFile';
+import {SchemaTreeItem} from '../../../../../domain/states/objects/fileTree/SchemaTreeItem';
 import {If} from '../../helper/If';
 import {Icon} from '../Icon';
 import {Link} from '../Link';
 import styles from './FileTreeStyles.scss';
+import {SchemaTree} from '../../../../../domain/states/objects/fileTree/SchemaTree';
 
 interface Props {
-    files: DataFileType[];
+    tree: SchemaTree;
     className?: string;
-    selected?: DataFile;
-    onSelectFile?: (file: DataFile) => void;
-    onSelectDir?: (dir: DataDir) => void;
+    selectedFilename?: string;
+    onSelectFile?: (file: SchemaFile) => void;
+    onSelectDir?: (dir: SchemaDir) => void;
 }
 
 @observer
@@ -22,21 +24,21 @@ export class FileTree extends React.Component<Props> {
         return (
             <div className={[styles.tree, this.props.className].join(' ')}>
                 <ul>
-                    {this.props.files.map(this.renderItem)}
+                    {this.props.tree.children.map(this.renderItem)}
                 </ul>
             </div>
         );
     };
 
-    private renderItem = (file: DataFileType): JSX.Element => {
-        return file.isDir ? this.renderDir(file as DataDir) : this.renderFile(file as DataFile);
+    private renderItem = (file: SchemaTreeItem): JSX.Element => {
+        return file instanceof SchemaDir ? this.renderDir(file as SchemaDir) : this.renderFile(file as SchemaFile);
     };
 
-    private renderFile = (file: DataFile): JSX.Element => {
+    private renderFile = (file: SchemaFile): JSX.Element => {
         let className: string = '';
-        let icon: string = Icon.FILE_O;
+        let icon: string      = Icon.FILE_O;
 
-        if (this.props.selected && file.basename == this.props.selected.basename) {
+        if (this.props.selectedFilename && file.basename == this.props.selectedFilename) {
             className = styles.active;
             icon      = Icon.FILE;
         }
@@ -50,7 +52,7 @@ export class FileTree extends React.Component<Props> {
         );
     };
 
-    private renderDir = (dir: DataDir): JSX.Element => {
+    private renderDir = (dir: SchemaDir): JSX.Element => {
         let icon: string = Icon.FOLDER;
         if (dir.collapsed) {
             icon = Icon.FOLDER_COLLAPSED;

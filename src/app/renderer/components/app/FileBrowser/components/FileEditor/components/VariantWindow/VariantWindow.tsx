@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Option, Options} from 'react-select';
-import {VariantTypeConfig} from '../../../../../../../entities/project/Project';
+import {VariantTypeConfig} from '../../../../../../../../../domain/states/objects/ProjectConfig';
 import {Checkbox} from '../../../../../../form/Checkbox';
 import {SchemaForm} from '../../../../../../form/SchemaForm';
 import {Select} from '../../../../../../form/Select';

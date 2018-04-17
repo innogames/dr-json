@@ -99,20 +99,28 @@ function baseConfig(isDev, devServerPort, name) {
                         deny: ['/src/app/main']
                     },
                     {
+                        module: '/src/app/renderer/components/common/',
+                        deny: ['/src/app/renderer/components/app/']
+                    },
+                    {
+                        module: '/src/app/renderer/components/form/',
+                        deny: ['/src/app/renderer/components/app/']
+                    },
+                    {
+                        module: '/src/app/renderer/components/helper/',
+                        deny: ['/src/app/renderer/components/app/']
+                    },
+                    {
+                        module: '/src/app/renderer/components/layout/',
+                        deny: ['/src/app/renderer/components/app/', 'mobx']
+                    },
+                    {
                         module: '/src/app/shared',
                         deny: ['/src/app/main', '/src/app/renderer']
                     },
                     {
-                        module: '/src/common',
-                        deny: ['/src/app', '/src/infrastructure']
-                    },
-                    {
-                        module: '/src/infrastructure',
-                        deny: ['/src/app']
-                    },
-                    {
                         module: '/src/domain',
-                        deny: ['/src/app']
+                        deny: ['/src/app', 'electron', 'react']
                     },
                 ]
             }),

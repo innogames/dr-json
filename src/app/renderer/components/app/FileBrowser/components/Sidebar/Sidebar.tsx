@@ -1,12 +1,12 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
+import {EditorState} from '../../../../../../../domain/states/EditorState';
+import {SchemaDir} from '../../../../../../../domain/states/objects/fileTree/SchemaDir';
+import {SchemaFile} from '../../../../../../../domain/states/objects/fileTree/SchemaFile';
+import {ProjectState} from '../../../../../../../domain/states/ProjectState';
 import {openFolderExternally} from '../../../../../actions/openFolderExternally';
 import {reload} from '../../../../../actions/reload';
 import {selectFile} from '../../../../../actions/selectFile';
-import {DataDir} from '../../../../../entities/project/DataDir';
-import {DataFile} from '../../../../../entities/project/DataFile';
-import {EditorStore} from '../../../../../stores/editorStore';
-import {SchemaStore} from '../../../../../stores/schemaStore';
 import {FileTree} from '../../../../common/FileTree';
 import {FileTreeButtons} from '../../../../common/FileTreeButtons';
 import {Icon} from '../../../../common/Icon';
@@ -14,11 +14,11 @@ import {Link} from '../../../../common/Link';
 import styles from './SidebarStyles.scss';
 
 interface Injected {
-    schemaStore: SchemaStore;
-    editorStore: EditorStore;
+    projectState: ProjectState;
+    editorState: EditorState;
 }
 
-@inject('schemaStore', 'editorStore')
+@inject('projectState', 'editorState')
 @observer
 export class Sidebar extends React.Component<{}, {}> {
 
@@ -36,8 +36,8 @@ export class Sidebar extends React.Component<{}, {}> {
                     <Link title='Open folder' onClick={this.openFolder}><Icon value={Icon.EXTERNAL_LINK}/></Link>
                 </FileTreeButtons>
                 <FileTree
-                    files={this.injected.schemaStore.files}
-                    selected={this.injected.editorStore.currentFile ? this.injected.editorStore.currentFile.file : undefined}
+                    tree={this.injected.projectState.project.schemaTree}
+                    selectedFilename={this.injected.editorState.currentFile ? this.injected.editorState.currentFile.filename : undefined}
                     onSelectFile={this.onSelectFile}
                     onSelectDir={this.onSelectDir}
                 />
@@ -45,11 +45,11 @@ export class Sidebar extends React.Component<{}, {}> {
         );
     }
 
-    private onSelectFile = (file: DataFile) => {
-        selectFile(file);
+    private onSelectFile = (file: SchemaFile) => {
+        selectFile(file.basename);
     };
 
-    private onSelectDir = (dir: DataDir) => {
+    private onSelectDir = (dir: SchemaDir) => {
         dir.setCollapsed(!dir.collapsed);
     };
 
@@ -58,13 +58,13 @@ export class Sidebar extends React.Component<{}, {}> {
     };
 
     private expandAll = () => {
-        this.injected.schemaStore.forEachDir((dir: DataDir) => {
+        this.injected.projectState.project.schemaTree.forEachDir((dir: SchemaDir) => {
             dir.setCollapsed(false);
         });
     };
 
     private collapseAll = () => {
-        this.injected.schemaStore.forEachDir((dir: DataDir) => {
+        this.injected.projectState.project.schemaTree.forEachDir((dir: SchemaDir) => {
             dir.setCollapsed(true);
         });
     };

@@ -1,39 +1,22 @@
-import {inject, observer} from 'mobx-react';
+import {observer} from 'mobx-react';
 import * as React from 'react';
 import {trim} from '../../../../../../../../../domain/helpers/value/trim';
-import {DataEntry, EntryId} from '../../../../../../../entities/editor/DataEntry';
-import {SchemaConfig} from '../../../../../../../../../domain/context/schema/SchemaConfig';
-import {EditorStore} from '../../../../../../../stores/editorStore';
-import {SchemaStore} from '../../../../../../../stores/schemaStore';
+import {ActiveFile} from '../../../../../../../../../domain/states/objects/editor/ActiveFile';
+import {DataEntry, EntryId} from '../../../../../../../../../domain/states/objects/editor/DataEntry';
+import {closeCreateEntry} from '../../../../../../../actions/entries/closeCreateEntry';
 import {SchemaForm} from '../../../../../../form/SchemaForm';
 
 interface Props {
-    schemaFile: string;
+    activeFile: ActiveFile;
     className: string;
     entry?: DataEntry;
     onSubmit?: (entryId: EntryId | null, entry: DataEntry) => Promise<void>;
 }
 
-interface Injected {
-    schemaStore: SchemaStore;
-    editorStore: EditorStore;
-}
-
-@inject('schemaStore', 'editorStore')
 @observer
 export class EntryForm extends React.Component<Props, {}> {
 
-    private get injected(): Injected {
-        // @ts-ignore: can not be converted
-        return this.props as Injected;
-    }
-
     render() {
-        const schema: SchemaConfig | null = this.injected.schemaStore.get(this.props.schemaFile);
-        if (!schema) {
-            return null;
-        }
-
         const entry: DataEntry | null = this.props.entry || null;
 
         const data: any = entry && entry.data ? this.props.entry!.data : {};
@@ -41,8 +24,8 @@ export class EntryForm extends React.Component<Props, {}> {
         return (
             <SchemaForm
                 className={this.props.className}
-                schema={schema.schema}
-                uiSchema={schema.uiSchema}
+                schema={this.props.activeFile.schema.schema}
+                uiSchema={this.props.activeFile.schema.uiSchema}
                 formData={data}
                 validate={this.validate}
                 onSubmit={this.onSubmit}
@@ -57,8 +40,7 @@ export class EntryForm extends React.Component<Props, {}> {
 
         if (entryId
             && isCreateMode
-            && this.injected.editorStore.currentFile
-            && this.injected.editorStore.currentFile.getEntryById(entryId)
+            && this.props.activeFile.entries.getById(entryId)
         ) {
             errors.id.addError(`ID "${entryId}" already exists`);
         }
@@ -81,8 +63,8 @@ export class EntryForm extends React.Component<Props, {}> {
     private onClose = () => {
         if (this.props.entry && this.props.entry.id) {
             this.props.entry.toggleEditMode(false);
-        } else if (this.injected.editorStore.currentFile) {
-            this.injected.editorStore.currentFile.closeCreateMode();
+        } else {
+            closeCreateEntry();
         }
     };
 }

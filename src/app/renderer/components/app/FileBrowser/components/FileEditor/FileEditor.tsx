@@ -1,18 +1,20 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {confirmDeleteEntry} from '../../../../../actions/confirmDeleteEntry';
-import {createEntry} from '../../../../../actions/createEntry';
-import {createVariant} from '../../../../../actions/createVariant';
-import {openCreateEntry} from '../../../../../actions/openCreateEntry';
-import {searchInFile} from '../../../../../actions/searchInFile';
-import {selectFile} from '../../../../../actions/selectFile';
-import {updateEntry} from '../../../../../actions/updateEntry';
-import {DataEntry, EntryId} from '../../../../../entities/editor/DataEntry';
-import {OpenFile} from '../../../../../entities/editor/OpenFile';
-import {FileVariant} from '../../../../../entities/project/DataFile';
-import {VariantTypeConfig} from '../../../../../entities/project/Project';
 import {filterEntriesBySearch} from '../../../../../../../domain/context/data/filterEntriesBySearch';
+import {ActiveFile} from '../../../../../../../domain/states/objects/editor/ActiveFile';
+import {DataEntry, EntryId} from '../../../../../../../domain/states/objects/editor/DataEntry';
+import {SchemaFileVariant} from '../../../../../../../domain/states/objects/fileTree/SchemaFileVariant';
+import {VariantTypeConfig} from '../../../../../../../domain/states/objects/ProjectConfig';
+import {confirmDeleteEntry} from '../../../../../actions/entries/confirmDeleteEntry';
+import {createEntry} from '../../../../../actions/entries/createEntry';
+import {openCreateEntry} from '../../../../../actions/entries/openCreateEntry';
+import {searchInFile} from '../../../../../actions/entries/searchInFile';
+import {updateEntry} from '../../../../../actions/entries/updateEntry';
+import {selectFileVariant} from '../../../../../actions/selectFileVariant';
+import {closeCreateVariant} from '../../../../../actions/variants/closeCreateVariant';
+import {createVariant} from '../../../../../actions/variants/createVariant';
+import {openCreateVariant} from '../../../../../actions/variants/openCreateVariant';
 import {ContentHint} from '../../../../common/ContentHint';
 import {Tab, Tabs, TabsPosition} from '../../../../common/Tabs';
 import {If} from '../../../../helper/If';
@@ -25,8 +27,10 @@ import {VariantWindow} from './components/VariantWindow';
 import styles from './FileEditorStyles.scss';
 
 interface Props {
-    openFile: OpenFile;
+    activeFile: ActiveFile;
+    fileVariants: SchemaFileVariant[];
     variantTypes: VariantTypeConfig[];
+    isAddVariantMode?: boolean;
     showFormInline?: boolean;
 }
 
@@ -43,17 +47,17 @@ export class FileEditor extends React.Component<Props, {}> {
 
     componentDidUpdate() {
         if (this.props.showFormInline
-            && this.props.openFile.isCreateMode
-            && this.props.openFile.isCreateMode != this.isCreateMode
+            && this.props.activeFile.isCreateMode
+            && this.props.activeFile.isCreateMode != this.isCreateMode
         ) {
             this.scrollToCreateForm();
         }
-        this.isCreateMode = this.props.openFile.isCreateMode;
+        this.isCreateMode = this.props.activeFile.isCreateMode;
     }
 
     render() {
-        let entries: DataEntry[] = this.props.openFile.entries;
-        entries                  = filterEntriesBySearch(entries, this.props.openFile.searchText);
+        let entries: DataEntry[] = this.props.activeFile.entries.all;
+        entries                  = filterEntriesBySearch(entries, this.props.activeFile.searchText);
 
         return (
             <div className={styles.editor}>
@@ -70,23 +74,23 @@ export class FileEditor extends React.Component<Props, {}> {
                 </div>
 
                 <Tabs position={TabsPosition.BOTTOM}>
-                    {this.props.openFile.file.variants.map((variant: FileVariant, idx: number) => {
+                    {this.props.fileVariants.map((variant: SchemaFileVariant) => {
                         return (
                             <Tab
-                                key={variant.id || 'default'}
-                                active={idx == this.props.openFile.file.currentVariantIdx}
+                                key={variant.variantId}
+                                active={variant.variantId == this.props.activeFile.variantId}
                                 onClick={() => {
-                                    this.onSelectVariant(idx);
+                                    this.onSelectVariant(variant.variantId);
                                 }}
                             >
-                                {variant.id || 'Default'}
+                                {variant.label}
                             </Tab>
                         );
                     })}
                     <Tab onClick={this.onClickAddVariant}>+</Tab>
                 </Tabs>
 
-                <If cond={this.props.openFile.isAddVariantMode}>
+                <If cond={this.props.isAddVariantMode}>
                     <VariantWindow
                         variantTypes={this.props.variantTypes}
                         onSubmit={this.onCreateVariant}
@@ -98,7 +102,7 @@ export class FileEditor extends React.Component<Props, {}> {
     }
 
     private renderEntries(entries: DataEntry[]) {
-        if (entries.length === 0 && !this.props.openFile.isCreateMode) {
+        if (entries.length === 0 && !this.props.activeFile.isCreateMode) {
             return (
                 <ContentHint>Empty</ContentHint>
             );
@@ -147,7 +151,7 @@ export class FileEditor extends React.Component<Props, {}> {
     }
 
     private renderCreate() {
-        if (!this.props.openFile.isCreateMode) {
+        if (!this.props.activeFile.isCreateMode) {
             return null;
         }
 
@@ -173,8 +177,8 @@ export class FileEditor extends React.Component<Props, {}> {
                 ref="createForm"
                 key='new'
                 className={className}
-                schemaFile={this.props.openFile.file.schemaFile}
-                entry={this.props.openFile.createByEntry || undefined}
+                activeFile={this.props.activeFile}
+                entry={this.props.activeFile.createModeEntry || undefined}
                 onSubmit={this.onSubmitCreateForm}
             />
         );
@@ -184,7 +188,7 @@ export class FileEditor extends React.Component<Props, {}> {
         return (
             <EntryForm
                 className={className}
-                schemaFile={this.props.openFile.file.schemaFile}
+                activeFile={this.props.activeFile}
                 entry={entry}
                 onSubmit={this.onSubmitEditForm}
             />
@@ -197,7 +201,7 @@ export class FileEditor extends React.Component<Props, {}> {
 
     private onClickAdd = (): void => {
         if (!this.props.showFormInline) {
-            this.props.openFile.entries.forEach((entry: DataEntry) => {
+            this.props.activeFile.entries.all.forEach((entry: DataEntry) => {
                 entry.toggleEditMode(false);
             });
         }
@@ -209,7 +213,7 @@ export class FileEditor extends React.Component<Props, {}> {
     };
 
     private onClickDelete = (entry: DataEntry): void => {
-        confirmDeleteEntry(this.props.openFile.file.currentVariant.file, entry.id!);
+        confirmDeleteEntry(this.props.activeFile.filename, entry.id!);
     };
 
     private onClickCopy = (entry: DataEntry): void => {
@@ -217,11 +221,11 @@ export class FileEditor extends React.Component<Props, {}> {
     };
 
     private onSubmitEditForm = (entryId: EntryId | null, entry: DataEntry): Promise<void> => {
-        return updateEntry(this.props.openFile.file.currentVariant.file, entryId, entry);
+        return updateEntry(this.props.activeFile.filename, entryId, entry);
     };
 
     private onSubmitCreateForm = (_entryId: EntryId | null, entry: DataEntry): Promise<void> => {
-        return createEntry(this.props.openFile.file.currentVariant.file, entry)
+        return createEntry(this.props.activeFile.filename, entry)
             .then(() => {
                 if (!this.props.showFormInline) {
                     this.scrollToBottom();
@@ -230,19 +234,19 @@ export class FileEditor extends React.Component<Props, {}> {
     };
 
     private onClickAddVariant = () => {
-        this.props.openFile.openAddVariant();
+        openCreateVariant();
     };
 
     private onCreateVariant = (variantId: string, copyEntries: boolean): Promise<void> => {
-        return createVariant(this.props.openFile.file, variantId, copyEntries);
+        return createVariant(this.props.activeFile.filename, variantId, copyEntries);
     };
 
     private onCloseVariantWindow = () => {
-        this.props.openFile.closeAddVariant();
+        closeCreateVariant();
     };
 
-    private onSelectVariant = (idx: number) => {
-        selectFile(this.props.openFile.file, idx);
+    private onSelectVariant = (variantId: string) => {
+        selectFileVariant(this.props.activeFile.filename, variantId);
     };
 
     private scrollToCreateForm = () => {

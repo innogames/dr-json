@@ -1,9 +1,13 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
-import {OpenFile} from '../../../entities/editor/OpenFile';
-import {Project} from '../../../entities/project/Project';
-import {EditorStore} from '../../../stores/editorStore';
-import {SettingsStore} from '../../../stores/settingsStore';
+import {errorToString} from '../../../../../domain/helpers/errorToString';
+import {EditorState} from '../../../../../domain/states/EditorState';
+import {ActiveFile} from '../../../../../domain/states/objects/editor/ActiveFile';
+import {SchemaFile} from '../../../../../domain/states/objects/fileTree/SchemaFile';
+import {SchemaFileVariant} from '../../../../../domain/states/objects/fileTree/SchemaFileVariant';
+import {Project} from '../../../../../domain/states/objects/Project';
+import {ProjectState} from '../../../../../domain/states/ProjectState';
+import {SettingsState} from '../../../../../domain/states/SettingsState';
 import {ContentHint} from '../../common/ContentHint';
 import {ErrorHint} from '../../common/ErrorHint';
 import {Loader} from '../../common/Loader/Loader';
@@ -18,11 +22,12 @@ interface Props {
 }
 
 interface Injected {
-    editorStore: EditorStore;
-    settingsStore: SettingsStore;
+    editorState: EditorState;
+    settingsState: SettingsState;
+    projectState: ProjectState;
 }
 
-@inject('editorStore', 'settingsStore')
+@inject('editorState', 'settingsState', 'projectState')
 @observer
 export class FileBrowser extends React.Component<Props, {}> {
 
@@ -34,7 +39,7 @@ export class FileBrowser extends React.Component<Props, {}> {
     render() {
         return (
             <div className={styles.wrap}>
-                <Head projectName={this.props.project.name}/>
+                <Head projectName={this.props.project.config.name}/>
                 <div className={styles.main}>
                     <Sidebar />
 
@@ -48,8 +53,8 @@ export class FileBrowser extends React.Component<Props, {}> {
     }
 
     private renderContent() {
-        const openFile: OpenFile | null = this.injected.editorStore.currentFile;
-        if (!openFile) {
+        const activeFile: ActiveFile | null = this.injected.editorState.currentFile;
+        if (!activeFile) {
             return (
                 <ContentHint>
                     No file selected.<br/>
@@ -58,20 +63,35 @@ export class FileBrowser extends React.Component<Props, {}> {
             );
         }
 
-        if (openFile.isLoading) {
+        if (activeFile.isLoading) {
             return <ContentHint><Loader/></ContentHint>;
         }
 
-        if (openFile.error) {
-            return <ErrorHint>{openFile.error}</ErrorHint>;
+        if (activeFile.error) {
+            return <ErrorHint>{errorToString(activeFile.error)}</ErrorHint>;
         }
 
         return (
             <FileEditor
-                openFile={openFile}
-                variantTypes={this.props.project.variantTypes}
-                showFormInline={this.injected.settingsStore.get().inlineForms}
+                activeFile={activeFile}
+                variantTypes={this.props.project.config.variantTypes}
+                fileVariants={this.getVariants(activeFile)}
+                isAddVariantMode={this.injected.editorState.isAddVariantMode}
+                showFormInline={this.injected.settingsState.globalSettings.inlineForms}
             />
         );
+    }
+
+    private getVariants(activeFile: ActiveFile): SchemaFileVariant[] {
+        if (!this.injected.projectState.hasProject) {
+            return [];
+        }
+
+        const file: SchemaFile | null = this.injected.projectState.project.schemaTree.getFile(activeFile.filename);
+        if (!file) {
+            return [];
+        }
+
+        return file.variants;
     }
 }

@@ -16,8 +16,13 @@ export class CreateVariant {
     ) {
     }
 
-    execute(file: SchemaFile, variantId: string, copyEntries: boolean): Promise<void> {
+    execute(filename: string, variantId: string, copyEntries: boolean): Promise<void> {
         let promise: Promise<DataEntries>;
+
+        let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(filename);
+        if (!file) {
+            return Promise.reject(`tried to create variant for not existing file ${filename}`);
+        }
 
         if (copyEntries) {
             promise = this.dataRepo.load(file.dataFile);
@@ -27,7 +32,7 @@ export class CreateVariant {
 
         return promise
             .then((entries: DataEntries) => {
-                return this.createVariantFile(variantId, file, entries);
+                return this.createVariantFile(variantId, file as SchemaFile, entries);
             });
     }
 
@@ -41,7 +46,7 @@ export class CreateVariant {
         file.addVariant(new SchemaFileVariant(variantId, variantId, variantFile));
 
         return this.dataRepo.save(variantFile, toJS(entries.all))
-            .then(() => this.selectFileVariant.execute(file, variantId));
+            .then(() => this.selectFileVariant.execute(file.basename, variantId));
     }
 
 }

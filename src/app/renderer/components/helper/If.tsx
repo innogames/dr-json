@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 interface Props {
-    cond: boolean;
+    cond: boolean | undefined;
 }
 
 export class If extends React.PureComponent<Props, {}> {

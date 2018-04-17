@@ -1,6 +1,6 @@
 import {remote} from 'electron';
-import {EntryId} from '../entities/editor/DataEntry';
-import {deleteEntry} from './deleteEntry';
+import {EntryId} from '../../../../domain/states/objects/editor/DataEntry';
+import {useCases} from '../../container';
 
 export function confirmDeleteEntry(filename: string, entryId: EntryId) {
     remote.dialog.showMessageBox(
@@ -14,7 +14,7 @@ export function confirmDeleteEntry(filename: string, entryId: EntryId) {
         },
         (buttonId: number) => {
             if (buttonId == 1) {
-                deleteEntry(filename, entryId);
+                useCases.deleteEntry.execute(filename, entryId);
             }
         },
     );

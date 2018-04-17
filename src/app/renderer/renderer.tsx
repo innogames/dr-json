@@ -1,13 +1,17 @@
 import {ipcRenderer} from 'electron';
-import {configure} from 'mobx';
+import {configure, reaction} from 'mobx';
 import {Provider} from 'mobx-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import {SchemaDir} from '../../domain/states/objects/fileTree/SchemaDir';
 import {getAppVersion} from '../shared/version';
-import {closeProject} from './actions/closeProject';
-import {openProject} from './actions/openProject';
+import {closeProject} from './actions/project/closeProject';
+import {openProject} from './actions/project/openProject';
+import {reopenLastProject} from './actions/project/reopenLastProject';
+import {changeSettingCollapsedDirs} from './actions/settings/changeSettingCollapsedDirs';
+import {toggleSettingInlineForms} from './actions/settings/toggleSettingInlineForms';
 import {App} from './components/app/App';
-import {stores} from './stores';
+import {states} from './container';
 
 configure({
     enforceActions: true,
@@ -22,15 +26,43 @@ ipcRenderer.on('close-project', () => {
 });
 
 ipcRenderer.on('toggle-settings-inlineForms', () => {
-    stores.settingsStore.toggleInlineForms();
+    toggleSettingInlineForms();
 });
 
-if (stores.settingsStore.projectFile) {
-    openProject(stores.settingsStore.projectFile);
-}
+// try to open last project
+reopenLastProject();
+
+// remember the collapsed state of folders in the folder tree, so the states will be the same
+// after closing and opening the application again.
+reaction(
+    () => {
+        if (!states.projectState.hasProject) {
+            return null;
+        }
+
+        let collapsed: string[] = [];
+
+        states.projectState.project.schemaTree.forEachDir((dir: SchemaDir) => {
+            if (dir.collapsed) {
+                collapsed.push(dir.basename);
+            }
+        });
+
+        return collapsed;
+    },
+    (collapsedDirs: string[] | null) => {
+        if (collapsedDirs != null) {
+            changeSettingCollapsedDirs(collapsedDirs);
+        }
+    },
+    {
+        delay: 1000,
+    },
+);
+
 
 ReactDOM.render(
-    <Provider {...stores}>
+    <Provider {...states}>
         <App appVersion={getAppVersion()}/>
     </Provider>,
     document.getElementById('app'),

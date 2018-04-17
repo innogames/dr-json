@@ -1,6 +1,6 @@
 import {shell} from 'electron';
-import {projectStore} from '../stores/projectStore';
+import {states} from '../container';
 
 export function openFolderExternally(): void {
-    shell.openExternal(`file://${projectStore.current.rootFolder}`);
+    shell.openExternal(`file://${states.projectState.project.rootPath}`);
 }

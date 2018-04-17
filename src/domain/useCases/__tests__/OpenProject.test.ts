@@ -2,7 +2,6 @@ import 'jest';
 import {ProjectRepo} from '../../repositories/ProjectRepo';
 import {SchemaRepo} from '../../repositories/SchemaRepo';
 import {SettingsRepo} from '../../repositories/SettingsRepo';
-import {ProjectConfigValidator} from '../../context/config/ProjectConfigValidator';
 import {SchemaDir} from '../../states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
 import {SchemaTree} from '../../states/objects/fileTree/SchemaTree';
@@ -17,7 +16,6 @@ let closeProject: CloseProject;
 let projectRepo: ProjectRepo;
 let settingsRepo: SettingsRepo;
 let schemaRepo: SchemaRepo;
-let projectConfigValidator: ProjectConfigValidator;
 let projectState: ProjectState;
 let settingsState: SettingsState;
 
@@ -40,10 +38,6 @@ beforeEach(() => {
         loadFileTree: jest.fn(),
     })));
 
-    projectConfigValidator = new (jest.fn<ProjectConfigValidator>(() => ({
-        validate: (data: any) => Promise.resolve(data),
-    })));
-
     projectState  = new ProjectState();
     settingsState = new SettingsState();
 
@@ -52,7 +46,6 @@ beforeEach(() => {
         projectRepo,
         settingsRepo,
         schemaRepo,
-        projectConfigValidator,
         projectState,
         settingsState,
     );
@@ -74,7 +67,9 @@ describe('OpenProject', () => {
             ]));
         };
 
-        settingsState.setCollapsedDirs(['collapsedFolder']);
+        settingsState.setProjectSettings({
+            collapsedDirs: ['collapsedFolder'],
+        });
 
         return useCase.execute(projectFile)
             .then(() => {

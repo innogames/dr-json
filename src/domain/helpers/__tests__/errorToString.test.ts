@@ -2,6 +2,11 @@ import 'jest';
 import {errorToString} from '../errorToString';
 
 describe('errorToString()', () => {
+    it('keeps null as is', () => {
+        expect(errorToString(null)).toEqual(null);
+        expect(errorToString(undefined)).toEqual(undefined);
+    });
+
     it('keeps string as is', () => {
         expect(errorToString('some error')).toEqual('some error');
     });

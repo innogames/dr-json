@@ -1,4 +1,5 @@
 import {action, observable} from 'mobx';
+import {SchemaConfig} from '../../../context/schema/SchemaConfig';
 import {DataEntries} from './DataEntries';
 import {DataEntry} from './DataEntry';
 
@@ -7,6 +8,7 @@ export class ActiveFile {
     @observable private _variantId: string | null          = null;
     @observable private _isLoading: boolean                = false;
     @observable private _error: any                        = null;
+    @observable private _schema: SchemaConfig              = {schema: {}};
     @observable private _entries: DataEntries              = new DataEntries();
     @observable private _searchText: string                = '';
     @observable private _createMode: boolean               = false;
@@ -34,6 +36,10 @@ export class ActiveFile {
         return this._error;
     }
 
+    get schema(): SchemaConfig {
+        return this._schema;
+    }
+
     get entries(): DataEntries {
         return this._entries;
     }
@@ -53,6 +59,7 @@ export class ActiveFile {
     @action
     setLoading(): void {
         this._isLoading  = true;
+        this._schema     = {schema: {}};
         this._entries    = new DataEntries();
         this._error      = null;
         this._searchText = '';
@@ -60,8 +67,9 @@ export class ActiveFile {
     }
 
     @action
-    setLoaded(entries: DataEntries): void {
+    setLoaded(schema: SchemaConfig, entries: DataEntries): void {
         this._isLoading = false;
+        this._schema    = schema;
         this._entries   = entries;
     }
 

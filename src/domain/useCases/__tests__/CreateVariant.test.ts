@@ -41,18 +41,17 @@ describe('CreateVariant', () => {
         const variantId = 'varId';
 
         const file = new SchemaFile('Stuff', 'stuff', 'stuff.schema.json', 'stuff.json', []);
-
         const tree = new SchemaTree([file]);
 
         projectState.setLoaded(new Project('/root/projectFile', new ProjectConfig({name: ''}), tree));
 
-        return useCase.execute(file, variantId, false)
+        return useCase.execute('stuff', variantId, false)
             .then(() => {
                 expect(projectState.project.schemaTree.getFile('stuff')!.variants.length).toBe(1);
 
                 expect(dataRepo.save).toBeCalledWith('/root/variantData/varId/stuff.json', []);
 
-                expect(selectFileVariant.execute).toBeCalled();
+                expect(selectFileVariant.execute).toBeCalledWith('stuff', variantId);
             });
     });
 
@@ -60,12 +59,11 @@ describe('CreateVariant', () => {
         const variantId = 'varId';
 
         const file = new SchemaFile('Stuff', 'stuff', 'stuff.schema.json', 'stuff.json', []);
-
         const tree = new SchemaTree([file]);
 
         projectState.setLoaded(new Project('/root/projectFile', new ProjectConfig({name: ''}), tree));
 
-        return useCase.execute(file, variantId, true)
+        return useCase.execute('stuff', variantId, true)
             .then(() => {
                 expect(projectState.project.schemaTree.getFile('stuff')!.variants.length).toBe(1);
 
@@ -74,7 +72,7 @@ describe('CreateVariant', () => {
                     [new DataEntry('one', {key: 'value1'})],
                 );
 
-                expect(selectFileVariant.execute).toBeCalled();
+                expect(selectFileVariant.execute).toBeCalledWith('stuff', variantId);
             });
     });
 });
