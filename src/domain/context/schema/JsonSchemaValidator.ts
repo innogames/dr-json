@@ -1,5 +1,5 @@
 import {SchemaConfig} from './SchemaConfig';
-import {SchemaValidationError} from './SchemaValidationError';
+import {SchemaValidationError, ValidationErrorData} from './SchemaValidationError';
 
 const schemaSchema = require('../../../../schemas/data-schema.json');
 const Ajv          = require('ajv');
@@ -15,32 +15,39 @@ try {
 
 export class JsonSchemaValidator {
 
-    public validate = <D = any, S = any>(data: D, schema: S): Promise<D> => {
+    public validate = <D = any, S = any>(data: D, schema: S, message: string | null = null): Promise<D> => {
         const validateFn = ajv.compile(schema);
 
-        return this.runValidator<D>(validateFn, data);
+        return this.runValidator<D>(validateFn, data, message);
     };
 
-    public validateSchema = (schema: SchemaConfig): Promise<SchemaConfig> => {
-        return this.runValidator(schemaValidator, schema)
+    public validateSchema = (schema: SchemaConfig, file: string | null = null): Promise<SchemaConfig> => {
+        let message: string | null = null;
+        if (file) {
+            message = `Schema file ${file} is invalid.`;
+        }
+
+        return this.runValidator(schemaValidator, schema, message)
             .then((schema: SchemaConfig) => {
                 this.validateRequiredField(schema.schema, 'schema');
                 return schema;
             });
     };
 
-    private runValidator<D = any>(validateFn: any, data: D): Promise<D> {
+    private runValidator<D = any>(validateFn: any, data: D, message: string | null = null): Promise<D> {
         return new Promise((resolve, reject) => {
             if (!validateFn(data)) {
-                reject(validateFn.errors.map((err: any) => {
-                    return new SchemaValidationError(
-                        err.dataPath,
-                        err.keyword,
-                        err.message,
-                        err.params,
-                        err.schemaPath,
-                    );
-                }));
+                let errors: ValidationErrorData[] = validateFn.errors.map((err: any): ValidationErrorData => {
+                    return {
+                        dataPath:   err.dataPath,
+                        keyword:    err.keyword,
+                        message:    err.message,
+                        params:     err.params,
+                        schemaPath: err.schemaPath,
+                    };
+                });
+
+                reject(new SchemaValidationError(message || 'Schema validation failed.', errors));
                 return;
             }
 

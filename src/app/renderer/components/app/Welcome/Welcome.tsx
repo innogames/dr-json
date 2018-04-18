@@ -1,9 +1,9 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
-import {errorToString} from '../../../../../domain/helpers/errorToString';
 import {packageJson} from '../../../../shared/package';
 import {openSelectProject} from '../../../actions/project/openSelectProject';
 import {Button} from '../../common/Button';
+import {ErrorHint} from '../../common/ErrorHint';
 import {If} from '../../helper/If';
 import {Outside} from '../../layout/Outside';
 
@@ -29,7 +29,7 @@ export class Welcome extends React.Component<Props, {}> {
 
                 <If cond={!!this.props.error}>
                     <div className={styles.error}>
-                        {errorToString(this.props.error)}
+                        <ErrorHint error={this.props.error}/>
                     </div>
                 </If>
             </Outside>

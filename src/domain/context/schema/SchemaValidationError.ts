@@ -1,15 +1,32 @@
+export interface ValidationErrorData {
+    dataPath: string;
+    keyword: string;
+    message: string;
+    params: any;
+    schemaPath: string;
+}
+
 export class SchemaValidationError {
     constructor(
-        public readonly dataPath: string,
-        public readonly keyword: string,
         public readonly message: string,
-        public readonly params: any,
-        public readonly schemaPath: string,
+        public readonly errors: ValidationErrorData[],
     ) {
 
     }
 
-    toString(): string {
-        return `${this.dataPath} ${this.message}`.substr(1).trim();
+    public getErrorMessages(): string[] {
+        return this.errors.map(this.errorDataToString);
     }
+
+    private errorDataToString = (data: ValidationErrorData): string => {
+        return `${data.dataPath} ${data.message} ${this.paramsToString(data.params)}`.trim();
+    };
+
+    private paramsToString = (params: any) => {
+        if (!params) {
+            return '';
+        }
+
+        return JSON.stringify(params);
+    };
 }

@@ -1,9 +1,10 @@
-import {dirname, getAbsolutePath, joinPath, relativePath} from '../helpers/value/path';
+import * as path from 'path';
 import {FileInfo} from '../context/fs/FileInfo';
 import {FilesystemInterface} from '../context/fs/FilesystemInterface';
+import {JsonSchemaValidator} from '../context/schema/JsonSchemaValidator';
 import {SchemaConfig} from '../context/schema/SchemaConfig';
 import {jsonBasename} from '../helpers/jsonBasename';
-import {JsonSchemaValidator} from '../context/schema/JsonSchemaValidator';
+import {dirname, getAbsolutePath, joinPath, relativePath} from '../helpers/value/path';
 import {SchemaDir} from '../states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../states/objects/fileTree/SchemaFile';
 import {SchemaFileVariant} from '../states/objects/fileTree/SchemaFileVariant';
@@ -22,7 +23,7 @@ export class SchemaRepo {
 
     public load(file: string, schemaFolder: string): Promise<SchemaConfig> {
         return this.filesystem.readJson<SchemaConfig>(file)
-            .then((schema: SchemaConfig) => this.jsonSchemaValidator.validateSchema(schema))
+            .then((schema: SchemaConfig) => this.jsonSchemaValidator.validateSchema(schema, path.basename(file)))
             .then((schema: SchemaConfig) => this.resolveSchema(schema, file, schemaFolder));
     }
 

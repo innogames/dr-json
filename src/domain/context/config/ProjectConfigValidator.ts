@@ -1,4 +1,3 @@
-import {errorToString} from '../../helpers/errorToString';
 import {ProjectConfigData} from '../../states/objects/ProjectConfig';
 import {JsonSchemaValidator} from '../schema/JsonSchemaValidator';
 
@@ -12,9 +11,6 @@ export class ProjectConfigValidator {
     }
 
     public validate(config: ProjectConfigData): Promise<ProjectConfigData> {
-        return this.jsonSchemaValidator.validate(config, schema)
-            .catch((error: any) => {
-                throw new Error(`File is not a valid Project file. ${errorToString(error)}`);
-            });
+        return this.jsonSchemaValidator.validate(config, schema, 'Invalid project config file.');
     }
 }

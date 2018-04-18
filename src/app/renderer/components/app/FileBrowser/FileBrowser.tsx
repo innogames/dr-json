@@ -1,6 +1,5 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
-import {errorToString} from '../../../../../domain/helpers/errorToString';
 import {EditorState} from '../../../../../domain/states/EditorState';
 import {ActiveFile} from '../../../../../domain/states/objects/editor/ActiveFile';
 import {SchemaFile} from '../../../../../domain/states/objects/fileTree/SchemaFile';
@@ -68,7 +67,7 @@ export class FileBrowser extends React.Component<Props, {}> {
         }
 
         if (activeFile.error) {
-            return <ErrorHint>{errorToString(activeFile.error)}</ErrorHint>;
+            return <ErrorHint error={activeFile.error}/>;
         }
 
         return (
