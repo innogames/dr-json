@@ -13,8 +13,6 @@ export class DataEntries {
     }
 
     getById(entryId: EntryId): DataEntry | null {
-        return this._entries.find((entry: DataEntry) => {
-                return entry.id === entryId;
-            }) || null;
+        return this._entries.find((entry: DataEntry) => entry.id === entryId) || null;
     }
 }

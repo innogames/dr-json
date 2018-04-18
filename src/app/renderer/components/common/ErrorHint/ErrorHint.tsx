@@ -29,10 +29,10 @@ export class ErrorHint extends React.PureComponent<Props, {}> {
             let num = 1;
             return (
                 <>
-                <div>{error.message}</div>
-                {error.getErrorMessages().map((message: string) => {
-                    return <div>{`(${num++}) ${message}`}</div>;
-                })}
+                    <div>{error.message}</div>
+                    {error.getErrorMessages().map((message: string) => {
+                        return <div>{`(${num++}) ${message}`}</div>;
+                    })}
                 </>
             );
         }

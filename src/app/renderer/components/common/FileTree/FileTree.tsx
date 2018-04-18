@@ -2,12 +2,12 @@ import {observer} from 'mobx-react';
 import * as React from 'react';
 import {SchemaDir} from '../../../../../domain/states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../../../../../domain/states/objects/fileTree/SchemaFile';
+import {SchemaTree} from '../../../../../domain/states/objects/fileTree/SchemaTree';
 import {SchemaTreeItem} from '../../../../../domain/states/objects/fileTree/SchemaTreeItem';
 import {If} from '../../helper/If';
 import {Icon} from '../Icon';
 import {Link} from '../Link';
 import styles from './FileTreeStyles.scss';
-import {SchemaTree} from '../../../../../domain/states/objects/fileTree/SchemaTree';
 
 interface Props {
     tree: SchemaTree;

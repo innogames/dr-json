@@ -1,6 +1,6 @@
+import {ProjectConfigValidator} from '../context/config/ProjectConfigValidator';
 import {FilesystemInterface} from '../context/fs/FilesystemInterface';
 import {ProjectConfig, ProjectConfigData} from '../states/objects/ProjectConfig';
-import {ProjectConfigValidator} from '../context/config/ProjectConfigValidator';
 
 export class ProjectRepo {
     constructor(

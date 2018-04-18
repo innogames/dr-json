@@ -31,6 +31,7 @@ interface States {
     projectState: ProjectState;
     settingsState: SettingsState;
 }
+
 export const states: States = {
     editorState:   new EditorState(),
     projectState:  new ProjectState(),

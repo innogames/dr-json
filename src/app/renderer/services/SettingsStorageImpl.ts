@@ -1,4 +1,5 @@
 import {SettingsStorageInterface} from '../../../domain/context/settings/SettingsStorageInterface';
+
 const electronSettings = require('electron-settings');
 
 export class SettingsStorageImpl implements SettingsStorageInterface {

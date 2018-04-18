@@ -1,6 +1,7 @@
 import {app, BrowserWindow, dialog, Event, ipcMain, Menu, shell} from 'electron';
 import {isDev, isMacOS} from '../shared/environment';
 import {packageJson} from '../shared/package';
+
 const electronSettings = require('electron-settings');
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 import WebContents = Electron.WebContents;
@@ -122,7 +123,7 @@ function createMenu() {
         template[0].submenu = [
             {type: 'separator'},
             {role: 'about'},
-            ...submenus
+            ...submenus,
         ];
     }
 
