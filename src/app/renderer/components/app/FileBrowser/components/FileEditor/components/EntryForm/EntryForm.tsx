@@ -1,5 +1,7 @@
+import {toJS} from 'mobx';
 import {observer} from 'mobx-react';
 import * as React from 'react';
+import {SchemaConfig} from '../../../../../../../../../domain/context/schema/SchemaConfig';
 import {trim} from '../../../../../../../../../domain/helpers/value/trim';
 import {ActiveFile} from '../../../../../../../../../domain/states/objects/editor/ActiveFile';
 import {DataEntry, EntryId} from '../../../../../../../../../domain/states/objects/editor/DataEntry';
@@ -19,13 +21,14 @@ export class EntryForm extends React.Component<Props, {}> {
     render() {
         const entry: DataEntry | null = this.props.entry || null;
 
-        const data: any = entry && entry.data ? this.props.entry!.data : {};
+        const data: any            = entry && entry.data ? this.props.entry!.data : {};
+        const schema: SchemaConfig = toJS(this.props.activeFile.schema);
 
         return (
             <SchemaForm
                 className={this.props.className}
-                schema={this.props.activeFile.schema.schema}
-                uiSchema={this.props.activeFile.schema.uiSchema}
+                schema={schema.schema}
+                uiSchema={schema.uiSchema}
                 formData={data}
                 validate={this.validate}
                 onSubmit={this.onSubmit}
