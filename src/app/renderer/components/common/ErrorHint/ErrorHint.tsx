@@ -2,8 +2,10 @@ import * as React from 'react';
 import {SchemaValidationError} from '../../../../../domain/context/schema/SchemaValidationError';
 import styles from './ErrorHintStyles.scss';
 
+type ErrorType = string | Error | SchemaValidationError;
+
 interface Props {
-    error: any;
+    error: ErrorType;
 }
 
 export class ErrorHint extends React.PureComponent<Props, {}> {
@@ -16,25 +18,24 @@ export class ErrorHint extends React.PureComponent<Props, {}> {
         );
     };
 
-    private convertError = (error: any): any => {
+    private convertError = (error: ErrorType): any => {
         if (!error) {
             return '';
         }
 
-        if (error instanceof Error) {
-            return error.message;
-        }
-
         if (error instanceof SchemaValidationError) {
-            let num = 1;
             return (
                 <>
                     <div>{error.message}</div>
-                    {error.getErrorMessages().map((message: string) => {
-                        return <div>{`(${num++}) ${message}`}</div>;
+                    {error.getErrorMessages().map((message: string, idx: number) => {
+                        return <div key={idx}>- {message}</div>;
                     })}
                 </>
             );
+        }
+
+        if (error instanceof Error) {
+            return error.message;
         }
 
         return error.toString();
