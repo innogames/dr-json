@@ -6,6 +6,7 @@ import {SchemaDir} from '../../states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
 import {SchemaTree} from '../../states/objects/fileTree/SchemaTree';
 import {ProjectConfig} from '../../states/objects/ProjectConfig';
+import {ProjectSettings} from '../../states/objects/settings/ProjectSettings';
 import {ProjectState} from '../../states/ProjectState';
 import {SettingsState} from '../../states/SettingsState';
 import {CloseProject} from '../CloseProject';
@@ -31,6 +32,11 @@ beforeEach(() => {
     settingsRepo = new (jest.fn<SettingsRepo>(() => ({
         saveLastProjectFile: jest.fn().mockImplementation(() => {
             return Promise.resolve();
+        }),
+        loadProjectSettings: jest.fn().mockImplementation((): Promise<ProjectSettings> => {
+            return Promise.resolve({
+                collapsedDirs: ['collapsedFolder'],
+            });
         }),
     })));
 
@@ -66,10 +72,6 @@ describe('OpenProject', () => {
                 fileC,
             ]));
         };
-
-        settingsState.setProjectSettings({
-            collapsedDirs: ['collapsedFolder'],
-        });
 
         return useCase.execute(projectFile)
             .then(() => {

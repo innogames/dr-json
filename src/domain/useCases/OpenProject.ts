@@ -6,6 +6,7 @@ import {SchemaTree} from '../states/objects/fileTree/SchemaTree';
 import {SchemaTreeItem} from '../states/objects/fileTree/SchemaTreeItem';
 import {Project} from '../states/objects/Project';
 import {ProjectConfig} from '../states/objects/ProjectConfig';
+import {ProjectSettings} from '../states/objects/settings/ProjectSettings';
 import {ProjectState} from '../states/ProjectState';
 import {SettingsState} from '../states/SettingsState';
 import {CloseProject} from './CloseProject';
@@ -25,6 +26,8 @@ export class OpenProject {
     execute(projectFile: string): Promise<void> {
         return this.closeProject.execute()
             .then(() => this.projectState.setLoading())
+            .then(() => this.settingsRepo.loadProjectSettings(projectFile))
+            .then((settings: ProjectSettings) => this.settingsState.setProjectSettings(settings))
             .then(() => this.projectRepo.loadConfig(projectFile))
             .then((config: ProjectConfig): Promise<Project> => {
                 const project: Project = new Project(projectFile, config, new SchemaTree([]));
