@@ -1,4 +1,3 @@
-import {toJS} from 'mobx';
 import {joinPath} from '../helpers/value/path';
 import {DataRepo} from '../repositories/DataRepo';
 import {DataEntries} from '../states/objects/editor/DataEntries';
@@ -45,7 +44,7 @@ export class CreateVariant {
 
         file.addVariant(new SchemaFileVariant(variantId, variantId, variantFile));
 
-        return this.dataRepo.save(variantFile, toJS(entries.all))
+        return this.dataRepo.save(variantFile, [...entries.all])
             .then(() => this.selectFileVariant.execute(file.basename, variantId));
     }
 
