@@ -11,6 +11,7 @@ import {createEntry} from '../../../../../actions/entries/createEntry';
 import {openCreateEntry} from '../../../../../actions/entries/openCreateEntry';
 import {searchInFile} from '../../../../../actions/entries/searchInFile';
 import {updateEntry} from '../../../../../actions/entries/updateEntry';
+import {selectFile} from '../../../../../actions/selectFile';
 import {selectFileVariant} from '../../../../../actions/selectFileVariant';
 import {closeCreateVariant} from '../../../../../actions/variants/closeCreateVariant';
 import {createVariant} from '../../../../../actions/variants/createVariant';
@@ -74,6 +75,14 @@ export class FileEditor extends React.Component<Props, {}> {
                 </div>
 
                 <Tabs position={TabsPosition.BOTTOM}>
+                    <Tab
+                        active={!this.props.activeFile.variantId}
+                        onClick={() => {
+                            this.onSelectDefaultVariant();
+                        }}
+                    >
+                        Default
+                    </Tab>
                     {this.props.fileVariants.map((variant: SchemaFileVariant) => {
                         return (
                             <Tab
@@ -243,6 +252,10 @@ export class FileEditor extends React.Component<Props, {}> {
 
     private onCloseVariantWindow = () => {
         closeCreateVariant();
+    };
+
+    private onSelectDefaultVariant = () => {
+        selectFile(this.props.activeFile.basename);
     };
 
     private onSelectVariant = (variantId: string) => {
