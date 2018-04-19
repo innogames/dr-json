@@ -54,14 +54,20 @@ export class SchemaRepo {
 
     private fetchFileTree(schemaDir: string): Promise<FileInfo> {
         return this.filesystem.readDir(schemaDir)
-            .then((fileInfo: FileInfo) => {
+            .then((fileInfo: FileInfo | null) => {
+                if (fileInfo == null) {
+                    throw new Error(`schema directory ${schemaDir} doesn't exist.`);
+                }
                 return fileInfo.filterFiles(/\.schema\.json$/).filterEmptyDirs();
             });
     }
 
     private fetchFileVariantIds(variantDir: string): Promise<FileToVariantIds> {
         return this.filesystem.readDir(variantDir)
-            .then((fileInfo: FileInfo) => {
+            .then((fileInfo: FileInfo | null): FileInfo[] => {
+                if (fileInfo == null) {
+                    return [];
+                }
                 return fileInfo.filterFiles(/\.json$/).filterEmptyDirs().children;
             })
             .then((variantDirs: FileInfo[]) => {

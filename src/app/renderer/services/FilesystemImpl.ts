@@ -5,8 +5,13 @@ import {joinPath} from '../../../domain/helpers/value/path';
 
 export class FilesystemImpl implements FilesystemInterface {
 
-    public readDir(dir: string): Promise<FileInfo> {
+    public readDir(dir: string): Promise<FileInfo|null> {
         return new Promise((resolve) => {
+            if(!fs.existsSync(dir)) {
+                resolve(null);
+                return;
+            }
+
             if (!fs.statSync(dir).isDirectory()) {
                 throw new Error(`try to read dir, but dir is not a directory (${dir})`);
             }

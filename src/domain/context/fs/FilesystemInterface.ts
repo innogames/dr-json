@@ -1,7 +1,7 @@
 import {FileInfo} from './FileInfo';
 
 export interface FilesystemInterface {
-    readDir(dir: string): Promise<FileInfo>;
+    readDir(dir: string): Promise<FileInfo | null>;
 
     readJson<R>(file: string): Promise<R>;
 
