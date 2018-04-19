@@ -213,7 +213,7 @@ export class FileEditor extends React.Component<Props, {}> {
     };
 
     private onClickDelete = (entry: DataEntry): void => {
-        confirmDeleteEntry(this.props.activeFile.filename, entry.id!);
+        confirmDeleteEntry(this.props.activeFile.dataFile, entry.id!);
     };
 
     private onClickCopy = (entry: DataEntry): void => {
@@ -221,11 +221,11 @@ export class FileEditor extends React.Component<Props, {}> {
     };
 
     private onSubmitEditForm = (entryId: EntryId | null, entry: DataEntry): Promise<void> => {
-        return updateEntry(this.props.activeFile.filename, entryId, entry);
+        return updateEntry(this.props.activeFile.dataFile, entryId, entry);
     };
 
     private onSubmitCreateForm = (_entryId: EntryId | null, entry: DataEntry): Promise<void> => {
-        return createEntry(this.props.activeFile.filename, entry)
+        return createEntry(this.props.activeFile.dataFile, entry)
             .then(() => {
                 if (!this.props.showFormInline) {
                     this.scrollToBottom();
@@ -238,7 +238,7 @@ export class FileEditor extends React.Component<Props, {}> {
     };
 
     private onCreateVariant = (variantId: string, copyEntries: boolean): Promise<void> => {
-        return createVariant(this.props.activeFile.filename, variantId, copyEntries);
+        return createVariant(this.props.activeFile.basename, variantId, copyEntries);
     };
 
     private onCloseVariantWindow = () => {
@@ -246,7 +246,7 @@ export class FileEditor extends React.Component<Props, {}> {
     };
 
     private onSelectVariant = (variantId: string) => {
-        selectFileVariant(this.props.activeFile.filename, variantId);
+        selectFileVariant(this.props.activeFile.basename, variantId);
     };
 
     private scrollToCreateForm = () => {

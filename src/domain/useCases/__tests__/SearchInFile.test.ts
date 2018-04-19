@@ -16,7 +16,7 @@ describe('SearchInFile', () => {
     it('searches in current file', () => {
         const search: string = 'foo';
 
-        editorState.open(new ActiveFile('file.json'));
+        editorState.open(new ActiveFile('myFile', '/temp/myFile.json'));
 
         return useCase.execute(search)
             .then(() => {

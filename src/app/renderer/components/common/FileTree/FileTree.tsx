@@ -12,7 +12,7 @@ import styles from './FileTreeStyles.scss';
 interface Props {
     tree: SchemaTree;
     className?: string;
-    selectedFilename?: string;
+    selectedBasename?: string;
     onSelectFile?: (file: SchemaFile) => void;
     onSelectDir?: (dir: SchemaDir) => void;
 }
@@ -38,7 +38,7 @@ export class FileTree extends React.Component<Props> {
         let className: string = '';
         let icon: string      = Icon.FILE_O;
 
-        if (this.props.selectedFilename && file.basename == this.props.selectedFilename) {
+        if (this.props.selectedBasename && file.basename == this.props.selectedBasename) {
             className = styles.active;
             icon      = Icon.FILE;
         }

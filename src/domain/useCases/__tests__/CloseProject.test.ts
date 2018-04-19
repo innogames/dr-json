@@ -28,7 +28,7 @@ beforeEach(() => {
 describe('CloseProject', () => {
     it('closes project', () => {
         projectState.setLoaded(new Project('someFile', new ProjectConfig({name: ''}), new SchemaTree([])));
-        editorState.open(new ActiveFile('file.json'));
+        editorState.open(new ActiveFile('myFile', '/temp/myFile.json'));
 
         expect(projectState.hasProject).toBe(true);
         expect(editorState.currentFile).not.toBeNull();

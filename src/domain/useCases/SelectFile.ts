@@ -17,14 +17,14 @@ export class SelectFile {
     ) {
     }
 
-    execute(filename: string): Promise<void> {
-        let activeFile: ActiveFile = new ActiveFile(filename);
-        this.editorState.open(activeFile);
-
-        let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(filename);
+    execute(basename: string): Promise<void> {
+        let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(basename);
         if (!file) {
-            return Promise.reject(`tried to select not existing file ${filename}`);
+            return Promise.reject(`tried to select not existing file ${basename}`);
         }
+
+        let activeFile: ActiveFile = new ActiveFile(basename, file.dataFile);
+        this.editorState.open(activeFile);
 
         return Promise.all<SchemaConfig, DataEntries>([
             this.schemaRepo.load(file.schemaFile, this.projectState.project.schemaPath),

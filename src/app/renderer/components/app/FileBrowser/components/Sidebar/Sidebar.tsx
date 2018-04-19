@@ -37,7 +37,7 @@ export class Sidebar extends React.Component<{}, {}> {
                 </FileTreeButtons>
                 <FileTree
                     tree={this.injected.projectState.project.schemaTree}
-                    selectedFilename={this.injected.editorState.currentFile ? this.injected.editorState.currentFile.filename : undefined}
+                    selectedBasename={this.injected.editorState.currentFile ? this.injected.editorState.currentFile.basename : undefined}
                     onSelectFile={this.onSelectFile}
                     onSelectDir={this.onSelectDir}
                 />

@@ -16,12 +16,12 @@ export class CreateVariant {
     ) {
     }
 
-    execute(filename: string, variantId: string, copyEntries: boolean): Promise<void> {
+    execute(basename: string, variantId: string, copyEntries: boolean): Promise<void> {
         let promise: Promise<DataEntries>;
 
-        let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(filename);
+        let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(basename);
         if (!file) {
-            return Promise.reject(`tried to create variant for not existing file ${filename}`);
+            return Promise.reject(`tried to create variant for not existing file ${basename}`);
         }
 
         if (copyEntries) {

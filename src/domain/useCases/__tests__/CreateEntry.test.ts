@@ -29,16 +29,20 @@ beforeEach(() => {
 
 describe('CreateEntry', () => {
     it('creates entry', () => {
-        editorState.open(new ActiveFile('file.json'));
+        editorState.open(new ActiveFile('myFile', '/temp/myFile.json'));
 
         const newEntry: DataEntry = new DataEntry('three', {key: 'value3'});
 
-        return useCase.execute('file', newEntry)
+        return useCase.execute('/temp/myFile.json', newEntry)
             .then(() => {
                 expect(editorState.currentFile!.entries.all.length).toBe(3);
                 expect(editorState.currentFile!.entries.getById('three')!.data.key).toBe('value3');
 
-                expect(dataRepo.save).toBeCalled();
+                expect(dataRepo.save).toBeCalledWith('/temp/myFile.json', [
+                    new DataEntry('one', {key: 'value1'}),
+                    new DataEntry('two', {key: 'value2'}),
+                    new DataEntry('three', {key: 'value3'}),
+                ]);
             });
     });
 });

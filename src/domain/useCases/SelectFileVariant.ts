@@ -17,19 +17,19 @@ export class SelectFileVariant {
     ) {
     }
 
-    execute(filename: string, variantId: string): Promise<void> {
-        let activeFile: ActiveFile = new ActiveFile(filename, variantId);
-        this.editorState.open(activeFile);
-
-        let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(filename);
+    execute(basename: string, variantId: string): Promise<void> {
+        let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(basename);
         if (!file) {
-            return Promise.reject(`tried to select not existing file ${filename}`);
+            return Promise.reject(`tried to select not existing file ${basename}`);
         }
 
         const dataFile: string | null = file.getVariantFileById(variantId);
         if (!dataFile) {
             throw new Error(`tried to select not existing variant "${variantId}" in ${file.basename}`);
         }
+
+        let activeFile: ActiveFile = new ActiveFile(basename, dataFile, variantId);
+        this.editorState.open(activeFile);
 
         return Promise.all<SchemaConfig, DataEntries>([
             this.schemaRepo.load(file.schemaFile, this.projectState.project.schemaPath),

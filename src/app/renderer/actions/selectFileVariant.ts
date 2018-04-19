@@ -1,5 +1,5 @@
 import {useCases} from '../container';
 
-export function selectFileVariant(filename: string, variantId: string): Promise<void> {
-    return useCases.selectFileVariant.execute(filename, variantId);
+export function selectFileVariant(basename: string, variantId: string): Promise<void> {
+    return useCases.selectFileVariant.execute(basename, variantId);
 }

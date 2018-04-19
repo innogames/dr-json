@@ -29,14 +29,16 @@ beforeEach(() => {
 
 describe('DeleteEntry', () => {
     it('deletes entry', () => {
-        editorState.open(new ActiveFile('file.json'));
+        editorState.open(new ActiveFile('myFile', '/temp/myFile.json'));
 
-        return useCase.execute('file', 'one')
+        return useCase.execute('/temp/myFile.json', 'one')
             .then(() => {
                 expect(editorState.currentFile!.entries.all.length).toBe(1);
                 expect(editorState.currentFile!.entries.getById('two')!.data.key).toBe('value2');
 
-                expect(dataRepo.save).toBeCalled();
+                expect(dataRepo.save).toBeCalledWith('/temp/myFile.json', [
+                    new DataEntry('two', {key: 'value2'})
+                ]);
             });
     });
 });

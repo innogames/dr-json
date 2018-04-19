@@ -49,7 +49,7 @@ describe('SelectFile', () => {
 
         return useCase.execute('myFile')
             .then(() => {
-                expect(editorState.currentFile!.filename).toBe('myFile');
+                expect(editorState.currentFile!.basename).toBe('myFile');
                 expect(editorState.currentFile!.variantId).toBeNull();
                 expect(editorState.currentFile!.isLoading).toBe(false);
                 expect(editorState.currentFile!.error).toBeNull();

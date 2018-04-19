@@ -4,7 +4,8 @@ import {DataEntries} from './DataEntries';
 import {DataEntry} from './DataEntry';
 
 export class ActiveFile {
-    @observable private _filename: string;
+    @observable private _basename: string;
+    @observable private _dataFile: string;
     @observable private _variantId: string | null          = null;
     @observable private _isLoading: boolean                = false;
     @observable private _error: any                        = null;
@@ -14,14 +15,19 @@ export class ActiveFile {
     @observable private _createMode: boolean               = false;
     @observable private _createModeEntry: DataEntry | null = null;
 
-    constructor(filename: string, variantId: string | null = null) {
-        this._filename  = filename;
+    constructor(basename: string, dataFile: string, variantId: string | null = null) {
+        this._basename  = basename;
+        this._dataFile  = dataFile;
         this._variantId = variantId;
         this._isLoading = true;
     }
 
-    get filename(): string {
-        return this._filename;
+    get basename(): string {
+        return this._basename;
+    }
+
+    get dataFile(): string {
+        return this._dataFile;
     }
 
     get variantId(): string | null {

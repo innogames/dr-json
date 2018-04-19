@@ -15,7 +15,7 @@ beforeEach(() => {
 
 describe('OpenCreateEntry', () => {
     it('activated create mode', () => {
-        editorState.open(new ActiveFile('file.json'));
+        editorState.open(new ActiveFile('myFile', '/temp/myFile.json'));
 
         return useCase.execute()
             .then(() => {
@@ -25,7 +25,7 @@ describe('OpenCreateEntry', () => {
     });
 
     it('activated create mode from another entry', () => {
-        editorState.open(new ActiveFile('file.json'));
+        editorState.open(new ActiveFile('myFile', '/temp/myFile.json'));
 
         const byEntry: DataEntry       = new DataEntry('someId', {key: 'someValue'});
         const templateEntry: DataEntry = new DataEntry(null, byEntry.data);

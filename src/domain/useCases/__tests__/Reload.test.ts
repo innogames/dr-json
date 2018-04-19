@@ -59,7 +59,7 @@ describe('Reload', () => {
         const tree = new SchemaTree([file]);
 
         projectState.setLoaded(new Project(projectFile, new ProjectConfig({name: ''}), tree));
-        editorState.open(new ActiveFile(file.basename));
+        editorState.open(new ActiveFile(file.basename, file.dataFile));
 
         return useCase.execute()
             .then(() => {
@@ -81,7 +81,7 @@ describe('Reload', () => {
         const tree = new SchemaTree([file]);
 
         projectState.setLoaded(new Project(projectFile, new ProjectConfig({name: ''}), tree));
-        editorState.open(new ActiveFile(file.basename, selectedVariantId));
+        editorState.open(new ActiveFile(file.basename, file.dataFile, selectedVariantId));
 
         return useCase.execute()
             .then(() => {

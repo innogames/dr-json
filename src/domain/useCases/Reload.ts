@@ -17,18 +17,18 @@ export class Reload {
     }
 
     execute(): Promise<void> {
-        let selectedFile: string;
+        let selectedBasename: string;
         let selectedVariantId: string | null;
 
         if (this.editorState.currentFile) {
-            selectedFile      = this.editorState.currentFile.filename;
+            selectedBasename  = this.editorState.currentFile.basename;
             selectedVariantId = this.editorState.currentFile.variantId;
         }
 
         return this.openProject.execute(this.projectState.project.file)
             .then(() => {
-                if (selectedFile) {
-                    let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(selectedFile);
+                if (selectedBasename) {
+                    let file: SchemaFile | null = this.projectState.project.schemaTree.getFile(selectedBasename);
                     if (file) {
                         if (selectedVariantId && file.getVariantFileById(selectedVariantId)) {
                             return this.selectFileVariant.execute(file.basename, selectedVariantId);

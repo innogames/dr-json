@@ -17,7 +17,7 @@ describe('CloseCreateEntry', () => {
     it('closes create mode', () => {
         const byEntry: DataEntry = new DataEntry('someId', {key: 'someValue'});
 
-        editorState.open(new ActiveFile('file.json'));
+        editorState.open(new ActiveFile('myFile', '/temp/myFile.json'));
         editorState.currentFile!.openCreateMode(byEntry);
 
         return useCase.execute()

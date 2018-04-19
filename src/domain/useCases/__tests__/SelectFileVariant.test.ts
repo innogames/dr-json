@@ -55,7 +55,7 @@ describe('SelectFile', () => {
 
         return useCase.execute('myFile', variantId)
             .then(() => {
-                expect(editorState.currentFile!.filename).toBe('myFile');
+                expect(editorState.currentFile!.basename).toBe('myFile');
                 expect(editorState.currentFile!.variantId).toBe(variantId);
                 expect(editorState.currentFile!.isLoading).toBe(false);
                 expect(editorState.currentFile!.error).toBeNull();

@@ -86,7 +86,7 @@ export class FileBrowser extends React.Component<Props, {}> {
             return [];
         }
 
-        const file: SchemaFile | null = this.injected.projectState.project.schemaTree.getFile(activeFile.filename);
+        const file: SchemaFile | null = this.injected.projectState.project.schemaTree.getFile(activeFile.basename);
         if (!file) {
             return [];
         }
