@@ -1,10 +1,14 @@
 import {app, BrowserWindow, dialog, Event, ipcMain, Menu, shell} from 'electron';
+import {GlobalSettings} from '../../domain/states/objects/settings/GlobalSettings';
 import {isDev, isMacOS} from '../shared/environment';
 import {packageJson} from '../shared/package';
-
-const electronSettings = require('electron-settings');
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 import WebContents = Electron.WebContents;
+
+const electronSettings               = require('electron-settings');
+const globalSettings: GlobalSettings = electronSettings.get('globalSettings') || {
+    inlineForms: false,
+};
 
 let win: BrowserWindow | null;
 const isDevelopment = isDev();
@@ -88,7 +92,7 @@ function createMenu() {
             {
                 label:   'Inline Forms',
                 type:    'checkbox',
-                checked: electronSettings.get('inlineForms'),
+                checked: globalSettings.inlineForms,
                 click:   function () {
                     if (win) {
                         win.webContents.send('toggle-settings-inlineForms');

@@ -9,6 +9,7 @@ import {closeProject} from './actions/project/closeProject';
 import {openProject} from './actions/project/openProject';
 import {reopenLastProject} from './actions/project/reopenLastProject';
 import {changeSettingCollapsedDirs} from './actions/settings/changeSettingCollapsedDirs';
+import {loadGlobalSettings} from './actions/settings/loadGlobalSettings';
 import {toggleSettingInlineForms} from './actions/settings/toggleSettingInlineForms';
 import {App} from './components/app/App';
 import {states} from './container';
@@ -31,6 +32,7 @@ ipcRenderer.on('toggle-settings-inlineForms', () => {
 
 // try to open last project
 reopenLastProject();
+loadGlobalSettings();
 
 // remember the collapsed state of folders in the folder tree, so the states will be the same
 // after closing and opening the application again.

@@ -42,7 +42,8 @@ export class OpenProject {
             })
             .catch((error: any) => {
                 this.projectState.setError(error);
-                return this.settingsRepo.saveLastProjectFile(null);
+                return this.settingsRepo.saveLastProjectFile(null)
+                    .then(() => Promise.reject(error));
             });
     }
 
