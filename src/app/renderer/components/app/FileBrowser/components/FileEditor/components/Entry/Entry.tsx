@@ -1,3 +1,4 @@
+import {observer} from 'mobx-react';
 import * as React from 'react';
 import {DataEntry} from '../../../../../../../../../domain/states/objects/editor/DataEntry';
 import {Button} from '../../../../../../common/Button';
@@ -13,11 +14,17 @@ interface Props {
     onClickCopy?: (entry: DataEntry) => void;
 }
 
-export class Entry extends React.PureComponent<Props, {}> {
+@observer
+export class Entry extends React.Component<Props, {}> {
 
     render() {
         return (
-            <EntryWrapper headline={this.props.entry.id as string || ''}>
+            <EntryWrapper
+                headline={this.props.entry.id as string || ''}
+                collapsible
+                collapsed={this.props.entry.collapsed}
+                onToggleCollapsed={this.toggleCollapsed}
+            >
                 <div className={styles.wrapper}>
                     <EntryJsonData entry={this.props.entry}/>
                     <div className={styles.buttons}>
@@ -46,5 +53,9 @@ export class Entry extends React.PureComponent<Props, {}> {
         if (this.props.onClickCopy) {
             this.props.onClickCopy(this.props.entry);
         }
+    };
+
+    private toggleCollapsed = (collapsed: boolean) => {
+        this.props.entry.setCollapsed(collapsed);
     };
 }

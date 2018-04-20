@@ -7,9 +7,28 @@
   display: flex;
   flex-direction: column;
 
-  h3 {
-    margin: 0 0 .5rem 0;
+  .headline {
     padding: 4px;
     background-color: $color-bg-highlight;
+    display: flex;
+
+    h3 {
+      margin: 0;
+      flex: 1;
+    }
+
+    .collapseToggle {
+      flex: 0;
+      padding: 0 .5rem;
+      align-self: center;
+    }
+  }
+
+  .content {
+    margin-top: .5rem;
+  }
+
+  .collapsed {
+    display: none;
   }
 }
