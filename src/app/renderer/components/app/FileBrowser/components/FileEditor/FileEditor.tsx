@@ -10,6 +10,7 @@ import {confirmDeleteEntry} from '../../../../../actions/entries/confirmDeleteEn
 import {createEntry} from '../../../../../actions/entries/createEntry';
 import {openCreateEntry} from '../../../../../actions/entries/openCreateEntry';
 import {searchInFile} from '../../../../../actions/entries/searchInFile';
+import {toggleCollapseEntries} from '../../../../../actions/entries/toggleCollapseEntries';
 import {updateEntry} from '../../../../../actions/entries/updateEntry';
 import {selectFile} from '../../../../../actions/selectFile';
 import {selectFileVariant} from '../../../../../actions/selectFileVariant';
@@ -65,6 +66,8 @@ export class FileEditor extends React.Component<Props, {}> {
                 <Toolbar
                     onClickAdd={this.onClickAdd}
                     onSearch={this.onSearch}
+                    onCollapseAll={this.onCollapseAll}
+                    onExpandAll={this.onExpandAll}
                 />
 
                 <div className={styles.entries} ref="container">
@@ -275,5 +278,13 @@ export class FileEditor extends React.Component<Props, {}> {
         if (container) {
             container.scrollTop = container.scrollHeight;
         }
+    };
+
+    private onCollapseAll = () => {
+        toggleCollapseEntries(this.props.activeFile, true);
+    };
+
+    private onExpandAll = () => {
+        toggleCollapseEntries(this.props.activeFile, false);
     };
 }

@@ -34,11 +34,14 @@ export class DataEntry {
 
     @action
     toggleEditMode(active: boolean): void {
-        this._editMode = active;
+        this._editMode  = active;
+        this._collapsed = false;
     }
 
     @action
     setCollapsed(collapsed: boolean): void {
-        this._collapsed = collapsed;
+        if (!this._editMode) {
+            this._collapsed = collapsed;
+        }
     }
 }
