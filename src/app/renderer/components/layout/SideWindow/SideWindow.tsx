@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import {ResizeHandle} from '../../common/ResizeHandle';
 import {If} from '../../helper/If';
 import styles from './SideWindowStyles.scss';
 
@@ -15,15 +16,13 @@ interface State {
     parentRight: number;
     parentWidth: number;
     width: number;
-    resizeMode: boolean;
-    resizeFrom: number;
-    resizeWidth: number;
 }
 
 export class SideWindow extends React.PureComponent<Props, State> {
 
     // @ts-ignore: has no initializer
     private parentNode: HTMLElement;
+    private originWidth: number = 400;
 
     constructor(props: Props) {
         super(props);
@@ -33,16 +32,11 @@ export class SideWindow extends React.PureComponent<Props, State> {
             parentLeft:   0,
             parentRight:  0,
             parentWidth:  0,
-            width:        400,
-            resizeMode:   false,
-            resizeFrom:   0,
-            resizeWidth:  0,
+            width:        this.originWidth,
         };
     }
 
     componentDidMount() {
-        document.addEventListener('mousemove', this.handleMouseMove);
-        document.addEventListener('mouseup', this.handleMouseUp);
         window.addEventListener('resize', this.handleResize);
 
         this.parentNode = ReactDOM.findDOMNode(this).parentElement as HTMLElement;
@@ -50,8 +44,6 @@ export class SideWindow extends React.PureComponent<Props, State> {
     }
 
     componentWillUnmount() {
-        document.removeEventListener('mousemove', this.handleMouseMove);
-        document.removeEventListener('mouseup', this.handleMouseUp);
         window.removeEventListener('resize', this.handleResize);
     }
 
@@ -71,15 +63,15 @@ export class SideWindow extends React.PureComponent<Props, State> {
                 </If>
                 <div className={styles.side}
                      style={{
-                         width:    this.state.resizeMode ? this.state.resizeWidth : this.state.width,
+                         width:    this.state.width,
                          maxWidth: this.state.parentWidth,
                          top:      this.state.parentTop,
                          bottom:   this.state.parentBottom,
                          right:    this.state.parentRight,
                      }}
                 >
-                    <div className={styles.sizeHandle}
-                         onMouseDown={this.handleSizeMouseDown}
+                    <ResizeHandle
+                        onChangeValue={this.handleWidthChange}
                     />
                     <div className={[styles.content, this.props.className].join(' ')}>
                         {this.props.children}
@@ -89,40 +81,10 @@ export class SideWindow extends React.PureComponent<Props, State> {
         );
     };
 
-    private handleSizeMouseDown = (event: any) => {
-        event.persist();
+    private handleWidthChange = (offset: number) => {
         this.setState(() => {
             return {
-                resizeMode:  true,
-                resizeFrom:  event.clientX,
-                resizeWidth: this.state.width,
-            };
-        });
-    };
-
-    private handleMouseUp = () => {
-        if (!this.state.resizeMode) {
-            return;
-        }
-
-        this.setState(() => {
-            return {
-                resizeMode: false,
-                width:      this.state.resizeWidth,
-            };
-        });
-    };
-
-    private handleMouseMove = (event: MouseEvent) => {
-        if (!this.state.resizeMode) {
-            return;
-        }
-
-        event.preventDefault();
-
-        this.setState(() => {
-            return {
-                resizeWidth: this.state.width + (this.state.resizeFrom - event.clientX),
+                width: this.originWidth + offset,
             };
         });
     };

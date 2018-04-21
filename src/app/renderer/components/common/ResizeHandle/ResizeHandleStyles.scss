@@ -1,0 +1,7 @@
+@import "../../../config/config";
+
+:local .sizeHandle {
+  flex: 0 0 2px;
+  background-color: $color-border;
+  cursor: col-resize;
+}

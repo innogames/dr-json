@@ -15,12 +15,6 @@
   box-shadow: -6px 0px 15px -6px #555;
   display: flex;
 
-  .sizeHandle {
-    flex: 0 0 2px;
-    background-color: $color-border;
-    cursor: col-resize;
-  }
-
   .content {
     flex: 1;
   }
