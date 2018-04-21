@@ -9,7 +9,7 @@ import {ProjectState} from '../../../../../domain/states/ProjectState';
 import {SettingsState} from '../../../../../domain/states/SettingsState';
 import {ContentHint} from '../../common/ContentHint';
 import {ErrorHint} from '../../common/ErrorHint';
-import {Loader} from '../../common/Loader/Loader';
+import {Loader} from '../../common/Loader';
 import {FileEditor} from './components/FileEditor';
 import {Head} from './components/Head';
 import {Sidebar} from './components/Sidebar';

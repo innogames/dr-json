@@ -2,7 +2,7 @@ import {inject, observer} from 'mobx-react';
 import * as React from 'react';
 import {compareVersion} from '../../../../domain/helpers/value/version';
 import {ProjectState} from '../../../../domain/states/ProjectState';
-import {Loader} from '../common/Loader/Loader';
+import {Loader} from '../common/Loader';
 import {Outside} from '../layout/Outside';
 import {Window} from '../layout/Window';
 import {FileBrowser} from './FileBrowser';
