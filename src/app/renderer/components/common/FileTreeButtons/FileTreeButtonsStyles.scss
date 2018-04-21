@@ -3,13 +3,13 @@
 $btnSize: 25px;
 
 :local .buttons {
+  flex: 0 30px;
   display: flex;
   background-color: $color-primary-dark;
   border-bottom: 1px solid $color-secondary;
 
   & > a {
     flex: 0 $btnSize;
-    height: $btnSize;
     text-align: center;
     color: $color-primary-contrast;
     padding: .2rem;

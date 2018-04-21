@@ -1,8 +1,10 @@
 @import "../../../../../config/config";
 
 :local .sidebar {
-  flex: 0 0 250px;
-  overflow: auto;
+  flex: 0 0 auto;
+  width: 250px;
   background-color: $color-primary;
   color: $color-primary-contrast;
+  display: flex;
+  flex-direction: column;
 }
