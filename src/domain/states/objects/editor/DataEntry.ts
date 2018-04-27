@@ -3,6 +3,7 @@ import {action, observable} from 'mobx';
 export type EntryId = string | number;
 
 export class DataEntry {
+    @observable private _error: any         = null;
     @observable private _editMode: boolean  = false;
     @observable private _collapsed: boolean = false;
 
@@ -20,6 +21,10 @@ export class DataEntry {
         return this._data;
     }
 
+    get error(): any {
+        return this._error;
+    }
+
     get editMode(): boolean {
         return this._editMode;
     }
@@ -30,6 +35,11 @@ export class DataEntry {
 
     toJson(): string {
         return JSON.stringify(this.data);
+    }
+
+    @action
+    setError(error: any): void {
+        this._error = error;
     }
 
     @action

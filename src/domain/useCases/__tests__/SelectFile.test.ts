@@ -1,4 +1,5 @@
 import 'jest';
+import {EntryValidator} from '../../context/data/EntryValidator';
 import {DataRepo} from '../../repositories/DataRepo';
 import {SchemaRepo} from '../../repositories/SchemaRepo';
 import {EditorState} from '../../states/EditorState';
@@ -16,6 +17,7 @@ let editorState: EditorState;
 let projectState: ProjectState;
 let dataRepo: DataRepo;
 let schemaRepo: SchemaRepo;
+let entryValidator: EntryValidator;
 
 beforeEach(() => {
     editorState  = new EditorState();
@@ -38,7 +40,13 @@ beforeEach(() => {
         }),
     })));
 
-    useCase = new SelectFile(editorState, projectState, dataRepo, schemaRepo);
+    entryValidator = new (jest.fn<EntryValidator>(() => ({
+        validate: jest.fn().mockImplementation((entries: DataEntry[]) => {
+            return Promise.resolve(entries);
+        }),
+    })));
+
+    useCase = new SelectFile(editorState, projectState, dataRepo, schemaRepo, entryValidator);
 });
 
 describe('SelectFile', () => {

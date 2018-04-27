@@ -1,11 +1,15 @@
 import * as React from 'react';
-import './IconStyles.scss';
+import styles from './IconStyles.scss';
 
 interface Props {
     value: string;
     className?: string;
-    color?: string;
+    color?: Colors;
     onClick?: () => void;
+}
+
+enum Colors {
+    Danger = styles.colorDanger
 }
 
 export class Icon extends React.Component<Props, {}> {
@@ -29,22 +33,22 @@ export class Icon extends React.Component<Props, {}> {
     static COLLAPSE         = 'collapse';
     static PIN              = 'pin';
     static EXTERNAL_LINK    = 'external-link';
+    static WARNING          = 'warning';
+
+    static Colors = Colors;
 
     render() {
         let classNames = [
             'icon',
             `icon-${this.props.value}`,
+            this.props.className,
+            this.props.color,
         ];
-
-        if (this.props.className) {
-            classNames.push(this.props.className);
-        }
 
         return (
             <span
                 className={classNames.join(' ')}
                 onClick={this.handleClick}
-                style={{color: this.props.color}}
             />
         );
     }

@@ -1,3 +1,4 @@
+@import "../../../../../../../config/config";
 
 :local .wrapper {
   display: flex;
@@ -11,4 +12,9 @@
   button {
     margin-bottom: .3rem;
   }
+}
+
+:local .error {
+  border: 1px dotted $color-danger;
+  margin-bottom: .5rem;
 }

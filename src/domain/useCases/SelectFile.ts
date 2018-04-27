@@ -1,3 +1,4 @@
+import {EntryValidator} from '../context/data/EntryValidator';
 import {SchemaConfig} from '../context/schema/SchemaConfig';
 import {DataRepo} from '../repositories/DataRepo';
 import {SchemaRepo} from '../repositories/SchemaRepo';
@@ -14,6 +15,7 @@ export class SelectFile {
         private projectState: ProjectState,
         private dataRepo: DataRepo,
         private schemaRepo: SchemaRepo,
+        private entryValidator: EntryValidator,
     ) {
     }
 
@@ -31,7 +33,10 @@ export class SelectFile {
             this.dataRepo.load(file.dataFile),
         ])
             .then(([schema, entries]) => {
-                activeFile.setLoaded(schema, entries);
+                return this.entryValidator.validate(entries.all, schema)
+                    .then((entries) => {
+                        activeFile.setLoaded(schema, new DataEntries(entries));
+                    });
             })
             .catch((error: any) => {
                 activeFile.setError(error);

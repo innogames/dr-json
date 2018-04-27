@@ -6,6 +6,7 @@ import styles from './EntryWrapperStyles.scss';
 
 interface Props {
     headline: string;
+    hasError?: boolean;
     collapsible?: boolean;
     collapsed?: boolean;
     onToggleCollapsed?: (collapsed: boolean) => void;
@@ -22,7 +23,7 @@ export class EntryWrapper extends React.PureComponent<Props, {}> {
         return (
             <div className={styles.entry}>
                 <div className={styles.headline}>
-                    <h3>{this.props.headline}</h3>
+                    <h3>{this.props.headline} {this.renderIcon()}</h3>
 
                     <If cond={this.props.collapsible}>
                         <div className={styles.collapseToggle}>
@@ -37,6 +38,16 @@ export class EntryWrapper extends React.PureComponent<Props, {}> {
             </div>
         );
     };
+
+    private renderIcon() {
+        if (!this.props.hasError) {
+            return null;
+        }
+
+        return (
+            <Icon value={Icon.WARNING} color={Icon.Colors.Danger}/>
+        );
+    }
 
     private renderCollapseToggle() {
         if (this.props.collapsed) {

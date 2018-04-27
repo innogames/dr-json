@@ -6,13 +6,14 @@ type ErrorType = string | Error | SchemaValidationError;
 
 interface Props {
     error: ErrorType;
+    className?: string;
 }
 
 export class ErrorHint extends React.PureComponent<Props, {}> {
 
     render() {
         return (
-            <div className={styles.error}>
+            <div className={[styles.error, this.props.className].join(' ')}>
                 {this.convertError(this.props.error)}
             </div>
         );

@@ -5,9 +5,9 @@ import {joinPath} from '../../../domain/helpers/value/path';
 
 export class FilesystemImpl implements FilesystemInterface {
 
-    public readDir(dir: string): Promise<FileInfo|null> {
+    public readDir(dir: string): Promise<FileInfo | null> {
         return new Promise((resolve) => {
-            if(!fs.existsSync(dir)) {
+            if (!fs.existsSync(dir)) {
                 resolve(null);
                 return;
             }
@@ -44,15 +44,16 @@ export class FilesystemImpl implements FilesystemInterface {
     }
 
     public readJsonIfExists<R>(file: string, defaultValue: R): Promise<R> {
-        return new Promise((resolve) => {
-            fs.access(file, fs.constants.F_OK, (err: NodeJS.ErrnoException) => {
-                if (err) {
-                    resolve(defaultValue);
-                } else {
-                    this.readJson<R>(file).then(resolve);
+        return fs.access(file, fs.constants.F_OK)
+            .then(() => true)
+            .catch(() => false)
+            .then((fileExists) => {
+                if (!fileExists) {
+                    return defaultValue;
                 }
+
+                return this.readJson<R>(file);
             });
-        });
     }
 
     public readJsonSync<R = any>(file: string): R {

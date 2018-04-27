@@ -2,7 +2,9 @@ import {observer} from 'mobx-react';
 import * as React from 'react';
 import {DataEntry} from '../../../../../../../../../domain/states/objects/editor/DataEntry';
 import {Button} from '../../../../../../common/Button';
+import {ErrorHint} from '../../../../../../common/ErrorHint';
 import {Icon} from '../../../../../../common/Icon';
+import {If} from '../../../../../../helper/If';
 import {EntryJsonData} from '../EntryJsonData';
 import {EntryWrapper} from '../EntryWrapper';
 import styles from './EntryStyles.scss';
@@ -21,12 +23,18 @@ export class Entry extends React.Component<Props, {}> {
         return (
             <EntryWrapper
                 headline={this.props.entry.id as string || ''}
+                hasError={this.props.entry.error}
                 collapsible
                 collapsed={this.props.entry.collapsed}
                 onToggleCollapsed={this.toggleCollapsed}
             >
+                <If cond={this.props.entry.error}>
+                    <ErrorHint error={this.props.entry.error} className={styles.error}/>
+                </If>
+
                 <div className={styles.wrapper}>
                     <EntryJsonData entry={this.props.entry}/>
+
                     <div className={styles.buttons}>
                         <Button title='Edit' icon={Icon.EDIT} onClick={this.handleClickEdit} primary/>
                         <Button title='Delete' icon={Icon.REMOVE} onClick={this.handleClickDelete} danger/>

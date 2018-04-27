@@ -1,4 +1,5 @@
 import {ProjectConfigValidator} from '../../domain/context/config/ProjectConfigValidator';
+import {EntryValidator} from '../../domain/context/data/EntryValidator';
 import {FilesystemInterface} from '../../domain/context/fs/FilesystemInterface';
 import {JsonSchemaValidator} from '../../domain/context/schema/JsonSchemaValidator';
 import {SettingsStorageInterface} from '../../domain/context/settings/SettingsStorageInterface';
@@ -40,6 +41,7 @@ export const states: States = {
 
 const filesystem: FilesystemInterface                = new FilesystemImpl();
 const jsonSchemaValidator: JsonSchemaValidator       = new JsonSchemaValidator();
+const entryValidator: EntryValidator                 = new EntryValidator(jsonSchemaValidator);
 const projectConfigValidator: ProjectConfigValidator = new ProjectConfigValidator(jsonSchemaValidator);
 const settingsStorage: SettingsStorageInterface      = new SettingsStorageImpl();
 
@@ -58,7 +60,7 @@ const deleteEntry: DeleteEntry               = new DeleteEntry(states.editorStat
 const openCreateEntry: OpenCreateEntry       = new OpenCreateEntry(states.editorState);
 const openCreateVariant: OpenCreateVariant   = new OpenCreateVariant(states.editorState);
 const openProject: OpenProject               = new OpenProject(closeProject, projectRepo, settingsRepo, schemaRepo, states.projectState, states.settingsState);
-const selectFile: SelectFile                 = new SelectFile(states.editorState, states.projectState, dataRepo, schemaRepo);
+const selectFile: SelectFile                 = new SelectFile(states.editorState, states.projectState, dataRepo, schemaRepo, entryValidator);
 const reload: Reload                         = new Reload(states.editorState, states.projectState, openProject, selectFile, selectFileVariant);
 const searchInFile: SearchInFile             = new SearchInFile(states.editorState);
 const updateEntry: UpdateEntry               = new UpdateEntry(states.editorState, dataRepo);
