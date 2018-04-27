@@ -36,8 +36,12 @@ interface Props {
     showFormInline?: boolean;
 }
 
+interface State {
+    showErrorsOnly: boolean;
+}
+
 @observer
-export class FileEditor extends React.Component<Props, {}> {
+export class FileEditor extends React.Component<Props, State> {
 
     private isCreateMode: boolean = false;
 
@@ -46,6 +50,13 @@ export class FileEditor extends React.Component<Props, {}> {
         createForm: EntryForm,
         container: Element
     };
+
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            showErrorsOnly: false,
+        };
+    }
 
     componentDidUpdate() {
         if (this.props.showFormInline
@@ -60,6 +71,7 @@ export class FileEditor extends React.Component<Props, {}> {
     render() {
         let entries: DataEntry[] = this.props.activeFile.entries.all;
         entries                  = filterEntriesBySearch(entries, this.props.activeFile.searchText);
+        let hasErrors: boolean   = this.props.activeFile.entries.hasErrors();
 
         return (
             <div className={styles.editor}>
@@ -68,10 +80,12 @@ export class FileEditor extends React.Component<Props, {}> {
                     onSearch={this.onSearch}
                     onCollapseAll={this.onCollapseAll}
                     onExpandAll={this.onExpandAll}
+                    hasErrors={hasErrors}
+                    onToggleErrors={this.onToggleErrors}
                 />
 
                 <div className={styles.entries} ref="container">
-                    {this.renderEntries(entries)}
+                    {this.renderEntries(entries, hasErrors)}
 
                     {this.renderSidebarEditForm(entries)}
                     {this.renderCreate()}
@@ -113,15 +127,27 @@ export class FileEditor extends React.Component<Props, {}> {
         );
     }
 
-    private renderEntries(entries: DataEntry[]) {
+    private renderEntries(entries: DataEntry[], hasErrors: boolean) {
         if (entries.length === 0 && !this.props.activeFile.isCreateMode) {
             return (
                 <ContentHint>Empty</ContentHint>
             );
         }
 
+        if (hasErrors) {
+            entries = entries.filter(this.filterErrors);
+        }
+
         return entries.map(this.renderEntry);
     }
+
+    private filterErrors = (entry: DataEntry): boolean => {
+        if (this.state.showErrorsOnly && !entry.error) {
+            return false;
+        }
+
+        return !!entry;
+    };
 
     private renderEntry = (entry: DataEntry, idx: number) => {
         if (entry.editMode && this.props.showFormInline) {
@@ -286,5 +312,9 @@ export class FileEditor extends React.Component<Props, {}> {
 
     private onExpandAll = () => {
         toggleCollapseEntries(this.props.activeFile, false);
+    };
+
+    private onToggleErrors = () => {
+        this.setState(() => ({showErrorsOnly: !this.state.showErrorsOnly}));
     };
 }

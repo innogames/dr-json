@@ -15,4 +15,14 @@ export class DataEntries {
     getById(entryId: EntryId): DataEntry | null {
         return this._entries.find((entry: DataEntry) => entry.id === entryId) || null;
     }
+
+    hasErrors(): boolean {
+        for (const entry of this._entries) {
+            if (entry.error) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -4,6 +4,7 @@ import {Button} from '../../../../../../common/Button';
 import {Icon} from '../../../../../../common/Icon';
 import {Link} from '../../../../../../common/Link';
 import {TextField} from '../../../../../../form/TextField';
+import {If} from '../../../../../../helper/If';
 import styles from './ToolbarStyles.scss';
 
 interface Props {
@@ -11,6 +12,8 @@ interface Props {
     onSearch?: (value: string) => void;
     onExpandAll?: () => void;
     onCollapseAll?: () => void;
+    hasErrors?: boolean;
+    onToggleErrors?: () => void;
 }
 
 @observer
@@ -33,6 +36,12 @@ export class Toolbar extends React.Component<Props, {}> {
                     <Link title='Collapse All' onClick={this.props.onCollapseAll} className={styles.btn}>
                         <Icon value={Icon.COLLAPSE}/>
                     </Link>
+
+                    <If cond={this.props.hasErrors}>
+                        <Link title='Show/Hide Errors Only' onClick={this.props.onToggleErrors} className={styles.btn}>
+                            <Icon value={Icon.WARNING} color={Icon.Colors.Danger}/>
+                        </Link>
+                    </If>
                 </div>
 
                 <div className={styles.toolbarRight}>
