@@ -1,5 +1,6 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
+import {SchemaConfig} from '../../../../../../../../../domain/context/schema/SchemaConfig';
 import {DataEntry} from '../../../../../../../../../domain/states/objects/editor/DataEntry';
 import {Button} from '../../../../../../common/Button';
 import {ErrorHint} from '../../../../../../common/ErrorHint';
@@ -11,6 +12,7 @@ import styles from './EntryStyles.scss';
 
 interface Props {
     entry: DataEntry;
+    schema: SchemaConfig;
     onClickEdit?: (entry: DataEntry) => void;
     onClickDelete?: (entry: DataEntry) => void;
     onClickCopy?: (entry: DataEntry) => void;
@@ -33,7 +35,7 @@ export class Entry extends React.Component<Props, {}> {
                 </If>
 
                 <div className={styles.wrapper}>
-                    <EntryJsonData entry={this.props.entry}/>
+                    <EntryJsonData entry={this.props.entry} schema={this.props.schema}/>
 
                     <div className={styles.buttons}>
                         <Button title='Edit' icon={Icon.EDIT} onClick={this.handleClickEdit} primary/>

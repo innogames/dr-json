@@ -162,6 +162,7 @@ export class FileEditor extends React.Component<Props, State> {
             <Entry
                 key={idx}
                 entry={entry}
+                schema={this.props.activeFile.schema}
                 onClickEdit={this.onClickEdit}
                 onClickDelete={this.onClickDelete}
                 onClickCopy={this.onClickCopy}

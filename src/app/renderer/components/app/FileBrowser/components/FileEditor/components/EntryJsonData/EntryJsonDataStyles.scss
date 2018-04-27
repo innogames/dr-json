@@ -53,3 +53,7 @@ $propertiesGap: .5rem;
     margin-bottom: 2px;
   }
 }
+
+:local .fallback {
+  color: $color-danger;
+}
