@@ -1,25 +1,32 @@
-import {SchemaDir} from './SchemaDir';
+import {SchemaDir, sortTreeChildren} from './SchemaDir';
 import {SchemaFile} from './SchemaFile';
 import {SchemaTreeItem} from './SchemaTreeItem';
 
 type ItemMapper = (item: SchemaTreeItem) => SchemaTreeItem;
 
 export class SchemaTree {
+    private _children: SchemaTreeItem[];
+
     constructor(
-        public readonly children: SchemaTreeItem[],
+        children: SchemaTreeItem[],
     ) {
+        this._children = sortTreeChildren(children);
+    }
+
+    public get children(): SchemaTreeItem[] {
+        return this._children;
     }
 
     public map(fn: ItemMapper): SchemaTree {
-        return new SchemaTree(this.mapChildren(this.children, fn));
+        return new SchemaTree(this.mapChildren(this._children, fn));
     }
 
     public getFile(basename: string): SchemaFile | null {
-        return this.findFileRecursive(this.children, basename);
+        return this.findFileRecursive(this._children, basename);
     }
 
     public forEachDir(fn: (dir: SchemaDir) => void): void {
-        this.forEachDirRecursive(this.children, fn);
+        this.forEachDirRecursive(this._children, fn);
     }
 
     private mapChildren(children: SchemaTreeItem[], fn: ItemMapper): SchemaTreeItem[] {
