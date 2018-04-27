@@ -1,0 +1,31 @@
+@import '../../../config/config';
+
+$propertiesGap: .5rem;
+
+:local table.props {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    vertical-align: top;
+    padding: 0 1rem $propertiesGap 0;
+    white-space: nowrap;
+
+    &:after {
+      content: ':';
+      word-wrap: normal;
+    }
+  }
+
+  td {
+    padding: 0 0 $propertiesGap 0;
+    width: 100%;
+  }
+
+  tr:last-child {
+    th, td {
+      padding-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+@import '../../../config/config';
+
+:local .arrayValue {
+  padding-bottom: .2rem;
+  margin-bottom: .2rem;
+  border-bottom: 1px dotted $color-border;
+
+  &:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+
+  .arrayIdx {
+    font-size: .7rem;
+    color: $color-text-light;
+    background-color: rgba($color-primary, .1);
+    margin-bottom: 2px;
+  }
+}
