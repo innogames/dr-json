@@ -38,7 +38,7 @@ export class EntryJsonData extends React.PureComponent<Props, {}> {
     };
 
     private renderValue = (value: any, schema: any, path: string): any => {
-        if (typeof value === 'undefined') {
+        if (typeof value === 'undefined' || value === null) {
             return null;
         }
 
