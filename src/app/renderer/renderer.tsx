@@ -3,6 +3,7 @@ import {configure} from 'mobx';
 import {Provider} from 'mobx-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import {errorToString} from '../../domain/helpers/errorToString';
 import {getAppVersion} from '../shared/version';
 import {closeProject} from './actions/project/closeProject';
 import {openProject} from './actions/project/openProject';
@@ -12,6 +13,13 @@ import {toggleSettingInlineForms} from './actions/settings/toggleSettingInlineFo
 import {App} from './components/app/App';
 import {states} from './container';
 import {rememberSchemaTreeCollapsedState} from './reactions/rememberSchemaTreeCollapsedState';
+
+window.addEventListener('error', (event: ErrorEvent): void => {
+    ipcRenderer.send('handle-error', errorToString(event.error));
+});
+window.addEventListener('unhandledrejection', (event: Event): void => {
+    ipcRenderer.send('handle-error', errorToString((event as PromiseRejectionEvent).reason));
+});
 
 configure({
     enforceActions: true,

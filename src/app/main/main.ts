@@ -1,4 +1,5 @@
 import {app, BrowserWindow, dialog, Event, ipcMain, Menu, shell} from 'electron';
+import {errorToString} from '../../domain/helpers/errorToString';
 import {GlobalSettings} from '../../domain/states/objects/settings/GlobalSettings';
 import {isDev, isMacOS} from '../shared/environment';
 import {packageJson} from '../shared/package';
@@ -12,6 +13,9 @@ const globalSettings: GlobalSettings = electronSettings.get('globalSettings') ||
 
 let win: BrowserWindow | null;
 const isDevelopment = isDev();
+
+process.on('uncaughtException', handleError);
+process.on('unhandledRejection', handleError);
 
 function createWindow() {
     win = new BrowserWindow({width: 1000, height: 800});
@@ -165,8 +169,12 @@ app.on('activate', () => {
     }
 });
 
-ipcMain.on('open-select-project-dialog', function (event: Event) {
+ipcMain.on('open-select-project-dialog', (event: Event): void => {
     openSelectProjectDialog(event.sender);
+});
+
+ipcMain.on('handle-error', (_event: Event, error: any) => {
+    handleError(error);
 });
 
 function openSelectProjectDialog(webContents: WebContents) {
@@ -180,4 +188,11 @@ function openSelectProjectDialog(webContents: WebContents) {
             webContents.send('project-selected', files[0]);
         }
     });
+}
+
+function handleError(error: any): void {
+    dialog.showErrorBox(
+        'Oh no! Something unexpected happened :(',
+        `Please report this to a Dr. Json developer:\n\n${errorToString(error)}`
+    );
 }
