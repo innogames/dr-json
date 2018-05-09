@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Form from 'react-jsonschema-form';
+import {removeOptionalEmptyValues} from '../../../../../domain/helpers/jsonSchema/removeOptionalEmptyValues';
 import {Button} from '../../common/Button';
 import styles from './SchemaFormStyles.scss';
 import {SelectWidget} from './widgets/SelectWidget';
@@ -26,6 +27,20 @@ interface State {
     error: Error | null;
 }
 
+/**
+ * This component is a workaround for this bug until it's fixed:
+ * https://github.com/mozilla-services/react-jsonschema-form/issues/675
+ *
+ * If fixed, remove this component and use Form directly
+ */
+class ReactJsonSchemaForm<T> extends Form<T> {
+    validate(formData: any, schema: any) {
+        formData = removeOptionalEmptyValues(formData, this.props.schema);
+        //@ts-ignore
+        return super.validate(formData, schema);
+    }
+}
+
 export class SchemaForm extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
@@ -46,7 +61,7 @@ export class SchemaForm extends React.PureComponent<Props, State> {
 
         return (
             <div className={[styles.form, this.props.className].join(' ')}>
-                <Form
+                <ReactJsonSchemaForm
                     schema={this.props.schema}
                     uiSchema={this.props.uiSchema || {}}
                     formData={this.props.formData || {}}
@@ -63,7 +78,7 @@ export class SchemaForm extends React.PureComponent<Props, State> {
                         <Button label='Save' type='submit' primary disabled={!Object.keys(this.props.schema).length}/>
                         <Button label='Cancel' type='button' onClick={this.props.onCancel}/>
                     </div>
-                </Form>
+                </ReactJsonSchemaForm>
             </div>
         );
     }
@@ -86,7 +101,7 @@ export class SchemaForm extends React.PureComponent<Props, State> {
 
     private onSubmit = (data: any) => {
         if (this.props.onSubmit) {
-            this.props.onSubmit(data.formData)
+            this.props.onSubmit(removeOptionalEmptyValues(data.formData, this.props.schema))
                 .then(() => {
                     if (this.props.onCancel) {
                         this.props.onCancel();
