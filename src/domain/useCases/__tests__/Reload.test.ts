@@ -1,4 +1,5 @@
 import 'jest';
+import 'reflect-metadata';
 import {EditorState} from '../../states/EditorState';
 import {ActiveFile} from '../../states/objects/editor/ActiveFile';
 import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';

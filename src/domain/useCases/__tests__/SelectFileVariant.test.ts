@@ -1,4 +1,5 @@
 import 'jest';
+import 'reflect-metadata';
 import {DataRepo} from '../../repositories/DataRepo';
 import {SchemaRepo} from '../../repositories/SchemaRepo';
 import {EditorState} from '../../states/EditorState';

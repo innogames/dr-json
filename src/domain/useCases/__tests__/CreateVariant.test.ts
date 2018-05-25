@@ -1,4 +1,5 @@
 import 'jest';
+import 'reflect-metadata';
 import {DataRepo} from '../../repositories/DataRepo';
 import {DataEntries} from '../../states/objects/editor/DataEntries';
 import {DataEntry} from '../../states/objects/editor/DataEntry';

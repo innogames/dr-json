@@ -1,4 +1,5 @@
 import 'jest';
+import 'reflect-metadata';
 import {ProjectRepo} from '../../repositories/ProjectRepo';
 import {SchemaRepo} from '../../repositories/SchemaRepo';
 import {SettingsRepo} from '../../repositories/SettingsRepo';

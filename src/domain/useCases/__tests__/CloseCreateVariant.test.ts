@@ -1,4 +1,5 @@
 import 'jest';
+import 'reflect-metadata';
 import {EditorState} from '../../states/EditorState';
 import {CloseCreateVariant} from '../CloseCreateVariant';
 
