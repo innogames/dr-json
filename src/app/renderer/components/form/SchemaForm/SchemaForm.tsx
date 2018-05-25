@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Form from 'react-jsonschema-form';
 import {removeOptionalEmptyValues} from '../../../../../domain/helpers/jsonSchema/removeOptionalEmptyValues';
+import {setRequiredBoolDefaultValues} from '../../../../../domain/helpers/jsonSchema/setRequiredBoolDefaultValues';
 import {Button} from '../../common/Button';
 import styles from './SchemaFormStyles.scss';
 import {SelectWidget} from './widgets/SelectWidget';
@@ -36,6 +37,7 @@ interface State {
 class ReactJsonSchemaForm<T> extends Form<T> {
     validate(formData: any, schema: any) {
         formData = removeOptionalEmptyValues(formData, this.props.schema);
+        formData = setRequiredBoolDefaultValues(formData, this.props.schema);
         //@ts-ignore
         return super.validate(formData, schema);
     }
@@ -101,7 +103,10 @@ export class SchemaForm extends React.PureComponent<Props, State> {
 
     private onSubmit = (data: any) => {
         if (this.props.onSubmit) {
-            this.props.onSubmit(removeOptionalEmptyValues(data.formData, this.props.schema))
+            data.formData = removeOptionalEmptyValues(data.formData, this.props.schema);
+            data.formData = setRequiredBoolDefaultValues(data.formData, this.props.schema);
+
+            this.props.onSubmit(data.formData)
                 .then(() => {
                     if (this.props.onCancel) {
                         this.props.onCancel();
