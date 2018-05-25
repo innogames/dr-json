@@ -6,6 +6,7 @@
     "moduleResolution": "node",
     "jsx": "react",
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "noEmitOnError": true,
     "noImplicitReturns": true,
@@ -15,7 +16,9 @@
     "removeComments": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true
+    "strict": true,
+    "types": ["reflect-metadata"],
+    "lib": ["es6", "dom"]
   },
   "include": [
     "src"

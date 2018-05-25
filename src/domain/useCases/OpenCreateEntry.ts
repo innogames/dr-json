@@ -1,6 +1,8 @@
+import {injectable} from 'inversify';
 import {EditorState} from '../states/EditorState';
 import {DataEntry} from '../states/objects/editor/DataEntry';
 
+@injectable()
 export class OpenCreateEntry {
 
     constructor(

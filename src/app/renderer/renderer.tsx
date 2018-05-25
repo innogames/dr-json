@@ -3,7 +3,11 @@ import {configure} from 'mobx';
 import {Provider} from 'mobx-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import 'reflect-metadata';
 import {errorToString} from '../../domain/helpers/errorToString';
+import {EditorState} from '../../domain/states/EditorState';
+import {ProjectState} from '../../domain/states/ProjectState';
+import {SettingsState} from '../../domain/states/SettingsState';
 import {getAppVersion} from '../shared/version';
 import {closeProject} from './actions/project/closeProject';
 import {openProject} from './actions/project/openProject';
@@ -11,7 +15,7 @@ import {reopenLastProject} from './actions/project/reopenLastProject';
 import {loadGlobalSettings} from './actions/settings/loadGlobalSettings';
 import {toggleSettingInlineForms} from './actions/settings/toggleSettingInlineForms';
 import {App} from './components/app/App';
-import {states} from './container';
+import {container} from './container';
 import {rememberSchemaTreeCollapsedState} from './reactions/rememberSchemaTreeCollapsedState';
 
 window.addEventListener('error', (event: ErrorEvent): void => {
@@ -43,6 +47,12 @@ loadGlobalSettings();
 
 // install mobx reactions
 rememberSchemaTreeCollapsedState();
+
+const states: any = {
+    editorState:   container.get(EditorState),
+    projectState:  container.get(ProjectState),
+    settingsState: container.get(SettingsState),
+};
 
 ReactDOM.render(
     <Provider {...states}>

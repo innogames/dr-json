@@ -1,8 +1,9 @@
+import {Container} from 'inversify';
 import {ProjectConfigValidator} from '../../domain/context/config/ProjectConfigValidator';
 import {EntryValidator} from '../../domain/context/data/EntryValidator';
-import {FilesystemInterface} from '../../domain/context/fs/FilesystemInterface';
+import {FilesystemId, FilesystemInterface} from '../../domain/context/fs/FilesystemInterface';
 import {JsonSchemaValidator} from '../../domain/context/schema/JsonSchemaValidator';
-import {SettingsStorageInterface} from '../../domain/context/settings/SettingsStorageInterface';
+import {SettingsStorageId, SettingsStorageInterface} from '../../domain/context/settings/SettingsStorageInterface';
 import {DataRepo} from '../../domain/repositories/DataRepo';
 import {ProjectRepo} from '../../domain/repositories/ProjectRepo';
 import {SchemaRepo} from '../../domain/repositories/SchemaRepo';
@@ -27,74 +28,38 @@ import {UpdateEntry} from '../../domain/useCases/UpdateEntry';
 import {FilesystemImpl} from './services/FilesystemImpl';
 import {SettingsStorageImpl} from './services/SettingsStorageImpl';
 
-interface States {
-    editorState: EditorState;
-    projectState: ProjectState;
-    settingsState: SettingsState;
-}
+let container: Container = new Container();
 
-export const states: States = {
-    editorState:   new EditorState(),
-    projectState:  new ProjectState(),
-    settingsState: new SettingsState(),
-};
+// states
+container.bind<EditorState>(EditorState).toSelf().inSingletonScope();
+container.bind<ProjectState>(ProjectState).toSelf().inSingletonScope();
+container.bind<SettingsState>(SettingsState).toSelf().inSingletonScope();
 
-const filesystem: FilesystemInterface                = new FilesystemImpl();
-const jsonSchemaValidator: JsonSchemaValidator       = new JsonSchemaValidator();
-const entryValidator: EntryValidator                 = new EntryValidator(jsonSchemaValidator);
-const projectConfigValidator: ProjectConfigValidator = new ProjectConfigValidator(jsonSchemaValidator);
-const settingsStorage: SettingsStorageInterface      = new SettingsStorageImpl();
+// services
+container.bind<DataRepo>(DataRepo).toSelf().inSingletonScope();
+container.bind<EntryValidator>(EntryValidator).toSelf().inSingletonScope();
+container.bind<FilesystemInterface>(FilesystemId).to(FilesystemImpl).inSingletonScope();
+container.bind<JsonSchemaValidator>(JsonSchemaValidator).toSelf().inSingletonScope();
+container.bind<ProjectConfigValidator>(ProjectConfigValidator).toSelf().inSingletonScope();
+container.bind<ProjectRepo>(ProjectRepo).toSelf().inSingletonScope();
+container.bind<SchemaRepo>(SchemaRepo).toSelf().inSingletonScope();
+container.bind<SettingsRepo>(SettingsRepo).toSelf().inSingletonScope();
+container.bind<SettingsStorageInterface>(SettingsStorageId).to(SettingsStorageImpl).inSingletonScope();
 
-export const settingsRepo: SettingsRepo = new SettingsRepo(settingsStorage);
-const dataRepo: DataRepo                = new DataRepo(filesystem);
-const projectRepo: ProjectRepo          = new ProjectRepo(filesystem, projectConfigValidator);
-const schemaRepo: SchemaRepo            = new SchemaRepo(filesystem, jsonSchemaValidator);
+// use cases
+container.bind<CloseCreateEntry>(CloseCreateEntry).toSelf().inSingletonScope();
+container.bind<CloseCreateVariant>(CloseCreateVariant).toSelf().inSingletonScope();
+container.bind<CloseProject>(CloseProject).toSelf().inSingletonScope();
+container.bind<CreateEntry>(CreateEntry).toSelf().inSingletonScope();
+container.bind<SelectFileVariant>(SelectFileVariant).toSelf().inSingletonScope();
+container.bind<CreateVariant>(CreateVariant).toSelf().inSingletonScope();
+container.bind<DeleteEntry>(DeleteEntry).toSelf().inSingletonScope();
+container.bind<OpenCreateEntry>(OpenCreateEntry).toSelf().inSingletonScope();
+container.bind<OpenCreateVariant>(OpenCreateVariant).toSelf().inSingletonScope();
+container.bind<OpenProject>(OpenProject).toSelf().inSingletonScope();
+container.bind<SelectFile>(SelectFile).toSelf().inSingletonScope();
+container.bind<Reload>(Reload).toSelf().inSingletonScope();
+container.bind<SearchInFile>(SearchInFile).toSelf().inSingletonScope();
+container.bind<UpdateEntry>(UpdateEntry).toSelf().inSingletonScope();
 
-const closeCreateEntry: CloseCreateEntry     = new CloseCreateEntry(states.editorState);
-const closeCreateVariant: CloseCreateVariant = new CloseCreateVariant(states.editorState);
-const closeProject: CloseProject             = new CloseProject(states.projectState, states.editorState, settingsRepo);
-const createEntry: CreateEntry               = new CreateEntry(states.editorState, dataRepo);
-const selectFileVariant: SelectFileVariant   = new SelectFileVariant(states.editorState, states.projectState, dataRepo, schemaRepo);
-const createVariant: CreateVariant           = new CreateVariant(states.projectState, dataRepo, selectFileVariant);
-const deleteEntry: DeleteEntry               = new DeleteEntry(states.editorState, dataRepo);
-const openCreateEntry: OpenCreateEntry       = new OpenCreateEntry(states.editorState);
-const openCreateVariant: OpenCreateVariant   = new OpenCreateVariant(states.editorState);
-const openProject: OpenProject               = new OpenProject(closeProject, projectRepo, settingsRepo, schemaRepo, states.projectState, states.settingsState);
-const selectFile: SelectFile                 = new SelectFile(states.editorState, states.projectState, dataRepo, schemaRepo, entryValidator);
-const reload: Reload                         = new Reload(states.editorState, states.projectState, openProject, selectFile, selectFileVariant);
-const searchInFile: SearchInFile             = new SearchInFile(states.editorState);
-const updateEntry: UpdateEntry               = new UpdateEntry(states.editorState, dataRepo);
-
-interface UseCases {
-    closeCreateEntry: CloseCreateEntry,
-    closeCreateVariant: CloseCreateVariant,
-    closeProject: CloseProject,
-    createEntry: CreateEntry,
-    createVariant: CreateVariant,
-    deleteEntry: DeleteEntry,
-    openCreateEntry: OpenCreateEntry,
-    openCreateVariant: OpenCreateVariant,
-    openProject: OpenProject,
-    reload: Reload,
-    searchInFile: SearchInFile,
-    selectFile: SelectFile,
-    selectFileVariant: SelectFileVariant,
-    updateEntry: UpdateEntry,
-}
-
-export const useCases: UseCases = {
-    closeCreateEntry,
-    closeCreateVariant,
-    closeProject,
-    createEntry,
-    createVariant,
-    deleteEntry,
-    openCreateEntry,
-    openCreateVariant,
-    openProject,
-    reload,
-    searchInFile,
-    selectFile,
-    selectFileVariant,
-    updateEntry,
-};
+export {container};

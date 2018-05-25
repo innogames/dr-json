@@ -1,3 +1,4 @@
+import {injectable} from 'inversify';
 import {joinPath} from '../helpers/value/path';
 import {DataRepo} from '../repositories/DataRepo';
 import {DataEntries} from '../states/objects/editor/DataEntries';
@@ -6,6 +7,7 @@ import {SchemaFileVariant} from '../states/objects/fileTree/SchemaFileVariant';
 import {ProjectState} from '../states/ProjectState';
 import {SelectFileVariant} from './SelectFileVariant';
 
+@injectable()
 export class CreateVariant {
 
     constructor(

@@ -1,7 +1,9 @@
+import {injectable} from 'inversify';
 import {action, observable} from 'mobx';
 import {GlobalSettings} from './objects/settings/GlobalSettings';
 import {ProjectSettings} from './objects/settings/ProjectSettings';
 
+@injectable()
 export class SettingsState {
     @observable private _globalSettings: GlobalSettings = {
         inlineForms: false,

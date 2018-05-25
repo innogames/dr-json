@@ -1,5 +1,8 @@
-import {useCases} from '../../container';
+import {SearchInFile} from '../../../../domain/useCases/SearchInFile';
+import {container} from '../../container';
+
+const useCase: SearchInFile = container.get(SearchInFile);
 
 export function searchInFile(text: string): Promise<void> {
-    return useCases.searchInFile.execute(text);
+    return useCase.execute(text);
 }

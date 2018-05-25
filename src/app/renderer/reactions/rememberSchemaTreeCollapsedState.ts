@@ -1,21 +1,23 @@
 import {reaction} from 'mobx';
 import {SchemaDir} from '../../../domain/states/objects/fileTree/SchemaDir';
+import {ProjectState} from '../../../domain/states/ProjectState';
 import {changeSettingCollapsedDirs} from '../actions/settings/changeSettingCollapsedDirs';
-import {states} from '../container';
+import {container} from '../container';
 
 // remember the collapsed state of folders in the folder tree, so the states will be the same
 // after closing and opening the application again.
+const projectState: ProjectState = container.get(ProjectState);
 
 export function rememberSchemaTreeCollapsedState() {
     reaction(
         () => {
-            if (!states.projectState.hasProject) {
+            if (!projectState.hasProject) {
                 return null;
             }
 
             let collapsed: string[] = [];
 
-            states.projectState.project.schemaTree.forEachDir((dir: SchemaDir) => {
+            projectState.project.schemaTree.forEachDir((dir: SchemaDir) => {
                 if (dir.collapsed) {
                     collapsed.push(dir.basename);
                 }

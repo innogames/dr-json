@@ -1,5 +1,8 @@
-import {useCases} from '../../container';
+import {CloseProject} from '../../../../domain/useCases/CloseProject';
+import {container} from '../../container';
+
+const useCase: CloseProject = container.get(CloseProject);
 
 export function closeProject(): Promise<void> {
-    return useCases.closeProject.execute();
+    return useCase.execute();
 }

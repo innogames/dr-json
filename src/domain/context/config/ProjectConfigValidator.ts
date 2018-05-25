@@ -1,8 +1,10 @@
+import {injectable} from 'inversify';
 import {ProjectConfigData} from '../../states/objects/ProjectConfig';
 import {JsonSchemaValidator} from '../schema/JsonSchemaValidator';
 
 const schema = require('../../../../schemas/project-file-schema.json');
 
+@injectable()
 export class ProjectConfigValidator {
 
     constructor(

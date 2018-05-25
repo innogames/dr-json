@@ -1,10 +1,12 @@
-import {FilesystemInterface} from '../context/fs/FilesystemInterface';
+import {inject, injectable} from 'inversify';
+import {FilesystemId, FilesystemInterface} from '../context/fs/FilesystemInterface';
 import {DataEntries} from '../states/objects/editor/DataEntries';
 import {DataEntry} from '../states/objects/editor/DataEntry';
 
+@injectable()
 export class DataRepo {
     constructor(
-        private filesystem: FilesystemInterface,
+        @inject(FilesystemId) private filesystem: FilesystemInterface,
     ) {
     }
 

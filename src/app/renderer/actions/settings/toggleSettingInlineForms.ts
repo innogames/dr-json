@@ -1,11 +1,16 @@
+import {SettingsRepo} from '../../../../domain/repositories/SettingsRepo';
 import {GlobalSettings} from '../../../../domain/states/objects/settings/GlobalSettings';
-import {settingsRepo, states} from '../../container';
+import {SettingsState} from '../../../../domain/states/SettingsState';
+import {container} from '../../container';
+
+const settingsState: SettingsState = container.get(SettingsState);
+const settingsRepo: SettingsRepo   = container.get(SettingsRepo);
 
 export function toggleSettingInlineForms(): Promise<void> {
     return settingsRepo.updateGlobalSettings((settings: GlobalSettings): GlobalSettings => {
         settings.inlineForms = !settings.inlineForms;
 
-        states.settingsState.setGlobalSettings(settings);
+        settingsState.setGlobalSettings(settings);
 
         return settings;
     });

@@ -1,3 +1,4 @@
+import {injectable} from 'inversify';
 import {ProjectRepo} from '../repositories/ProjectRepo';
 import {SchemaRepo} from '../repositories/SchemaRepo';
 import {SettingsRepo} from '../repositories/SettingsRepo';
@@ -11,6 +12,7 @@ import {ProjectState} from '../states/ProjectState';
 import {SettingsState} from '../states/SettingsState';
 import {CloseProject} from './CloseProject';
 
+@injectable()
 export class OpenProject {
 
     constructor(

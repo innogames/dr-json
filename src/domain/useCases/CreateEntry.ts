@@ -1,8 +1,10 @@
+import {injectable} from 'inversify';
 import {DataRepo} from '../repositories/DataRepo';
 import {EditorState} from '../states/EditorState';
 import {DataEntries} from '../states/objects/editor/DataEntries';
 import {DataEntry} from '../states/objects/editor/DataEntry';
 
+@injectable()
 export class CreateEntry {
 
     constructor(

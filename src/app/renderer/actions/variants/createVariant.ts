@@ -1,5 +1,8 @@
-import {useCases} from '../../container';
+import {CreateVariant} from '../../../../domain/useCases/CreateVariant';
+import {container} from '../../container';
+
+const useCase: CreateVariant = container.get(CreateVariant);
 
 export function createVariant(basename: string, variantId: string, copyEntries: boolean): Promise<void> {
-    return useCases.createVariant.execute(basename, variantId, copyEntries);
+    return useCase.execute(basename, variantId, copyEntries);
 }

@@ -1,11 +1,12 @@
+import {injectable} from 'inversify';
 import {action, observable} from 'mobx';
 import {Project} from './objects/Project';
 
+@injectable()
 export class ProjectState {
     @observable private _project: Project | null = null;
     @observable private _isLoading: boolean      = false;
     @observable private _error: any              = null;
-
 
     @action
     setLoading(): void {

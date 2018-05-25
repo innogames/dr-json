@@ -1,7 +1,9 @@
+import {injectable} from 'inversify';
 import {DataEntry} from '../../states/objects/editor/DataEntry';
 import {JsonSchemaValidator} from '../schema/JsonSchemaValidator';
 import {SchemaConfig} from '../schema/SchemaConfig';
 
+@injectable()
 export class EntryValidator {
 
     constructor(

@@ -1,5 +1,7 @@
 import {FileInfo} from './FileInfo';
 
+export const FilesystemId: symbol = Symbol();
+
 export interface FilesystemInterface {
     readDir(dir: string): Promise<FileInfo | null>;
 

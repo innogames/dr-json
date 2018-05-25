@@ -1,3 +1,4 @@
+import {injectable} from 'inversify';
 import {SchemaConfig} from './SchemaConfig';
 import {SchemaValidationError, ValidationErrorData} from './SchemaValidationError';
 
@@ -13,6 +14,7 @@ try {
     throw new Error(`data-schema.schema.json is invalid: ${error}`);
 }
 
+@injectable()
 export class JsonSchemaValidator {
 
     public validate = <D = any, S = any>(data: D, schema: S, message: string | null = null): Promise<D> => {

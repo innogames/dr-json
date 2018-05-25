@@ -1,6 +1,8 @@
+import {injectable} from 'inversify';
 import {action, observable} from 'mobx';
 import {ActiveFile} from './objects/editor/ActiveFile';
 
+@injectable()
 export class EditorState {
     @observable private _activeFiles: ActiveFile[] = [];
     @observable private _isAddVariantMode: boolean = false;

@@ -1,3 +1,4 @@
+import {injectable} from 'inversify';
 import {EditorState} from '../states/EditorState';
 import {SchemaFile} from '../states/objects/fileTree/SchemaFile';
 import {ProjectState} from '../states/ProjectState';
@@ -5,6 +6,7 @@ import {OpenProject} from './OpenProject';
 import {SelectFile} from './SelectFile';
 import {SelectFileVariant} from './SelectFileVariant';
 
+@injectable()
 export class Reload {
 
     constructor(

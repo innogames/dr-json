@@ -1,3 +1,5 @@
+export const SettingsStorageId: symbol = Symbol();
+
 export interface SettingsStorageInterface {
     load<R>(name: string, defaultValue: R): R;
 

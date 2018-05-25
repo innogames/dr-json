@@ -1,8 +1,10 @@
 import * as fs from 'fs-extra';
+import {injectable} from 'inversify';
 import {FileInfo} from '../../../domain/context/fs/FileInfo';
 import {FilesystemInterface} from '../../../domain/context/fs/FilesystemInterface';
 import {joinPath} from '../../../domain/helpers/value/path';
 
+@injectable()
 export class FilesystemImpl implements FilesystemInterface {
 
     public readDir(dir: string): Promise<FileInfo | null> {

@@ -1,5 +1,8 @@
-import {useCases} from '../container';
+import {SelectFile} from '../../../domain/useCases/SelectFile';
+import {container} from '../container';
+
+const useCase: SelectFile = container.get(SelectFile);
 
 export function selectFile(filename: string): Promise<void> {
-    return useCases.selectFile.execute(filename);
+    return useCase.execute(filename);
 }

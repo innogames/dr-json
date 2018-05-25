@@ -1,3 +1,4 @@
+import {injectable} from 'inversify';
 import {EntryValidator} from '../context/data/EntryValidator';
 import {SchemaConfig} from '../context/schema/SchemaConfig';
 import {DataRepo} from '../repositories/DataRepo';
@@ -8,6 +9,7 @@ import {DataEntries} from '../states/objects/editor/DataEntries';
 import {SchemaFile} from '../states/objects/fileTree/SchemaFile';
 import {ProjectState} from '../states/ProjectState';
 
+@injectable()
 export class SelectFile {
 
     constructor(

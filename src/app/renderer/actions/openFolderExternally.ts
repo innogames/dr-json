@@ -1,6 +1,9 @@
 import {shell} from 'electron';
-import {states} from '../container';
+import {ProjectState} from '../../../domain/states/ProjectState';
+import {container} from '../container';
+
+const projectState: ProjectState = container.get(ProjectState);
 
 export function openFolderExternally(): void {
-    shell.openExternal(`file://${states.projectState.project.rootPath}`);
+    shell.openExternal(`file://${projectState.project.rootPath}`);
 }

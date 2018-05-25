@@ -1,4 +1,5 @@
-import {SettingsStorageInterface} from '../context/settings/SettingsStorageInterface';
+import {inject, injectable} from 'inversify';
+import {SettingsStorageId, SettingsStorageInterface} from '../context/settings/SettingsStorageInterface';
 import {GlobalSettings} from '../states/objects/settings/GlobalSettings';
 import {ProjectSettings} from '../states/objects/settings/ProjectSettings';
 
@@ -8,10 +9,11 @@ interface ProjectSetting {
     settings: ProjectSettings;
 }
 
+@injectable()
 export class SettingsRepo {
 
     constructor(
-        private storage: SettingsStorageInterface,
+        @inject(SettingsStorageId) private storage: SettingsStorageInterface,
     ) {
     }
 

@@ -1,6 +1,7 @@
+import {inject, injectable} from 'inversify';
 import * as path from 'path';
 import {FileInfo} from '../context/fs/FileInfo';
-import {FilesystemInterface} from '../context/fs/FilesystemInterface';
+import {FilesystemId, FilesystemInterface} from '../context/fs/FilesystemInterface';
 import {JsonSchemaValidator} from '../context/schema/JsonSchemaValidator';
 import {SchemaConfig} from '../context/schema/SchemaConfig';
 import {jsonBasename} from '../helpers/jsonBasename';
@@ -13,10 +14,11 @@ import {SchemaTreeItem} from '../states/objects/fileTree/SchemaTreeItem';
 
 type FileToVariantIds = Map<string, string[]>;
 
+@injectable()
 export class SchemaRepo {
 
     constructor(
-        private filesystem: FilesystemInterface,
+        @inject(FilesystemId) private filesystem: FilesystemInterface,
         private jsonSchemaValidator: JsonSchemaValidator,
     ) {
     }

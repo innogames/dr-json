@@ -1,10 +1,12 @@
+import {inject, injectable} from 'inversify';
 import {ProjectConfigValidator} from '../context/config/ProjectConfigValidator';
-import {FilesystemInterface} from '../context/fs/FilesystemInterface';
+import {FilesystemId, FilesystemInterface} from '../context/fs/FilesystemInterface';
 import {ProjectConfig, ProjectConfigData} from '../states/objects/ProjectConfig';
 
+@injectable()
 export class ProjectRepo {
     constructor(
-        private filesystem: FilesystemInterface,
+        @inject(FilesystemId) private filesystem: FilesystemInterface,
         private projectConfigValidator: ProjectConfigValidator,
     ) {
     }

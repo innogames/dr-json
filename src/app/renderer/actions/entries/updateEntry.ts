@@ -1,6 +1,9 @@
 import {DataEntry, EntryId} from '../../../../domain/states/objects/editor/DataEntry';
-import {useCases} from '../../container';
+import {UpdateEntry} from '../../../../domain/useCases/UpdateEntry';
+import {container} from '../../container';
+
+const useCase: UpdateEntry = container.get(UpdateEntry);
 
 export function updateEntry(file: string, entryId: EntryId | null, newEntry: DataEntry): Promise<void> {
-    return useCases.updateEntry.execute(file, entryId, newEntry);
+    return useCase.execute(file, entryId, newEntry);
 }
