@@ -1,7 +1,7 @@
 # JSON-Schema
 
 A JSON schema defines the structure of one entry in the JSON data file.
-In general, it follows the rules of the [JSON Schema definition](http://json-schema.org/JSON-Schemaa.md) but with some
+In general, it follows the rules of the [JSON Schema definition](http://json-schema.org/) but with some
 additional features (And some features of JSON Schema are not supported).
 
 ## Root object
