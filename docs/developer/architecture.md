@@ -26,11 +26,11 @@ The main **entry points** into the domain layer are so called "[Use Cases](../..
 **Each action** the user can do is represented by a UseCase class.
 Use Cases are executed asynchronously and just return a `Promise<void>`. Internally they change the application state.
 
-The application **state** consists of observable objects and contains all information about the current state
-(like current project, opened file and entries, UI states, ..).
-So everyone can subscribe and get notified when the state changes.
+The application **state** consists of observable objects (using [MobX](https://mobx.js.org)) and contains all information about the current state
+(like current project, opened file and entries, UI states, etc.).
+Everyone can subscribe and get notified when the state changes.
 
-![Domain Layer](../img/domain-layer.png)
+![Domain Layer](../img/layers.png)
 
 
 
@@ -53,3 +53,5 @@ components based on the application state (the state of the domain layer).
 
 On user input, the application layer executes a UseCase from the domain layer which changes the state.
 The React components observe the state and automatically re-render when the state changes.
+
+![App flow](../img/app-flow.png)

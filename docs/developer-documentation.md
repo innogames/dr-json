@@ -29,3 +29,7 @@ Clone this repository, go to the root folder of this project and run `yarn` to i
 - [MobX](https://mobx.js.org) (to store application state in observable objects)
 - [InversifyJS](http://inversify.io/) (dependency injection container)
 - [Jest](https://facebook.github.io/jest) (Testing framework)
+
+## Architecture / Layers
+
+See details about the [Architecture and Layers here](./developer/architecture.md).
