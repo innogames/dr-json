@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/innogames/dr-json.svg?branch=master)](https://travis-ci.org/innogames/dr-json)
+
 # What is Dr. Json?
 
 It's a native application for Win/iOS that gives you the possibility to manage JSON files based on JSON Schemas.
