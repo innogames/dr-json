@@ -144,6 +144,12 @@ function createMenu() {
                     shell.openExternal(packageJson.downloadUrl);
                 },
             },
+            {
+                label: 'Open Documentation',
+                click: function () {
+                    shell.openExternal(packageJson.documentationUrl);
+                },
+            },
         ],
     });
 

@@ -15,6 +15,10 @@ class PackageJson {
     get downloadUrl(): string {
         return this.data.homepage + '/releases';
     }
+
+    get documentationUrl(): string {
+        return this.data.homepage + '/blob/master/README.md';
+    }
 }
 
 export let packageJson = new PackageJson(jsonData);
