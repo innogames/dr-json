@@ -3,14 +3,14 @@ osx_image: xcode9.3
 language: node_js
 node_js: '8'
 env:
-  - ELECTRON_CACHE=$HOME/.cache/electron ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+- ELECTRON_CACHE=$HOME/.cache/electron ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
 cache:
   yarn: true
   directories:
-    - node_modules
-    - $HOME/.cache/electron
-    - $HOME/.cache/electron-builder
+  - node_modules
+  - "$HOME/.cache/electron"
+  - "$HOME/.cache/electron-builder"
 
 install: yarn
 
@@ -19,12 +19,12 @@ script:
 - yarn run dist
 
 before_cache:
-  - rm -rf $HOME/.cache/electron-builder/wine
+- rm -rf $HOME/.cache/electron-builder/wine
 
 deploy:
   provider: releases
   api_key:
-    secure: TSfS+wstR6jqX8N8rw36TwsFOfWhcaCNwovuoXZP/v5FX29Oc3nb/ZhWn0UvdnMHytNGZdO4+cRYJeM0fLW5gx5oMm7ZcdgLlDGWd64mFGbxqly8+6aFkCT0VKBzusNOzqs2ImSPSkc1X0aCNNLYmbwXF2CmN6ACHCj66ekyHXj/XADEcJYv8QZ4xo7W9nC83wgQYGolGQxRX0nhzBHez0dCPA5SocCE4GMEKB4xxYH3o6FGBq/CG1WC+xxGqIKLKYmLRGYUTSLmBqGB2kQUz9o1zDDMWwyRyqsn/Z4i2FRs91QGG76J/JcFTM/RbZvguV9v6NryKWODE9hb3fAjWlT7yNr43leOP5SI4mLyDCqXGziTtXHSHOgqaBADesD36eEfWLWVIKIFwJLJ3avcOd0wnAY+WZBFeJzVnBDNvz2gkrVnXnJ5ZFgezj/oGMbNCebPz1hfMB7sSxfHmoIsqRlDB4belx6IxjykrKu2m/GcdiAR5ZSuP/Ou03TDXdEKQqjsLGAoTDLvPMPiL5Gn/fetZchZf8DGoG/RwsihJQcEw8oZd4dOMBZ9GwvApfRwbzGtTO6ki7HxDzZA1FwgisWvoYmxZuVOFULch4mw2WiBGxmFBHlyW3yjMmvtHl39ceiQxIlZ/A2zc1MhqISAF9V8NufP9OwfUAydy+M7jy0=
+    secure: HLF2jYA18K7GxxfVVuEwc4FrJnW9oHA0k8ioWAapatWshP7acPFC/g3laINhe0vZp+oZfXx1R8XtHzESVESrD19hL5dOorT4rN6Hcm5uh3Cp/V1HlpGhPoAsc4sw+MwCWfSnR5s0UPY8rFOdrS/vCOKAwJdZ6raWD+lKJUMR2Os8pZViWC3UzxNoiElYmK1HOUr8LuECu0Ti87RRHGQn0xI58yyapFr5H/P6GHWTXiPqONdcJnXn4q3cLZvuxFDafSJTOvJ36zQY+mCfyV3jtIBtXlDsPAOtXZj1Vx0swXh1Fo3Mfxq15hfM86GcPIA0c/kVJE+5LHdxjtqaxYmP+w9XCPSjo3h96cpNehILNpXMFFcfLg1y6Ei8uRVuB6Zh2Ksn9tDHgcs6+VH/lxtiSD/N8YUbXo6Vf5A7iXZsWYLwMH6diIcHpDd7N7i0Dv1EFihuMxdc0pobMgdC4OPBMD4NJHqD/SGIsgBgqU5LKKKRjfnrsABAkX3tXOaHt/8FPIZY91V9doLd7NOcVaXvVMoQ09jvHm/YnV8wbhDGWUTxHCCFAdXrxsXE1nNplMLByT7+75/oFnj37jBbGf+zKf2GB41qORkRCQp17l0GSnDqsnjbKmW9HyPw4wlHrWRdvQ24yHcNwGciTRdA6XvWgvc25MDjNZen0//3kmpGM+A=
   file_glob: true
   file: dist/upload/*
   skip_cleanup: true
