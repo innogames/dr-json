@@ -1,14 +1,34 @@
-sudo: false
-
+os: osx
+osx_image: xcode9.3
 language: node_js
-node_js: "8"
+node_js: '8'
+env:
+  - ELECTRON_CACHE=$HOME/.cache/electron ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
-cache: yarn
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
 
 install: yarn
 
-jobs:
-  include:
-    - stage: test
-      script:
-      - yarn test
+script:
+- yarn test
+- yarn run dist
+
+before_cache:
+  - rm -rf $HOME/.cache/electron-builder/wine
+
+deploy:
+  provider: releases
+  api_key:
+    secure: TSfS+wstR6jqX8N8rw36TwsFOfWhcaCNwovuoXZP/v5FX29Oc3nb/ZhWn0UvdnMHytNGZdO4+cRYJeM0fLW5gx5oMm7ZcdgLlDGWd64mFGbxqly8+6aFkCT0VKBzusNOzqs2ImSPSkc1X0aCNNLYmbwXF2CmN6ACHCj66ekyHXj/XADEcJYv8QZ4xo7W9nC83wgQYGolGQxRX0nhzBHez0dCPA5SocCE4GMEKB4xxYH3o6FGBq/CG1WC+xxGqIKLKYmLRGYUTSLmBqGB2kQUz9o1zDDMWwyRyqsn/Z4i2FRs91QGG76J/JcFTM/RbZvguV9v6NryKWODE9hb3fAjWlT7yNr43leOP5SI4mLyDCqXGziTtXHSHOgqaBADesD36eEfWLWVIKIFwJLJ3avcOd0wnAY+WZBFeJzVnBDNvz2gkrVnXnJ5ZFgezj/oGMbNCebPz1hfMB7sSxfHmoIsqRlDB4belx6IxjykrKu2m/GcdiAR5ZSuP/Ou03TDXdEKQqjsLGAoTDLvPMPiL5Gn/fetZchZf8DGoG/RwsihJQcEw8oZd4dOMBZ9GwvApfRwbzGtTO6ki7HxDzZA1FwgisWvoYmxZuVOFULch4mw2WiBGxmFBHlyW3yjMmvtHl39ceiQxIlZ/A2zc1MhqISAF9V8NufP9OwfUAydy+M7jy0=
+  file_glob: true
+  file: dist/upload/*
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: innogames/dr-json
+    condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+
