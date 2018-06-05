@@ -20,6 +20,23 @@ Clone this repository, go to the root folder of this project and run `yarn` to i
 | `yarn run dist` | Create executable binaries for Mac and Windows
 
 
+## Create new release
+
+1. Update the version by executing one of the following commands:
+  ```bash
+  yarn version --major
+  yarn version --minor
+  yarn version --patch
+  ```
+
+  > This will update the version in **package.json** as well as creating a new **git tag**.
+
+2. Run `git push --tags`. Now the new version will be created by [TravisCI](https://travis-ci.org/innogames/dr-json) automatically.
+
+3. When the build is done, add the changelog to the release description of the [latest release here](https://github.com/innogames/dr-json/releases)
+(You need to write the changelog manually by checking the commits. There is no automatic solution right now).
+
+
 ## Tech stack
 
 - [Typescript](https://www.typescriptlang.org/) (Typed JavaScript)
