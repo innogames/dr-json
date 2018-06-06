@@ -1,5 +1,5 @@
 export function setRequiredBoolDefaultValues(data: any, schema: any): any {
-    if (schema.type == 'object') {
+    if (schema.type == 'object' && data) {
         let required: string[] = schema.required || [];
 
         if (schema.properties) {
@@ -15,7 +15,7 @@ export function setRequiredBoolDefaultValues(data: any, schema: any): any {
                 data = {...data, [prop]: val};
             });
         }
-    } else if (schema.type == 'array') {
+    } else if (schema.type == 'array' && Array.isArray(data)) {
         data = (data as any[])
             .map((item): any => {
                 if (schema.items) {
