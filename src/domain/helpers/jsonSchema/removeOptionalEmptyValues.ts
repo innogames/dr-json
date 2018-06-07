@@ -1,7 +1,7 @@
 import {isNestedEmpty} from '../value/object';
 
 export function removeOptionalEmptyValues(data: any, schema: any): any {
-    if (schema.type == 'object') {
+    if (schema.type == 'object' && data) {
         let required: string[] = schema.required || [];
 
         Object.keys(data).forEach((prop: string) => {
@@ -15,7 +15,7 @@ export function removeOptionalEmptyValues(data: any, schema: any): any {
 
             data = {...data, [prop]: newVal};
         });
-    } else if (schema.type == 'array') {
+    } else if (schema.type == 'array' && Array.isArray(data)) {
         data = (data as any[])
             .map((item): any => {
                 if (schema.items) {
