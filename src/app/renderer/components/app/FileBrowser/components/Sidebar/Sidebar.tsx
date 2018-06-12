@@ -12,6 +12,8 @@ import {FileTreeButtons} from '../../../../common/FileTreeButtons';
 import {Icon} from '../../../../common/Icon';
 import {Link} from '../../../../common/Link';
 import styles from './SidebarStyles.scss';
+import {SchemaFileVariant} from "../../../../../../../domain/states/objects/fileTree/SchemaFileVariant";
+import {selectFileVariant} from "../../../../../actions/selectFileVariant";
 
 interface Injected {
     projectState: ProjectState;
@@ -38,7 +40,9 @@ export class Sidebar extends React.Component<{}, {}> {
                 <FileTree
                     tree={this.injected.projectState.project.schemaTree}
                     selectedBasename={this.injected.editorState.currentFile ? this.injected.editorState.currentFile.basename : undefined}
+                    selectedVariantId={this.injected.editorState.currentFile ? this.injected.editorState.currentFile.variantId : undefined}
                     onSelectFile={this.onSelectFile}
+                    onSelectFileVariant={this.onSelectFileVariant}
                     onSelectDir={this.onSelectDir}
                 />
             </div>
@@ -47,6 +51,10 @@ export class Sidebar extends React.Component<{}, {}> {
 
     private onSelectFile = (file: SchemaFile) => {
         selectFile(file.basename);
+    };
+
+    private onSelectFileVariant = (basename: string, file: SchemaFileVariant) => {
+        selectFileVariant(basename, file.variantId);
     };
 
     private onSelectDir = (dir: SchemaDir) => {

@@ -9,6 +9,7 @@ import styles from './ToolbarStyles.scss';
 
 interface Props {
     onClickAdd: () => void;
+    onClickAddVariant: () => void;
     onSearch?: (value: string) => void;
     onExpandAll?: () => void;
     onCollapseAll?: () => void;
@@ -44,6 +45,9 @@ export class Toolbar extends React.Component<Props, {}> {
                     </If>
                 </div>
 
+                <div className={styles.toolbarRight}>
+                    <Button icon={Icon.PLUS} label='Add Variant' onClick={this.props.onClickAddVariant} primary/>
+                </div>
                 <div className={styles.toolbarRight}>
                     <Button icon={Icon.PLUS} label='Add' onClick={this.props.onClickAdd} primary/>
                 </div>

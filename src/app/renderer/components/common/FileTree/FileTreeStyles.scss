@@ -43,6 +43,23 @@
           height: 10px;
         }
       }
+
+      &.variant {
+        line-height: 1.2rem;
+
+        a {
+          &.variantActive {
+            color: #333333 !important;
+            font-size: .8rem;
+          }
+
+          &.variantInactive {
+            color: #cccccc !important;
+            font-size: .8rem;
+          }
+        }
+      }
+
     }
 
     a {

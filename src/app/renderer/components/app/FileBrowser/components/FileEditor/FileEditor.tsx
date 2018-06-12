@@ -12,13 +12,10 @@ import {openCreateEntry} from '../../../../../actions/entries/openCreateEntry';
 import {searchInFile} from '../../../../../actions/entries/searchInFile';
 import {toggleCollapseEntries} from '../../../../../actions/entries/toggleCollapseEntries';
 import {updateEntry} from '../../../../../actions/entries/updateEntry';
-import {selectFile} from '../../../../../actions/selectFile';
-import {selectFileVariant} from '../../../../../actions/selectFileVariant';
 import {closeCreateVariant} from '../../../../../actions/variants/closeCreateVariant';
 import {createVariant} from '../../../../../actions/variants/createVariant';
 import {openCreateVariant} from '../../../../../actions/variants/openCreateVariant';
 import {ContentHint} from '../../../../common/ContentHint';
-import {Tab, Tabs, TabsPosition} from '../../../../common/Tabs';
 import {If} from '../../../../helper/If';
 import {SideWindow} from '../../../../layout/SideWindow';
 import {Entry} from './components/Entry';
@@ -77,6 +74,7 @@ export class FileEditor extends React.Component<Props, State> {
             <div className={styles.editor}>
                 <Toolbar
                     onClickAdd={this.onClickAdd}
+                    onClickAddVariant={this.onClickAddVariant}
                     onSearch={this.onSearch}
                     onCollapseAll={this.onCollapseAll}
                     onExpandAll={this.onExpandAll}
@@ -90,31 +88,6 @@ export class FileEditor extends React.Component<Props, State> {
                     {this.renderSidebarEditForm(entries)}
                     {this.renderCreate()}
                 </div>
-
-                <Tabs position={TabsPosition.BOTTOM}>
-                    <Tab
-                        active={!this.props.activeFile.variantId}
-                        onClick={() => {
-                            this.onSelectDefaultVariant();
-                        }}
-                    >
-                        Default
-                    </Tab>
-                    {this.props.fileVariants.map((variant: SchemaFileVariant) => {
-                        return (
-                            <Tab
-                                key={variant.variantId}
-                                active={variant.variantId == this.props.activeFile.variantId}
-                                onClick={() => {
-                                    this.onSelectVariant(variant.variantId);
-                                }}
-                            >
-                                {variant.label}
-                            </Tab>
-                        );
-                    })}
-                    <Tab onClick={this.onClickAddVariant}>+</Tab>
-                </Tabs>
 
                 <If cond={this.props.isAddVariantMode}>
                     <VariantWindow
@@ -282,14 +255,6 @@ export class FileEditor extends React.Component<Props, State> {
 
     private onCloseVariantWindow = () => {
         closeCreateVariant();
-    };
-
-    private onSelectDefaultVariant = () => {
-        selectFile(this.props.activeFile.basename);
-    };
-
-    private onSelectVariant = (variantId: string) => {
-        selectFileVariant(this.props.activeFile.basename, variantId);
     };
 
     private scrollToCreateForm = () => {
