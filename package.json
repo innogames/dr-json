@@ -52,7 +52,7 @@
     "dist": "rimraf dist && yarn run compile && electron-builder -mw && ./build/scripts/zip-files.sh"
   },
   "dependencies": {
-    "electron-settings": "3.1.4",
+    "electron-settings": "^3.2.0",
     "fs-extra": "4.0.2",
     "inversify": "^4.13.0",
     "mobx": "4.0.0",

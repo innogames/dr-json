@@ -6,10 +6,7 @@ import {packageJson} from '../shared/package';
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 import WebContents = Electron.WebContents;
 
-const electronSettings               = require('electron-settings');
-const globalSettings: GlobalSettings = electronSettings.get('globalSettings') || {
-    inlineForms: false,
-};
+const electronSettings = require('electron-settings');
 
 let win: BrowserWindow | null;
 const isDevelopment = isDev();
@@ -42,6 +39,10 @@ function createWindow() {
 }
 
 function createMenu() {
+    const globalSettings: GlobalSettings = electronSettings.get('globalSettings') || {
+        inlineForms: false,
+    };
+
     let template: MenuItemConstructorOptions[] = [
         {
             label:   'File',
@@ -199,6 +200,6 @@ function openSelectProjectDialog(webContents: WebContents) {
 function handleError(error: any): void {
     dialog.showErrorBox(
         'Oh no! Something unexpected happened :(',
-        `Please report this to a Dr. Json developer:\n\n${errorToString(error)}`
+        `Please report this to a Dr. Json developer:\n\n${errorToString(error)}`,
     );
 }
