@@ -46,11 +46,10 @@ export class FileTree extends React.Component<Props> {
             icon = Icon.FILE_MULTIPLE;
         }
 
-        file.selected = false;
-        if (this.props.selectedBasename && file.basename == this.props.selectedBasename) {
+        const isSelected: boolean = !!this.props.selectedBasename && file.basename == this.props.selectedBasename;
+        if (isSelected) {
             className = styles.active;
             icon = Icon.FILE;
-            file.selected = true;
         }
 
         return (
@@ -58,7 +57,7 @@ export class FileTree extends React.Component<Props> {
                 <Link data={file} className={className} onClick={this.props.onSelectFile}>
                     <Icon value={icon} className={styles.fileIcon}/> {file.label}
                 </Link>
-                <If cond={file.selected}>
+                <If cond={isSelected}>
                     <Link onClick={this.props.onClickAddVariant}>
                         <Icon className={styles.addVariant} value={Icon.PLUS}/>
                     </Link>
@@ -78,7 +77,7 @@ export class FileTree extends React.Component<Props> {
     };
 
     private renderVariantFile = (file: SchemaFile, variant: SchemaFileVariant) => {
-        let className: string = styles.variantInactive;
+        let className: string = '';
         if (this.props.selectedVariantId && variant.variantId == this.props.selectedVariantId) {
             className = styles.variantActive;
         }
@@ -86,9 +85,9 @@ export class FileTree extends React.Component<Props> {
         return (
             <li className={styles.variant} key={variant.variantId}>
                 <Link className={className} onClick={() => {
-                    (this.props.onSelectFileVariant) ? this.props.onSelectFileVariant(file.basename, variant) : undefined;
+                    this.props.onSelectFileVariant && this.props.onSelectFileVariant(file.basename, variant);
                 }}>
-                    {variant.variantId}
+                    {variant.label}
                 </Link>
             </li>
         );

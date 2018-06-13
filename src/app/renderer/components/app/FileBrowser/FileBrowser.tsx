@@ -2,10 +2,7 @@ import {inject, observer} from 'mobx-react';
 import * as React from 'react';
 import {EditorState} from '../../../../../domain/states/EditorState';
 import {ActiveFile} from '../../../../../domain/states/objects/editor/ActiveFile';
-import {SchemaFile} from '../../../../../domain/states/objects/fileTree/SchemaFile';
-import {SchemaFileVariant} from '../../../../../domain/states/objects/fileTree/SchemaFileVariant';
 import {Project} from '../../../../../domain/states/objects/Project';
-import {ProjectState} from '../../../../../domain/states/ProjectState';
 import {SettingsState} from '../../../../../domain/states/SettingsState';
 import {ContentHint} from '../../common/ContentHint';
 import {ErrorHint} from '../../common/ErrorHint';
@@ -23,10 +20,9 @@ interface Props {
 interface Injected {
     editorState: EditorState;
     settingsState: SettingsState;
-    projectState: ProjectState;
 }
 
-@inject('editorState', 'settingsState', 'projectState')
+@inject('editorState', 'settingsState')
 @observer
 export class FileBrowser extends React.Component<Props, {}> {
 
@@ -74,23 +70,9 @@ export class FileBrowser extends React.Component<Props, {}> {
             <FileEditor
                 activeFile={activeFile}
                 variantTypes={this.props.project.config.variantTypes}
-                fileVariants={this.getVariants(activeFile)}
                 isAddVariantMode={this.injected.editorState.isAddVariantMode}
                 showFormInline={this.injected.settingsState.globalSettings.inlineForms}
             />
         );
-    }
-
-    private getVariants(activeFile: ActiveFile): SchemaFileVariant[] {
-        if (!this.injected.projectState.hasProject) {
-            return [];
-        }
-
-        const file: SchemaFile | null = this.injected.projectState.project.schemaTree.getFile(activeFile.basename);
-        if (!file) {
-            return [];
-        }
-
-        return file.variants;
     }
 }

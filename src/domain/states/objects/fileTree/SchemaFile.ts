@@ -11,7 +11,6 @@ export class SchemaFile extends SchemaTreeItem {
         public readonly schemaFile: string,
         public readonly dataFile: string,
         variants: SchemaFileVariant[] = [],
-        public selected: boolean = false,
     ) {
         super(label, basename);
         this._variants = variants;

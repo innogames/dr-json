@@ -4,7 +4,6 @@ import * as ReactDOM from 'react-dom';
 import {filterEntriesBySearch} from '../../../../../../../domain/context/data/filterEntriesBySearch';
 import {ActiveFile} from '../../../../../../../domain/states/objects/editor/ActiveFile';
 import {DataEntry, EntryId} from '../../../../../../../domain/states/objects/editor/DataEntry';
-import {SchemaFileVariant} from '../../../../../../../domain/states/objects/fileTree/SchemaFileVariant';
 import {VariantTypeConfig} from '../../../../../../../domain/states/objects/ProjectConfig';
 import {confirmDeleteEntry} from '../../../../../actions/entries/confirmDeleteEntry';
 import {createEntry} from '../../../../../actions/entries/createEntry';
@@ -26,7 +25,6 @@ import styles from './FileEditorStyles.scss';
 
 interface Props {
     activeFile: ActiveFile;
-    fileVariants: SchemaFileVariant[];
     variantTypes: VariantTypeConfig[];
     isAddVariantMode?: boolean;
     showFormInline?: boolean;
