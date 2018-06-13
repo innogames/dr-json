@@ -33,9 +33,10 @@ In this case you can define different types of variants in your project file lik
 
 In this example you can see two variant types. "AB Test" and "Hard Mode".
 
-![Variants](../img/variants-tabs.png)
+![Variants](../img/variants-in-tree.png)
 
-In Dr. Json you can see a tab called "Default" in each file and a `+` next to it. By clicking on the plus you can
+In Dr. Json you can see the variants in the file tree when you select a file which contains variants.
+You can also find a `+` next to the file. By clicking on the plus you can
 create a new variant for the current selected file. There you will get a form where you can choose between the 
 variant types configured above.
 
