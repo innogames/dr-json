@@ -4,7 +4,6 @@ import * as ReactDOM from 'react-dom';
 import {filterEntriesBySearch} from '../../../../../../../domain/context/data/filterEntriesBySearch';
 import {ActiveFile} from '../../../../../../../domain/states/objects/editor/ActiveFile';
 import {DataEntry, EntryId} from '../../../../../../../domain/states/objects/editor/DataEntry';
-import {SchemaFileVariant} from '../../../../../../../domain/states/objects/fileTree/SchemaFileVariant';
 import {VariantTypeConfig} from '../../../../../../../domain/states/objects/ProjectConfig';
 import {confirmDeleteEntry} from '../../../../../actions/entries/confirmDeleteEntry';
 import {createEntry} from '../../../../../actions/entries/createEntry';
@@ -12,13 +11,9 @@ import {openCreateEntry} from '../../../../../actions/entries/openCreateEntry';
 import {searchInFile} from '../../../../../actions/entries/searchInFile';
 import {toggleCollapseEntries} from '../../../../../actions/entries/toggleCollapseEntries';
 import {updateEntry} from '../../../../../actions/entries/updateEntry';
-import {selectFile} from '../../../../../actions/selectFile';
-import {selectFileVariant} from '../../../../../actions/selectFileVariant';
 import {closeCreateVariant} from '../../../../../actions/variants/closeCreateVariant';
 import {createVariant} from '../../../../../actions/variants/createVariant';
-import {openCreateVariant} from '../../../../../actions/variants/openCreateVariant';
 import {ContentHint} from '../../../../common/ContentHint';
-import {Tab, Tabs, TabsPosition} from '../../../../common/Tabs';
 import {If} from '../../../../helper/If';
 import {SideWindow} from '../../../../layout/SideWindow';
 import {Entry} from './components/Entry';
@@ -30,7 +25,6 @@ import styles from './FileEditorStyles.scss';
 
 interface Props {
     activeFile: ActiveFile;
-    fileVariants: SchemaFileVariant[];
     variantTypes: VariantTypeConfig[];
     isAddVariantMode?: boolean;
     showFormInline?: boolean;
@@ -90,31 +84,6 @@ export class FileEditor extends React.Component<Props, State> {
                     {this.renderSidebarEditForm(entries)}
                     {this.renderCreate()}
                 </div>
-
-                <Tabs position={TabsPosition.BOTTOM}>
-                    <Tab
-                        active={!this.props.activeFile.variantId}
-                        onClick={() => {
-                            this.onSelectDefaultVariant();
-                        }}
-                    >
-                        Default
-                    </Tab>
-                    {this.props.fileVariants.map((variant: SchemaFileVariant) => {
-                        return (
-                            <Tab
-                                key={variant.variantId}
-                                active={variant.variantId == this.props.activeFile.variantId}
-                                onClick={() => {
-                                    this.onSelectVariant(variant.variantId);
-                                }}
-                            >
-                                {variant.label}
-                            </Tab>
-                        );
-                    })}
-                    <Tab onClick={this.onClickAddVariant}>+</Tab>
-                </Tabs>
 
                 <If cond={this.props.isAddVariantMode}>
                     <VariantWindow
@@ -272,24 +241,12 @@ export class FileEditor extends React.Component<Props, State> {
             });
     };
 
-    private onClickAddVariant = () => {
-        openCreateVariant();
-    };
-
     private onCreateVariant = (variantId: string, copyEntries: boolean): Promise<void> => {
         return createVariant(this.props.activeFile.basename, variantId, copyEntries);
     };
 
     private onCloseVariantWindow = () => {
         closeCreateVariant();
-    };
-
-    private onSelectDefaultVariant = () => {
-        selectFile(this.props.activeFile.basename);
-    };
-
-    private onSelectVariant = (variantId: string) => {
-        selectFileVariant(this.props.activeFile.basename, variantId);
     };
 
     private scrollToCreateForm = () => {

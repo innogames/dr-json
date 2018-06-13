@@ -27,6 +27,7 @@ export class Icon extends React.Component<Props, {}> {
     static FOLDER_COLLAPSED = 'folder-collapsed';
     static FILE             = 'file';
     static FILE_O           = 'file-o';
+    static FILE_MULTIPLE    = 'file-multiple';
     static VALIDATE         = 'validate';
     static CROSSHAIRS       = 'crosshairs';
     static EXPAND           = 'expand';

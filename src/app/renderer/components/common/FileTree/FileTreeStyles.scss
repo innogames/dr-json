@@ -43,6 +43,20 @@
           height: 10px;
         }
       }
+
+      &.variant {
+        line-height: 1.2rem;
+
+        a {
+          color: $color-text-secondary !important;
+          font-size: .8rem;
+
+          &.variantActive {
+            color: $color-text-secondary-highlight !important;
+          }
+        }
+      }
+
     }
 
     a {
@@ -61,5 +75,11 @@
   .fileIcon {
     font-size: .8rem;
     color: darken($color-primary-dark, 5%);
+  }
+
+  .addVariant {
+    color: $color-text;
+    font-size: .8rem;
+    margin-left: .2rem;
   }
 }

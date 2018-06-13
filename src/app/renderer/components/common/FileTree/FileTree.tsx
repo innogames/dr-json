@@ -8,13 +8,17 @@ import {If} from '../../helper/If';
 import {Icon} from '../Icon';
 import {Link} from '../Link';
 import styles from './FileTreeStyles.scss';
+import {SchemaFileVariant} from "../../../../../domain/states/objects/fileTree/SchemaFileVariant";
 
 interface Props {
     tree: SchemaTree;
     className?: string;
     selectedBasename?: string;
+    selectedVariantId?: string | null;
     onSelectFile?: (file: SchemaFile) => void;
+    onSelectFileVariant?: (basename: string, file: SchemaFileVariant) => void;
     onSelectDir?: (dir: SchemaDir) => void;
+    onClickAddVariant: () => void;
 }
 
 @observer
@@ -36,17 +40,54 @@ export class FileTree extends React.Component<Props> {
 
     private renderFile = (file: SchemaFile): JSX.Element => {
         let className: string = '';
-        let icon: string      = Icon.FILE_O;
+        let icon: string = Icon.FILE_O;
 
-        if (this.props.selectedBasename && file.basename == this.props.selectedBasename) {
+        if (file.variants && file.variants.length) {
+            icon = Icon.FILE_MULTIPLE;
+        }
+
+        const isSelected: boolean = !!this.props.selectedBasename && file.basename == this.props.selectedBasename;
+        if (isSelected) {
             className = styles.active;
-            icon      = Icon.FILE;
+            icon = Icon.FILE;
         }
 
         return (
             <li key={file.basename}>
                 <Link data={file} className={className} onClick={this.props.onSelectFile}>
                     <Icon value={icon} className={styles.fileIcon}/> {file.label}
+                </Link>
+                <If cond={isSelected}>
+                    <Link onClick={this.props.onClickAddVariant}>
+                        <Icon className={styles.addVariant} value={Icon.PLUS}/>
+                    </Link>
+
+                    <If cond={file.variants.length > 0}>
+                        <ul>
+                            {
+                                file.variants.map((variant: SchemaFileVariant) => {
+                                    return this.renderVariantFile(file, variant);
+                                })
+                            }
+                        </ul>
+                    </If>
+                </If>
+            </li>
+        );
+    };
+
+    private renderVariantFile = (file: SchemaFile, variant: SchemaFileVariant) => {
+        let className: string = '';
+        if (this.props.selectedVariantId && variant.variantId == this.props.selectedVariantId) {
+            className = styles.variantActive;
+        }
+
+        return (
+            <li className={styles.variant} key={variant.variantId}>
+                <Link className={className} onClick={() => {
+                    this.props.onSelectFileVariant && this.props.onSelectFileVariant(file.basename, variant);
+                }}>
+                    {variant.label}
                 </Link>
             </li>
         );
