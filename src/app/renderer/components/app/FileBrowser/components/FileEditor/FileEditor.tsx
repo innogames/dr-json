@@ -14,7 +14,6 @@ import {toggleCollapseEntries} from '../../../../../actions/entries/toggleCollap
 import {updateEntry} from '../../../../../actions/entries/updateEntry';
 import {closeCreateVariant} from '../../../../../actions/variants/closeCreateVariant';
 import {createVariant} from '../../../../../actions/variants/createVariant';
-import {openCreateVariant} from '../../../../../actions/variants/openCreateVariant';
 import {ContentHint} from '../../../../common/ContentHint';
 import {If} from '../../../../helper/If';
 import {SideWindow} from '../../../../layout/SideWindow';
@@ -74,7 +73,6 @@ export class FileEditor extends React.Component<Props, State> {
             <div className={styles.editor}>
                 <Toolbar
                     onClickAdd={this.onClickAdd}
-                    onClickAddVariant={this.onClickAddVariant}
                     onSearch={this.onSearch}
                     onCollapseAll={this.onCollapseAll}
                     onExpandAll={this.onExpandAll}
@@ -243,10 +241,6 @@ export class FileEditor extends React.Component<Props, State> {
                     this.scrollToBottom();
                 }
             });
-    };
-
-    private onClickAddVariant = () => {
-        openCreateVariant();
     };
 
     private onCreateVariant = (variantId: string, copyEntries: boolean): Promise<void> => {

@@ -18,6 +18,7 @@ interface Props {
     onSelectFile?: (file: SchemaFile) => void;
     onSelectFileVariant?: (basename: string, file: SchemaFileVariant) => void;
     onSelectDir?: (dir: SchemaDir) => void;
+    onClickAddVariant: () => void;
 }
 
 @observer
@@ -41,9 +42,15 @@ export class FileTree extends React.Component<Props> {
         let className: string = '';
         let icon: string = Icon.FILE_O;
 
+        if (file.variants && file.variants.length) {
+            icon = Icon.FILE_MULTIPLE;
+        }
+
+        file.selected = false;
         if (this.props.selectedBasename && file.basename == this.props.selectedBasename) {
             className = styles.active;
             icon = Icon.FILE;
+            file.selected = true;
         }
 
         return (
@@ -51,12 +58,21 @@ export class FileTree extends React.Component<Props> {
                 <Link data={file} className={className} onClick={this.props.onSelectFile}>
                     <Icon value={icon} className={styles.fileIcon}/> {file.label}
                 </Link>
+                <If cond={file.selected}>
+                    <Link onClick={this.props.onClickAddVariant}>
+                        <Icon className={styles.addVariant} value={Icon.PLUS}/>
+                    </Link>
 
-                {
-                    file.variants.map((variant: SchemaFileVariant) => {
-                        return this.renderVariantFile(file, variant);
-                    })
-                }
+                    <If cond={file.variants.length > 0}>
+                        <ul>
+                            {
+                                file.variants.map((variant: SchemaFileVariant) => {
+                                    return this.renderVariantFile(file, variant);
+                                })
+                            }
+                        </ul>
+                    </If>
+                </If>
             </li>
         );
     };

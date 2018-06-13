@@ -14,6 +14,7 @@ import {Link} from '../../../../common/Link';
 import styles from './SidebarStyles.scss';
 import {SchemaFileVariant} from "../../../../../../../domain/states/objects/fileTree/SchemaFileVariant";
 import {selectFileVariant} from "../../../../../actions/selectFileVariant";
+import {openCreateVariant} from "../../../../../actions/variants/openCreateVariant";
 
 interface Injected {
     projectState: ProjectState;
@@ -44,10 +45,16 @@ export class Sidebar extends React.Component<{}, {}> {
                     onSelectFile={this.onSelectFile}
                     onSelectFileVariant={this.onSelectFileVariant}
                     onSelectDir={this.onSelectDir}
+                    onClickAddVariant={this.onClickAddVariant}
                 />
             </div>
         );
     }
+
+
+    private onClickAddVariant = () => {
+        openCreateVariant();
+    };
 
     private onSelectFile = (file: SchemaFile) => {
         selectFile(file.basename);
