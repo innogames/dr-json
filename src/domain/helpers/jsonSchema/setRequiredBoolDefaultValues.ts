@@ -6,7 +6,7 @@ export function setRequiredBoolDefaultValues(data: any, schema: any): any {
             Object.keys(schema.properties).forEach((prop: string) => {
                 let val: any = data[prop];
 
-                if (required.indexOf(prop) >= 0 && !val) {
+                if (schema.properties[prop].type == 'boolean' && required.indexOf(prop) >= 0 && !val) {
                     val = false;
                 } else {
                     val = setRequiredBoolDefaultValues(data[prop], schema.properties[prop]);

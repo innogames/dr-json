@@ -75,4 +75,26 @@ describe('setRequiredBoolDefaultValues()', () => {
 
         expect(setRequiredBoolDefaultValues(data, schema)).toEqual(expected);
     });
+
+    it('keeps empty values that are not bool', () => {
+        const schema: any = {
+            type:       'object',
+            properties: {
+                int: {type: 'integer'},
+                str: {type: 'string'},
+            },
+            required:   ['int', 'str'],
+        };
+
+        const data: any     = {
+            int: 0,
+            str: '',
+        };
+        const expected: any = {
+            int: 0,
+            str: '',
+        };
+
+        expect(setRequiredBoolDefaultValues(data, schema)).toEqual(expected);
+    });
 });
