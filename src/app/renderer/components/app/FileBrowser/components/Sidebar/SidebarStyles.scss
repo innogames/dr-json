@@ -7,4 +7,46 @@
   color: $color-primary-contrast;
   display: flex;
   flex-direction: column;
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdownContent {
+    display: block;
+    position: absolute;
+    background-color: $color-bg;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdownContent {
+    a {
+      color: $color-text;
+      padding: 6px 10px;
+      text-decoration: none;
+      display: block;
+    }
+
+    a:hover {
+      background-color: $color-bg-highlight;
+    }
+  }
+
+  .filter {
+    display: block;
+    position: relative;
+    background-color: $color-primary;
+    border-left: 12px solid $color-primary-dark !important;
+
+    a {
+      color: $color-text;
+    }
+
+    a:hover {
+      text-decoration: line-through !important;
+      text-decoration-color: $color-text;
+    }
+  }
 }
