@@ -6,6 +6,7 @@ import {SchemaFile} from '../../../../../../../domain/states/objects/fileTree/Sc
 import {SchemaFileVariant} from '../../../../../../../domain/states/objects/fileTree/SchemaFileVariant';
 import {SchemaTree} from '../../../../../../../domain/states/objects/fileTree/SchemaTree';
 import {ProjectState} from '../../../../../../../domain/states/ProjectState';
+import {toggleCollapseDir} from '../../../../../actions/fileTree/toggleCollapseDir';
 import {openFolderExternally} from '../../../../../actions/openFolderExternally';
 import {reload} from '../../../../../actions/reload';
 import {selectFile} from '../../../../../actions/selectFile';
@@ -96,11 +97,7 @@ export class Sidebar extends React.Component<{}, {}> {
     };
 
     private onSelectDir = (dir: SchemaDir) => {
-        this.injected.projectState.project.schemaTree.forEachDir((originalDir: SchemaDir) => {
-            if (originalDir.basename == dir.basename) {
-                originalDir.setCollapsed(!originalDir.collapsed);
-            }
-        });
+        toggleCollapseDir(dir.basename);
     };
 
     private refresh = () => {

@@ -24,6 +24,7 @@ import {Reload} from '../../domain/useCases/Reload';
 import {SearchInFile} from '../../domain/useCases/SearchInFile';
 import {SelectFile} from '../../domain/useCases/SelectFile';
 import {SelectFileVariant} from '../../domain/useCases/SelectFileVariant';
+import {ToggleCollapseDir} from '../../domain/useCases/fileTree/ToggleCollapseDir';
 import {UpdateEntry} from '../../domain/useCases/UpdateEntry';
 import {FilesystemImpl} from './services/FilesystemImpl';
 import {SettingsStorageImpl} from './services/SettingsStorageImpl';
@@ -60,6 +61,7 @@ container.bind<OpenProject>(OpenProject).toSelf().inSingletonScope();
 container.bind<SelectFile>(SelectFile).toSelf().inSingletonScope();
 container.bind<Reload>(Reload).toSelf().inSingletonScope();
 container.bind<SearchInFile>(SearchInFile).toSelf().inSingletonScope();
+container.bind<ToggleCollapseDir>(ToggleCollapseDir).toSelf().inSingletonScope();
 container.bind<UpdateEntry>(UpdateEntry).toSelf().inSingletonScope();
 
 export {container};
