@@ -1,16 +1,16 @@
 import 'jest';
 import 'reflect-metadata';
-import {DataRepo} from '../../repositories/DataRepo';
-import {SchemaRepo} from '../../repositories/SchemaRepo';
-import {EditorState} from '../../states/EditorState';
-import {DataEntries} from '../../states/objects/editor/DataEntries';
-import {DataEntry} from '../../states/objects/editor/DataEntry';
-import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
-import {SchemaFileVariant} from '../../states/objects/fileTree/SchemaFileVariant';
-import {SchemaTree} from '../../states/objects/fileTree/SchemaTree';
-import {Project} from '../../states/objects/Project';
-import {ProjectConfig} from '../../states/objects/ProjectConfig';
-import {ProjectState} from '../../states/ProjectState';
+import {DataRepo} from '../../../repositories/DataRepo';
+import {SchemaRepo} from '../../../repositories/SchemaRepo';
+import {EditorState} from '../../../states/EditorState';
+import {DataEntries} from '../../../states/objects/editor/DataEntries';
+import {DataEntry} from '../../../states/objects/editor/DataEntry';
+import {SchemaFile} from '../../../states/objects/fileTree/SchemaFile';
+import {SchemaFileVariant} from '../../../states/objects/fileTree/SchemaFileVariant';
+import {SchemaTree} from '../../../states/objects/fileTree/SchemaTree';
+import {Project} from '../../../states/objects/Project';
+import {ProjectConfig} from '../../../states/objects/ProjectConfig';
+import {ProjectState} from '../../../states/ProjectState';
 import {SelectFileVariant} from '../SelectFileVariant';
 
 let useCase: SelectFileVariant;

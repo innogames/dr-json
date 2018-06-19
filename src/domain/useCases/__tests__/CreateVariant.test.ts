@@ -9,7 +9,7 @@ import {Project} from '../../states/objects/Project';
 import {ProjectConfig} from '../../states/objects/ProjectConfig';
 import {ProjectState} from '../../states/ProjectState';
 import {CreateVariant} from '../CreateVariant';
-import {SelectFileVariant} from '../SelectFileVariant';
+import {SelectFileVariant} from '../fileTree/SelectFileVariant';
 
 let useCase: CreateVariant;
 let projectState: ProjectState;

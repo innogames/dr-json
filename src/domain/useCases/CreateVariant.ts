@@ -5,7 +5,7 @@ import {DataEntries} from '../states/objects/editor/DataEntries';
 import {SchemaFile} from '../states/objects/fileTree/SchemaFile';
 import {SchemaFileVariant} from '../states/objects/fileTree/SchemaFileVariant';
 import {ProjectState} from '../states/ProjectState';
-import {SelectFileVariant} from './SelectFileVariant';
+import {SelectFileVariant} from './fileTree/SelectFileVariant';
 
 @injectable()
 export class CreateVariant {

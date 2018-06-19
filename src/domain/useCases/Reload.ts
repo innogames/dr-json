@@ -3,8 +3,8 @@ import {EditorState} from '../states/EditorState';
 import {SchemaFile} from '../states/objects/fileTree/SchemaFile';
 import {ProjectState} from '../states/ProjectState';
 import {OpenProject} from './OpenProject';
-import {SelectFile} from './SelectFile';
-import {SelectFileVariant} from './SelectFileVariant';
+import {SelectFile} from './fileTree/SelectFile';
+import {SelectFileVariant} from './fileTree/SelectFileVariant';
 
 @injectable()
 export class Reload {

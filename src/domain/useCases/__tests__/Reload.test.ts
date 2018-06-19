@@ -10,8 +10,8 @@ import {ProjectConfig} from '../../states/objects/ProjectConfig';
 import {ProjectState} from '../../states/ProjectState';
 import {OpenProject} from '../OpenProject';
 import {Reload} from '../Reload';
-import {SelectFile} from '../SelectFile';
-import {SelectFileVariant} from '../SelectFileVariant';
+import {SelectFile} from '../fileTree/SelectFile';
+import {SelectFileVariant} from '../fileTree/SelectFileVariant';
 
 let useCase: Reload;
 let editorState: EditorState;
