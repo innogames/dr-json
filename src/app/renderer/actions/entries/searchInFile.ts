@@ -1,4 +1,4 @@
-import {SearchInFile} from '../../../../domain/useCases/SearchInFile';
+import {SearchInFile} from '../../../../domain/useCases/entries/SearchInFile';
 import {container} from '../../container';
 
 const useCase: SearchInFile = container.get(SearchInFile);

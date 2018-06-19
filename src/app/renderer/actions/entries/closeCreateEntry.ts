@@ -1,4 +1,4 @@
-import {CloseCreateEntry} from '../../../../domain/useCases/CloseCreateEntry';
+import {CloseCreateEntry} from '../../../../domain/useCases/entries/CloseCreateEntry';
 import {container} from '../../container';
 
 const useCase: CloseCreateEntry = container.get(CloseCreateEntry);

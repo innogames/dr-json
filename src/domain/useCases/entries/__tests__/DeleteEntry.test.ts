@@ -1,10 +1,10 @@
 import 'jest';
 import 'reflect-metadata';
-import {DataRepo} from '../../repositories/DataRepo';
-import {EditorState} from '../../states/EditorState';
-import {ActiveFile} from '../../states/objects/editor/ActiveFile';
-import {DataEntries} from '../../states/objects/editor/DataEntries';
-import {DataEntry} from '../../states/objects/editor/DataEntry';
+import {DataRepo} from '../../../repositories/DataRepo';
+import {EditorState} from '../../../states/EditorState';
+import {ActiveFile} from '../../../states/objects/editor/ActiveFile';
+import {DataEntries} from '../../../states/objects/editor/DataEntries';
+import {DataEntry} from '../../../states/objects/editor/DataEntry';
 import {DeleteEntry} from '../DeleteEntry';
 
 let useCase: DeleteEntry;

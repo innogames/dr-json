@@ -1,6 +1,6 @@
 import {remote} from 'electron';
 import {EntryId} from '../../../../domain/states/objects/editor/DataEntry';
-import {DeleteEntry} from '../../../../domain/useCases/DeleteEntry';
+import {DeleteEntry} from '../../../../domain/useCases/entries/DeleteEntry';
 import {container} from '../../container';
 
 const useCase: DeleteEntry = container.get(DeleteEntry);

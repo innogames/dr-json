@@ -1,8 +1,8 @@
 import 'jest';
 import 'reflect-metadata';
-import {EditorState} from '../../states/EditorState';
-import {ActiveFile} from '../../states/objects/editor/ActiveFile';
-import {DataEntry} from '../../states/objects/editor/DataEntry';
+import {EditorState} from '../../../states/EditorState';
+import {ActiveFile} from '../../../states/objects/editor/ActiveFile';
+import {DataEntry} from '../../../states/objects/editor/DataEntry';
 import {CloseCreateEntry} from '../CloseCreateEntry';
 
 let useCase: CloseCreateEntry;

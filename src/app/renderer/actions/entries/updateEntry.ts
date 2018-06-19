@@ -1,5 +1,5 @@
 import {DataEntry, EntryId} from '../../../../domain/states/objects/editor/DataEntry';
-import {UpdateEntry} from '../../../../domain/useCases/UpdateEntry';
+import {UpdateEntry} from '../../../../domain/useCases/entries/UpdateEntry';
 import {container} from '../../container';
 
 const useCase: UpdateEntry = container.get(UpdateEntry);

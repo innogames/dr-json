@@ -1,5 +1,5 @@
 import {DataEntry} from '../../../../domain/states/objects/editor/DataEntry';
-import {OpenCreateEntry} from '../../../../domain/useCases/OpenCreateEntry';
+import {OpenCreateEntry} from '../../../../domain/useCases/entries/OpenCreateEntry';
 import {container} from '../../container';
 
 const useCase: OpenCreateEntry = container.get(OpenCreateEntry);

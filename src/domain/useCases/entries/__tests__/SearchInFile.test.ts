@@ -1,7 +1,7 @@
 import 'jest';
 import 'reflect-metadata';
-import {EditorState} from '../../states/EditorState';
-import {ActiveFile} from '../../states/objects/editor/ActiveFile';
+import {EditorState} from '../../../states/EditorState';
+import {ActiveFile} from '../../../states/objects/editor/ActiveFile';
 import {SearchInFile} from '../SearchInFile';
 
 let useCase: SearchInFile;

@@ -1,5 +1,5 @@
 import {injectable} from 'inversify';
-import {EditorState} from '../states/EditorState';
+import {EditorState} from '../../states/EditorState';
 
 @injectable()
 export class SearchInFile {
