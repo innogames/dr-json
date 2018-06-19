@@ -1,8 +1,12 @@
 @import "../../../config/config";
 
+:local .wrapper{
+  position: relative;
+}
+
 :local .dropdown{
-  flex: 0 30px;
-  display: flex;
-  background-color: $color-primary-dark;
-  border-bottom: 1px solid $color-secondary;
+  position: absolute;
+  background-color: $color-bg;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }

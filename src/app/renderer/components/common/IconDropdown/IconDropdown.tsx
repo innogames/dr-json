@@ -5,7 +5,7 @@ import {Link} from "../Link";
 import {Icon} from "../Icon";
 
 interface Props {
-    optionsList?: string[];
+    title: string;
     icon: string;
 }
 
@@ -16,42 +16,35 @@ interface State {
 export class IconDropdown extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        
-        this.props = {
-            icon: ''
-        };
 
         this.state = {
             isOpen: false,
         };
-
-        this.onOpen = this.onOpen.bind(this);
-        this.onClose = this.onClose.bind(this);
     }
 
     render() {
         return (
             <>
-                <Link title='Filter' onClick={this.onOpen}><Icon value={this.props.icon}/></Link>
+                <Link title={this.props.title} onClick={this.toggle}><Icon value={this.props.icon}/></Link>
 
                 <If cond={this.state.isOpen}>
-                    <div className={styles.dropdown}>
-                        {this.props.children}
+                    <div className={styles.wrapper}>
+                        <div className={styles.dropdown}>
+                            {this.props.children}
+                        </div>
                     </div>
                 </If>
             </>
         );
     };
 
-    public onClose = () => {
-        this.setState({isOpen: false}, () => {
-            document.removeEventListener('click', this.onClose)
-        })
-    };
-
-    private onOpen = () => {
-        this.setState({isOpen: !this.state.isOpen}, () => {
-            document.addEventListener('click', this.onClose)
+    private toggle = () => {
+        this.setState(({isOpen: !this.state.isOpen}), () => {
+            if (this.state.isOpen) {
+                document.addEventListener('click', this.toggle)
+            } else {
+                document.removeEventListener('click', this.toggle)
+            }
         })
     };
 }

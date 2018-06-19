@@ -83,7 +83,7 @@ describe('SchemaTree', () => {
 
         let expectedFlatTree = [fileA, fileB, fileC, fileD];
 
-        expect([...new Set(tree.getFilesFlat())]).toEqual(expectedFlatTree);
+        expect(tree.getFilesFlat()).toEqual(expectedFlatTree);
     })
 
     it('can be filtered', () => {

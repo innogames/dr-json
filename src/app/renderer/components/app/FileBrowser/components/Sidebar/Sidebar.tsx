@@ -18,6 +18,8 @@ import {openCreateVariant} from "../../../../../actions/variants/openCreateVaria
 import {IconDropdown} from "../../../../common/IconDropdown";
 import {If} from "../../../../helper/If";
 import {SchemaTree} from "../../../../../../../domain/states/objects/fileTree/SchemaTree";
+import {Menu} from "../../../../common/Menu";
+import {MenuItem} from "../../../../common/Menu";
 
 interface Injected {
     projectState: ProjectState;
@@ -40,24 +42,29 @@ export class Sidebar extends React.Component<{}, {}> {
                     <Link title='Expand All' onClick={this.expandAll}><Icon value={Icon.EXPAND}/></Link>
                     <Link title='Collapse All' onClick={this.collapseAll}><Icon value={Icon.COLLAPSE}/></Link>
                     <Link title='Open folder' onClick={this.openFolder}><Icon value={Icon.EXTERNAL_LINK}/></Link>
-                    <IconDropdown icon={Icon.FILTER}>
-                        <div className={styles.dropdown}>
-                            <li className={styles.dropdownContent}>
-                                {
-                                    this.getUniqueVariantIds().map((variantId: string, index: number) => {
-                                        return (
-                                            <a onClick={() => this.onVariantFilterSelected(variantId)}
-                                               key={index}>{variantId}</a>
-                                        );
-                                    })
-                                }
-                            </li>
-                        </div>
+                    <IconDropdown title={'Filter'} icon={Icon.FILTER}>
+                        <Menu>
+                            <MenuItem label={'All'} onClick={this.onResetFilter}/>
+                            {
+                                this.getUniqueVariantIds().map((variantId: string) => {
+                                    return (
+                                        <MenuItem
+                                            key={variantId}
+                                            label={variantId}
+                                            onClick={() => {
+                                                this.onSelectVariantFilter(variantId)
+                                            }}
+                                        />
+                                    );
+                                })
+                            }
+                        </Menu>
                     </IconDropdown>
                 </FileTreeButtons>
                 <If cond={this.injected.projectState.project.filter != null}>
                     <div className={styles.filter}>
-                        <a title="Remove Filter" onClick={this.onResetFilter}> Filter: {this.injected.projectState.project.filter}</a>
+                        <a title="Remove Filter"
+                           onClick={this.onResetFilter}> Filter: {this.injected.projectState.project.filter}</a>
                     </div>
                 </If>
                 <FileTree
@@ -114,7 +121,7 @@ export class Sidebar extends React.Component<{}, {}> {
         openFolderExternally();
     };
 
-    private onVariantFilterSelected = (filter: string) => {
+    private onSelectVariantFilter = (filter: string) => {
         this.injected.projectState.project.setFilter(filter);
     };
 
@@ -123,19 +130,16 @@ export class Sidebar extends React.Component<{}, {}> {
     };
 
     private getUniqueVariantIds(): string[] {
-        let treeFlat = this.injected.projectState.project.schemaTree.getFilesFlat();
+        let files = this.injected.projectState.project.schemaTree.getFilesFlat();
+        let uniqueVariantIds: Set<string> = new Set();
 
-        let variantList: SchemaFileVariant[] = [];
-        for (let file of treeFlat) {
-            variantList = [...variantList, ...file.variants];
+        for (let file of files) {
+            for (let variant of file.variants) {
+                uniqueVariantIds.add(variant.variantId);
+            }
         }
 
-        let uniqueVariantIds: string[] = [];
-        for (let variantFile of variantList) {
-            uniqueVariantIds.push(variantFile.variantId);
-        }
-
-        return [...new Set(uniqueVariantIds)];
+        return [...uniqueVariantIds];
     }
 
     private getFilteredTree(): SchemaTree {

@@ -38,7 +38,7 @@ export class SchemaTree {
         if (child instanceof SchemaFile) {
             return [...value, child];
         } else {
-            return [...value, ...(child as SchemaDir).children.reduce(this.reduceFiles, value)];
+            return (child as SchemaDir).children.reduce(this.reduceFiles, value);
         }
     };
 
