@@ -17,6 +17,9 @@ import {CloseProject} from '../../domain/useCases/CloseProject';
 import {CreateEntry} from '../../domain/useCases/CreateEntry';
 import {CreateVariant} from '../../domain/useCases/CreateVariant';
 import {DeleteEntry} from '../../domain/useCases/DeleteEntry';
+import {CollapseAllDirs} from '../../domain/useCases/fileTree/CollapseAllDirs';
+import {ExpandAllDirs} from '../../domain/useCases/fileTree/ExpandAllDirs';
+import {ToggleCollapseDir} from '../../domain/useCases/fileTree/ToggleCollapseDir';
 import {OpenCreateEntry} from '../../domain/useCases/OpenCreateEntry';
 import {OpenCreateVariant} from '../../domain/useCases/OpenCreateVariant';
 import {OpenProject} from '../../domain/useCases/OpenProject';
@@ -24,7 +27,6 @@ import {Reload} from '../../domain/useCases/Reload';
 import {SearchInFile} from '../../domain/useCases/SearchInFile';
 import {SelectFile} from '../../domain/useCases/SelectFile';
 import {SelectFileVariant} from '../../domain/useCases/SelectFileVariant';
-import {ToggleCollapseDir} from '../../domain/useCases/fileTree/ToggleCollapseDir';
 import {UpdateEntry} from '../../domain/useCases/UpdateEntry';
 import {FilesystemImpl} from './services/FilesystemImpl';
 import {SettingsStorageImpl} from './services/SettingsStorageImpl';
@@ -48,6 +50,11 @@ container.bind<SettingsRepo>(SettingsRepo).toSelf().inSingletonScope();
 container.bind<SettingsStorageInterface>(SettingsStorageId).to(SettingsStorageImpl).inSingletonScope();
 
 // use cases
+// - fileTree
+container.bind<CollapseAllDirs>(CollapseAllDirs).toSelf().inSingletonScope();
+container.bind<ExpandAllDirs>(ExpandAllDirs).toSelf().inSingletonScope();
+container.bind<ToggleCollapseDir>(ToggleCollapseDir).toSelf().inSingletonScope();
+
 container.bind<CloseCreateEntry>(CloseCreateEntry).toSelf().inSingletonScope();
 container.bind<CloseCreateVariant>(CloseCreateVariant).toSelf().inSingletonScope();
 container.bind<CloseProject>(CloseProject).toSelf().inSingletonScope();
@@ -61,7 +68,6 @@ container.bind<OpenProject>(OpenProject).toSelf().inSingletonScope();
 container.bind<SelectFile>(SelectFile).toSelf().inSingletonScope();
 container.bind<Reload>(Reload).toSelf().inSingletonScope();
 container.bind<SearchInFile>(SearchInFile).toSelf().inSingletonScope();
-container.bind<ToggleCollapseDir>(ToggleCollapseDir).toSelf().inSingletonScope();
 container.bind<UpdateEntry>(UpdateEntry).toSelf().inSingletonScope();
 
 export {container};

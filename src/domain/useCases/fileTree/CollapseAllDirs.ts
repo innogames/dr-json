@@ -3,18 +3,16 @@ import {SchemaDir} from '../../states/objects/fileTree/SchemaDir';
 import {ProjectState} from '../../states/ProjectState';
 
 @injectable()
-export class ToggleCollapseDir {
+export class CollapseAllDirs {
 
     constructor(
         private projectState: ProjectState,
     ) {
     }
 
-    execute(basename: string): Promise<void> {
+    execute(): Promise<void> {
         this.projectState.project.schemaTree.forEachDir((dir: SchemaDir) => {
-            if (dir.basename == basename) {
-                dir.setCollapsed(!dir.collapsed);
-            }
+            dir.setCollapsed(true);
         });
 
         return Promise.resolve();
