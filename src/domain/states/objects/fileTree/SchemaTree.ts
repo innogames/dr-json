@@ -3,6 +3,7 @@ import {SchemaFile} from './SchemaFile';
 import {SchemaTreeItem} from './SchemaTreeItem';
 
 type ItemMapper = (item: SchemaTreeItem) => SchemaTreeItem;
+type FileFilterFn = (file: SchemaFile) => boolean;
 
 export class SchemaTree {
     private _children: SchemaTreeItem[];
@@ -21,12 +22,28 @@ export class SchemaTree {
         return new SchemaTree(this.mapChildren(this._children, fn));
     }
 
+    public getFilesFlat(): SchemaFile[] {
+        return this._children.reduce(this.reduceFiles, []);
+    }
+
     public getFile(basename: string): SchemaFile | null {
         return this.findFileRecursive(this._children, basename);
     }
 
     public forEachDir(fn: (dir: SchemaDir) => void): void {
         this.forEachDirRecursive(this._children, fn);
+    }
+
+    private reduceFiles = (value: SchemaFile[], child: SchemaTreeItem): SchemaFile[] => {
+        if (child instanceof SchemaFile) {
+            return [...value, child];
+        } else {
+            return (child as SchemaDir).children.reduce(this.reduceFiles, value);
+        }
+    };
+
+    public filterFiles(filterFn: FileFilterFn): SchemaTree {
+        return new SchemaTree(this.filterChildren(this._children, filterFn));
     }
 
     private mapChildren(children: SchemaTreeItem[], fn: ItemMapper): SchemaTreeItem[] {
@@ -69,5 +86,29 @@ export class SchemaTree {
                 fn(dir);
             }
         }
+    }
+
+    private filterChildren(children: SchemaTreeItem[], filterFn: FileFilterFn): SchemaTreeItem[] {
+        return children
+            .map((child: SchemaTreeItem): SchemaTreeItem | null => {
+                if (child instanceof SchemaFile) {
+                    return filterFn(child) ? child : null;
+                }
+
+                let dir = child as SchemaDir;
+
+                const newChildren: SchemaTreeItem[] = this.filterChildren(dir.children, filterFn);
+                if (newChildren.length == 0) {
+                    return null;
+                }
+
+                return new SchemaDir(
+                    dir.label,
+                    dir.basename,
+                    newChildren,
+                    dir.collapsed,
+                );
+            })
+            .filter((child: SchemaTreeItem | null) => child != null) as SchemaTreeItem[];
     }
 }

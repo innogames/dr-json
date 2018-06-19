@@ -22,6 +22,7 @@ export class Icon extends React.Component<Props, {}> {
     static EDIT             = 'edit';
     static REMOVE           = 'remove';
     static COPY             = 'copy';
+    static FILTER           = 'filter';
     static RELOAD           = 'reload';
     static FOLDER           = 'folder';
     static FOLDER_COLLAPSED = 'folder-collapsed';

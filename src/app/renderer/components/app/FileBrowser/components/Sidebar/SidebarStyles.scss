@@ -7,4 +7,20 @@
   color: $color-primary-contrast;
   display: flex;
   flex-direction: column;
+
+  .filter {
+    overflow: hidden;
+    padding-left: .2rem;
+    border-left: 12px solid $color-primary-dark !important;
+
+    a {
+      color: $color-text;
+      font-size: .8rem;
+    }
+
+    a:hover {
+      text-decoration: line-through !important;
+      text-decoration-color: $color-text;
+    }
+  }
 }

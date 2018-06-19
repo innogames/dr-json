@@ -1,16 +1,20 @@
 import {dirname, joinPath} from '../../helpers/value/path';
 import {SchemaTree} from './fileTree/SchemaTree';
 import {ProjectConfig} from './ProjectConfig';
+import {action, observable} from "mobx";
 
 export class Project {
+
     private _file: string;
     private _config: ProjectConfig;
     private _schemaTree: SchemaTree;
+    @observable private _filter: string | null;
 
     constructor(file: string, config: ProjectConfig, schemaTree: SchemaTree) {
         this._file       = file;
         this._config     = config;
         this._schemaTree = schemaTree;
+        this._filter     = null;
     }
 
     get file(): string {
@@ -39,6 +43,15 @@ export class Project {
 
     get schemaTree(): SchemaTree {
         return this._schemaTree;
+    }
+
+    get filter(): string | null {
+        return this._filter;
+    }
+
+    @action
+    setFilter(value: string | null) {
+        this._filter = value;
     }
 
     setSchemaTree(schemaTree: SchemaTree): void {
