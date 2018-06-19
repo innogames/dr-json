@@ -1,6 +1,6 @@
 import 'jest';
 import 'reflect-metadata';
-import {EditorState} from '../../states/EditorState';
+import {EditorState} from '../../../states/EditorState';
 import {CloseCreateVariant} from '../CloseCreateVariant';
 
 let useCase: CloseCreateVariant;

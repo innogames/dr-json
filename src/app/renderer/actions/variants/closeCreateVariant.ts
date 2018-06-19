@@ -1,4 +1,4 @@
-import {CloseCreateVariant} from '../../../../domain/useCases/CloseCreateVariant';
+import {CloseCreateVariant} from '../../../../domain/useCases/variants/CloseCreateVariant';
 import {container} from '../../container';
 
 const useCase: CloseCreateVariant = container.get(CloseCreateVariant);

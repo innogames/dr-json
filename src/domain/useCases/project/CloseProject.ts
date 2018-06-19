@@ -1,7 +1,7 @@
 import {injectable} from 'inversify';
-import {SettingsRepo} from '../repositories/SettingsRepo';
-import {EditorState} from '../states/EditorState';
-import {ProjectState} from '../states/ProjectState';
+import {SettingsRepo} from '../../repositories/SettingsRepo';
+import {EditorState} from '../../states/EditorState';
+import {ProjectState} from '../../states/ProjectState';
 
 @injectable()
 export class CloseProject {

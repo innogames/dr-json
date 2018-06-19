@@ -1,4 +1,4 @@
-import {OpenCreateVariant} from '../../../../domain/useCases/OpenCreateVariant';
+import {OpenCreateVariant} from '../../../../domain/useCases/variants/OpenCreateVariant';
 import {container} from '../../container';
 
 const useCase: OpenCreateVariant = container.get(OpenCreateVariant);

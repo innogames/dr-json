@@ -1,5 +1,5 @@
-import {SelectFile} from '../../../domain/useCases/fileTree/SelectFile';
-import {container} from '../container';
+import {SelectFile} from '../../../../domain/useCases/fileTree/SelectFile';
+import {container} from '../../container';
 
 const useCase: SelectFile = container.get(SelectFile);
 

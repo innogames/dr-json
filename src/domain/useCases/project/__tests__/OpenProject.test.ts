@@ -1,15 +1,15 @@
 import 'jest';
 import 'reflect-metadata';
-import {ProjectRepo} from '../../repositories/ProjectRepo';
-import {SchemaRepo} from '../../repositories/SchemaRepo';
-import {SettingsRepo} from '../../repositories/SettingsRepo';
-import {SchemaDir} from '../../states/objects/fileTree/SchemaDir';
-import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
-import {SchemaTree} from '../../states/objects/fileTree/SchemaTree';
-import {ProjectConfig} from '../../states/objects/ProjectConfig';
-import {ProjectSettings} from '../../states/objects/settings/ProjectSettings';
-import {ProjectState} from '../../states/ProjectState';
-import {SettingsState} from '../../states/SettingsState';
+import {ProjectRepo} from '../../../repositories/ProjectRepo';
+import {SchemaRepo} from '../../../repositories/SchemaRepo';
+import {SettingsRepo} from '../../../repositories/SettingsRepo';
+import {SchemaDir} from '../../../states/objects/fileTree/SchemaDir';
+import {SchemaFile} from '../../../states/objects/fileTree/SchemaFile';
+import {SchemaTree} from '../../../states/objects/fileTree/SchemaTree';
+import {ProjectConfig} from '../../../states/objects/ProjectConfig';
+import {ProjectSettings} from '../../../states/objects/settings/ProjectSettings';
+import {ProjectState} from '../../../states/ProjectState';
+import {SettingsState} from '../../../states/SettingsState';
 import {CloseProject} from '../CloseProject';
 import {OpenProject} from '../OpenProject';
 

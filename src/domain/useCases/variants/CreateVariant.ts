@@ -1,11 +1,11 @@
 import {injectable} from 'inversify';
-import {joinPath} from '../helpers/value/path';
-import {DataRepo} from '../repositories/DataRepo';
-import {DataEntries} from '../states/objects/editor/DataEntries';
-import {SchemaFile} from '../states/objects/fileTree/SchemaFile';
-import {SchemaFileVariant} from '../states/objects/fileTree/SchemaFileVariant';
-import {ProjectState} from '../states/ProjectState';
-import {SelectFileVariant} from './fileTree/SelectFileVariant';
+import {joinPath} from '../../helpers/value/path';
+import {DataRepo} from '../../repositories/DataRepo';
+import {DataEntries} from '../../states/objects/editor/DataEntries';
+import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
+import {SchemaFileVariant} from '../../states/objects/fileTree/SchemaFileVariant';
+import {ProjectState} from '../../states/ProjectState';
+import {SelectFileVariant} from '../fileTree/SelectFileVariant';
 
 @injectable()
 export class CreateVariant {

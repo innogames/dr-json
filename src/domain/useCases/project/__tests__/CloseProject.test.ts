@@ -1,12 +1,12 @@
 import 'jest';
 import 'reflect-metadata';
-import {SettingsRepo} from '../../repositories/SettingsRepo';
-import {EditorState} from '../../states/EditorState';
-import {ActiveFile} from '../../states/objects/editor/ActiveFile';
-import {SchemaTree} from '../../states/objects/fileTree/SchemaTree';
-import {Project} from '../../states/objects/Project';
-import {ProjectConfig} from '../../states/objects/ProjectConfig';
-import {ProjectState} from '../../states/ProjectState';
+import {SettingsRepo} from '../../../repositories/SettingsRepo';
+import {EditorState} from '../../../states/EditorState';
+import {ActiveFile} from '../../../states/objects/editor/ActiveFile';
+import {SchemaTree} from '../../../states/objects/fileTree/SchemaTree';
+import {Project} from '../../../states/objects/Project';
+import {ProjectConfig} from '../../../states/objects/ProjectConfig';
+import {ProjectState} from '../../../states/ProjectState';
 import {CloseProject} from '../CloseProject';
 
 let useCase: CloseProject;

@@ -1,17 +1,17 @@
 import 'jest';
 import 'reflect-metadata';
-import {EditorState} from '../../states/EditorState';
-import {ActiveFile} from '../../states/objects/editor/ActiveFile';
-import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
-import {SchemaFileVariant} from '../../states/objects/fileTree/SchemaFileVariant';
-import {SchemaTree} from '../../states/objects/fileTree/SchemaTree';
-import {Project} from '../../states/objects/Project';
-import {ProjectConfig} from '../../states/objects/ProjectConfig';
-import {ProjectState} from '../../states/ProjectState';
+import {EditorState} from '../../../states/EditorState';
+import {ActiveFile} from '../../../states/objects/editor/ActiveFile';
+import {SchemaFile} from '../../../states/objects/fileTree/SchemaFile';
+import {SchemaFileVariant} from '../../../states/objects/fileTree/SchemaFileVariant';
+import {SchemaTree} from '../../../states/objects/fileTree/SchemaTree';
+import {Project} from '../../../states/objects/Project';
+import {ProjectConfig} from '../../../states/objects/ProjectConfig';
+import {ProjectState} from '../../../states/ProjectState';
 import {OpenProject} from '../OpenProject';
 import {Reload} from '../Reload';
-import {SelectFile} from '../fileTree/SelectFile';
-import {SelectFileVariant} from '../fileTree/SelectFileVariant';
+import {SelectFile} from '../../fileTree/SelectFile';
+import {SelectFileVariant} from '../../fileTree/SelectFileVariant';
 
 let useCase: Reload;
 let editorState: EditorState;

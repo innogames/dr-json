@@ -1,8 +1,8 @@
 import {injectable} from 'inversify';
-import {EditorState} from '../states/EditorState';
+import {EditorState} from '../../states/EditorState';
 
 @injectable()
-export class CloseCreateVariant {
+export class OpenCreateVariant {
 
     constructor(
         private editorState: EditorState,
@@ -10,7 +10,7 @@ export class CloseCreateVariant {
     }
 
     execute(): Promise<void> {
-        this.editorState.setAddVariantMode(false);
+        this.editorState.setAddVariantMode(true);
 
         return Promise.resolve();
     }

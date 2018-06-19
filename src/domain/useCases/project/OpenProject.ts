@@ -1,15 +1,15 @@
 import {injectable} from 'inversify';
-import {ProjectRepo} from '../repositories/ProjectRepo';
-import {SchemaRepo} from '../repositories/SchemaRepo';
-import {SettingsRepo} from '../repositories/SettingsRepo';
-import {SchemaDir} from '../states/objects/fileTree/SchemaDir';
-import {SchemaTree} from '../states/objects/fileTree/SchemaTree';
-import {SchemaTreeItem} from '../states/objects/fileTree/SchemaTreeItem';
-import {Project} from '../states/objects/Project';
-import {ProjectConfig} from '../states/objects/ProjectConfig';
-import {ProjectSettings} from '../states/objects/settings/ProjectSettings';
-import {ProjectState} from '../states/ProjectState';
-import {SettingsState} from '../states/SettingsState';
+import {ProjectRepo} from '../../repositories/ProjectRepo';
+import {SchemaRepo} from '../../repositories/SchemaRepo';
+import {SettingsRepo} from '../../repositories/SettingsRepo';
+import {SchemaDir} from '../../states/objects/fileTree/SchemaDir';
+import {SchemaTree} from '../../states/objects/fileTree/SchemaTree';
+import {SchemaTreeItem} from '../../states/objects/fileTree/SchemaTreeItem';
+import {Project} from '../../states/objects/Project';
+import {ProjectConfig} from '../../states/objects/ProjectConfig';
+import {ProjectSettings} from '../../states/objects/settings/ProjectSettings';
+import {ProjectState} from '../../states/ProjectState';
+import {SettingsState} from '../../states/SettingsState';
 import {CloseProject} from './CloseProject';
 
 @injectable()

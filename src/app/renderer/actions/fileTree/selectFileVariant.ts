@@ -1,5 +1,5 @@
-import {SelectFileVariant} from '../../../domain/useCases/fileTree/SelectFileVariant';
-import {container} from '../container';
+import {SelectFileVariant} from '../../../../domain/useCases/fileTree/SelectFileVariant';
+import {container} from '../../container';
 
 const useCase: SelectFileVariant = container.get(SelectFileVariant);
 

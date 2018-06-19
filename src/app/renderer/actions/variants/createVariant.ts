@@ -1,4 +1,4 @@
-import {CreateVariant} from '../../../../domain/useCases/CreateVariant';
+import {CreateVariant} from '../../../../domain/useCases/variants/CreateVariant';
 import {container} from '../../container';
 
 const useCase: CreateVariant = container.get(CreateVariant);

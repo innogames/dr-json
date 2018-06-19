@@ -1,4 +1,4 @@
-import {OpenProject} from '../../../../domain/useCases/OpenProject';
+import {OpenProject} from '../../../../domain/useCases/project/OpenProject';
 import {container} from '../../container';
 
 const useCase: OpenProject = container.get(OpenProject);
