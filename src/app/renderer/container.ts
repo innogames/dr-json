@@ -31,6 +31,8 @@ import {SelectFileVariant} from '../../domain/useCases/fileTree/SelectFileVarian
 import {UpdateEntry} from '../../domain/useCases/entries/UpdateEntry';
 import {FilesystemImpl} from './services/FilesystemImpl';
 import {SettingsStorageImpl} from './services/SettingsStorageImpl';
+import {SelectFilter} from '../../domain/useCases/fileTree/SelectFilter';
+import {ResetFilter} from '../../domain/useCases/fileTree/ResetFilter';
 
 let container: Container = new Container();
 
@@ -55,6 +57,8 @@ container.bind<SettingsStorageInterface>(SettingsStorageId).to(SettingsStorageIm
 container.bind<CollapseAllDirs>(CollapseAllDirs).toSelf().inSingletonScope();
 container.bind<ExpandAllDirs>(ExpandAllDirs).toSelf().inSingletonScope();
 container.bind<ToggleCollapseDir>(ToggleCollapseDir).toSelf().inSingletonScope();
+container.bind<SelectFilter>(SelectFilter).toSelf().inRequestScope();
+container.bind<ResetFilter>(ResetFilter).toSelf().inRequestScope();
 // - entries
 container.bind<CloseCreateEntry>(CloseCreateEntry).toSelf().inSingletonScope();
 container.bind<CreateEntry>(CreateEntry).toSelf().inSingletonScope();
