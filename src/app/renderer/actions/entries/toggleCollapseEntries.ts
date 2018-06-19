@@ -1,8 +1,8 @@
-import {ActiveFile} from '../../../../domain/states/objects/editor/ActiveFile';
-import {DataEntry} from '../../../../domain/states/objects/editor/DataEntry';
+import {ToggleCollapseEntries} from '../../../../domain/useCases/entries/ToggleCollapseEntries';
+import {container} from '../../container';
 
-export function toggleCollapseEntries(activeFile: ActiveFile, collapsed: boolean): void {
-    activeFile.entries.all.map((entry: DataEntry) => {
-        entry.setCollapsed(collapsed);
-    });
+const useCase: ToggleCollapseEntries = container.get(ToggleCollapseEntries);
+
+export function toggleCollapseEntries(collapsed: boolean): Promise<void> {
+    return useCase.execute(collapsed);
 }

@@ -265,11 +265,11 @@ export class FileEditor extends React.Component<Props, State> {
     };
 
     private onCollapseAll = () => {
-        toggleCollapseEntries(this.props.activeFile, true);
+        toggleCollapseEntries(true);
     };
 
     private onExpandAll = () => {
-        toggleCollapseEntries(this.props.activeFile, false);
+        toggleCollapseEntries(false);
     };
 
     private onToggleErrors = () => {

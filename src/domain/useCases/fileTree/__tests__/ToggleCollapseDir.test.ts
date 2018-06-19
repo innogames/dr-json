@@ -14,10 +14,6 @@ let projectState: ProjectState;
 beforeEach(() => {
     projectState = new ProjectState();
 
-    useCase = new ToggleCollapseDir(projectState);
-});
-
-beforeEach(() => {
     let dirA: SchemaDir = new SchemaDir('Open Folder', 'openFolder', [
         new SchemaFile('File A', 'fileA', 'fileA.schema.json', 'fileA.json', []),
     ]);
@@ -28,6 +24,8 @@ beforeEach(() => {
 
     const tree = new SchemaTree([dirA, dirB]);
     projectState.setLoaded(new Project('/root/projectFile', new ProjectConfig({name: ''}), tree));
+
+    useCase = new ToggleCollapseDir(projectState);
 });
 
 describe('ToggleCollapseDir', () => {
