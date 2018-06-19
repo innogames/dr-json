@@ -1,4 +1,5 @@
-import * as React from "react";
+import * as React from 'react';
+import {Link} from '../Link';
 
 interface Props {
     label: string;
@@ -9,12 +10,8 @@ export class MenuItem extends React.Component<Props, {}> {
     render() {
         return (
             <li>
-                <a onClick={this.handleClick}>{this.props.label}</a>
+                <Link onClick={this.props.onClick}>{this.props.label}</Link>
             </li>
         );
     }
-
-    private handleClick = () => {
-        this.props.onClick();
-    };
 }

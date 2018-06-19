@@ -3,23 +3,22 @@ import * as React from 'react';
 import {EditorState} from '../../../../../../../domain/states/EditorState';
 import {SchemaDir} from '../../../../../../../domain/states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../../../../../../../domain/states/objects/fileTree/SchemaFile';
+import {SchemaFileVariant} from '../../../../../../../domain/states/objects/fileTree/SchemaFileVariant';
+import {SchemaTree} from '../../../../../../../domain/states/objects/fileTree/SchemaTree';
 import {ProjectState} from '../../../../../../../domain/states/ProjectState';
 import {openFolderExternally} from '../../../../../actions/openFolderExternally';
 import {reload} from '../../../../../actions/reload';
 import {selectFile} from '../../../../../actions/selectFile';
+import {selectFileVariant} from '../../../../../actions/selectFileVariant';
+import {openCreateVariant} from '../../../../../actions/variants/openCreateVariant';
 import {FileTree} from '../../../../common/FileTree';
 import {FileTreeButtons} from '../../../../common/FileTreeButtons';
 import {Icon} from '../../../../common/Icon';
+import {IconDropdown} from '../../../../common/IconDropdown';
 import {Link} from '../../../../common/Link';
+import {Menu, MenuItem} from '../../../../common/Menu';
+import {If} from '../../../../helper/If';
 import styles from './SidebarStyles.scss';
-import {SchemaFileVariant} from "../../../../../../../domain/states/objects/fileTree/SchemaFileVariant";
-import {selectFileVariant} from "../../../../../actions/selectFileVariant";
-import {openCreateVariant} from "../../../../../actions/variants/openCreateVariant";
-import {IconDropdown} from "../../../../common/IconDropdown";
-import {If} from "../../../../helper/If";
-import {SchemaTree} from "../../../../../../../domain/states/objects/fileTree/SchemaTree";
-import {Menu} from "../../../../common/Menu";
-import {MenuItem} from "../../../../common/Menu";
 
 interface Injected {
     projectState: ProjectState;
@@ -52,7 +51,7 @@ export class Sidebar extends React.Component<{}, {}> {
                                             key={variantId}
                                             label={variantId}
                                             onClick={() => {
-                                                this.onSelectVariantFilter(variantId)
+                                                this.onSelectVariantFilter(variantId);
                                             }}
                                         />
                                     );
@@ -61,12 +60,15 @@ export class Sidebar extends React.Component<{}, {}> {
                         </Menu>
                     </IconDropdown>
                 </FileTreeButtons>
+
                 <If cond={this.injected.projectState.project.filter != null}>
                     <div className={styles.filter}>
-                        <a title="Remove Filter"
-                           onClick={this.onResetFilter}> Filter: {this.injected.projectState.project.filter}</a>
+                        <Link title="Remove Filter" onClick={this.onResetFilter}>
+                            Filter: {this.injected.projectState.project.filter}
+                        </Link>
                     </div>
                 </If>
+
                 <FileTree
                     tree={this.getFilteredTree()}
                     selectedBasename={this.injected.editorState.currentFile ? this.injected.editorState.currentFile.basename : undefined}
@@ -130,7 +132,7 @@ export class Sidebar extends React.Component<{}, {}> {
     };
 
     private getUniqueVariantIds(): string[] {
-        let files = this.injected.projectState.project.schemaTree.getFilesFlat();
+        let files                         = this.injected.projectState.project.schemaTree.getFilesFlat();
         let uniqueVariantIds: Set<string> = new Set();
 
         for (let file of files) {
@@ -149,7 +151,9 @@ export class Sidebar extends React.Component<{}, {}> {
 
         return this.injected.projectState.project.schemaTree.filterFiles((file: SchemaFile) => {
             return file.variants.reduce(
-                (keep: boolean, variant: SchemaFileVariant) => keep || variant.variantId == this.injected.projectState.project.filter,
+                (keep: boolean, variant: SchemaFileVariant) => {
+                    return keep || variant.variantId == this.injected.projectState.project.filter;
+                },
                 false,
             );
         });
