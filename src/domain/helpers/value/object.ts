@@ -18,13 +18,7 @@ export function isNestedEmpty(value: any): boolean {
     }
 
     if (typeof value === 'object') {
-        return Object.keys(value).reduce((isEmpty: boolean, prop: string): boolean => {
-            if (!isEmpty) {
-                return false;
-            }
-
-            return isNestedEmpty(value[prop]);
-        }, true);
+        return Object.keys(value).every((prop: string): boolean => isNestedEmpty(value[prop]));
     }
 
     return false;

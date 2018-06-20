@@ -103,10 +103,7 @@ describe('SchemaTree', () => {
         ]);
 
         const filtered: SchemaTree = tree.filterFiles((file: SchemaFile) => {
-            return file.variants.reduce(
-                (keep: boolean, variant: SchemaFileVariant) => keep || variant.variantId == 'v',
-                false,
-            );
+            return file.variants.some((variant: SchemaFileVariant) => variant.variantId == 'v');
         });
 
         expect(filtered.children.length).toEqual(2);

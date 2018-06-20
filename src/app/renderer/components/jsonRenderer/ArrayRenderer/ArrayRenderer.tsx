@@ -11,11 +11,7 @@ export class ArrayRenderer extends React.PureComponent<JsonRenderProps, {}> {
 
         // --------------------------------------------------------------------------------------
         //TODO: remove this when renderer is configurable and simpleArrayRender can be configured
-        let isSimple: boolean = array.reduce((isSimple: boolean, value: any) => {
-                return isSimple && (typeof value == 'string' || typeof value == 'number');
-            },
-            true,
-        );
+        let isSimple: boolean = array.every((value: any) => typeof value == 'string' || typeof value == 'number');
         if (isSimple) {
             return array.join(', ');
         }
