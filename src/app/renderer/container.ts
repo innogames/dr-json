@@ -56,9 +56,9 @@ container.bind<SettingsStorageInterface>(SettingsStorageId).to(SettingsStorageIm
 // - fileTree
 container.bind<CollapseAllDirs>(CollapseAllDirs).toSelf().inSingletonScope();
 container.bind<ExpandAllDirs>(ExpandAllDirs).toSelf().inSingletonScope();
+container.bind<ResetFilter>(ResetFilter).toSelf().inSingletonScope();
+container.bind<SelectFilter>(SelectFilter).toSelf().inSingletonScope();
 container.bind<ToggleCollapseDir>(ToggleCollapseDir).toSelf().inSingletonScope();
-container.bind<SelectFilter>(SelectFilter).toSelf().inRequestScope();
-container.bind<ResetFilter>(ResetFilter).toSelf().inRequestScope();
 // - entries
 container.bind<CloseCreateEntry>(CloseCreateEntry).toSelf().inSingletonScope();
 container.bind<CreateEntry>(CreateEntry).toSelf().inSingletonScope();
