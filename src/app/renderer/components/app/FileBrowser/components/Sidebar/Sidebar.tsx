@@ -25,6 +25,8 @@ import {Link} from '../../../../common/Link';
 import {Menu, MenuItem} from '../../../../common/Menu';
 import {If} from '../../../../helper/If';
 import styles from './SidebarStyles.scss';
+import {selectFilter} from '../../../../../actions/fileTree/selectFilter';
+import {resetFilter} from '../../../../../actions/fileTree/resetFilter';
 
 interface Injected {
     projectState: ProjectState;
@@ -122,11 +124,11 @@ export class Sidebar extends React.Component<{}, {}> {
     };
 
     private onSelectVariantFilter = (filter: string) => {
-        this.injected.projectState.project.setFilter(filter);
+        selectFilter(filter);
     };
 
     private onResetFilter = () => {
-        this.injected.projectState.project.setFilter(null);
+        resetFilter();
     };
 
     private getFilteredTree(): SchemaTree {
