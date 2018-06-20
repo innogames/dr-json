@@ -1,6 +1,7 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import {byError} from '../../../../../../../domain/context/data/filter/byError';
 import {bySearch} from '../../../../../../../domain/context/data/filter/bySearch';
 import {ActiveFile} from '../../../../../../../domain/states/objects/editor/ActiveFile';
 import {DataEntry, EntryId} from '../../../../../../../domain/states/objects/editor/DataEntry';
@@ -103,20 +104,12 @@ export class FileEditor extends React.Component<Props, State> {
             );
         }
 
-        if (hasErrors) {
-            entries = entries.filter(this.filterErrors);
+        if (hasErrors && this.state.showErrorsOnly) {
+            entries = entries.filter(byError);
         }
 
         return entries.map(this.renderEntry);
     }
-
-    private filterErrors = (entry: DataEntry): boolean => {
-        if (this.state.showErrorsOnly && !entry.error) {
-            return false;
-        }
-
-        return !!entry;
-    };
 
     private renderEntry = (entry: DataEntry, idx: number) => {
         if (entry.editMode && this.props.showFormInline) {
