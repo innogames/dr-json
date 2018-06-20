@@ -16,6 +16,7 @@ import {toggleCollapseDir} from '../../../../../actions/fileTree/toggleCollapseD
 import {openFolderExternally} from '../../../../../actions/openFolderExternally';
 import {reload} from '../../../../../actions/project/reload';
 import {openCreateVariant} from '../../../../../actions/variants/openCreateVariant';
+import {getAllVariantIds} from '../../../../../queries/getAllVariantIds';
 import {FileTree} from '../../../../common/FileTree';
 import {FileTreeButtons} from '../../../../common/FileTreeButtons';
 import {Icon} from '../../../../common/Icon';
@@ -50,7 +51,7 @@ export class Sidebar extends React.Component<{}, {}> {
                         <Menu>
                             <MenuItem label={'All'} onClick={this.onResetFilter}/>
                             {
-                                this.getUniqueVariantIds().map((variantId: string) => {
+                                getAllVariantIds().map((variantId: string) => {
                                     return (
                                         <MenuItem
                                             key={variantId}
@@ -127,19 +128,6 @@ export class Sidebar extends React.Component<{}, {}> {
     private onResetFilter = () => {
         this.injected.projectState.project.setFilter(null);
     };
-
-    private getUniqueVariantIds(): string[] {
-        let files                         = this.injected.projectState.project.schemaTree.getFilesFlat();
-        let uniqueVariantIds: Set<string> = new Set();
-
-        for (let file of files) {
-            for (let variant of file.variants) {
-                uniqueVariantIds.add(variant.variantId);
-            }
-        }
-
-        return [...uniqueVariantIds];
-    }
 
     private getFilteredTree(): SchemaTree {
         const project: Project = this.injected.projectState.project;

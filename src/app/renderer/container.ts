@@ -8,6 +8,7 @@ import {DataRepo} from '../../domain/repositories/DataRepo';
 import {ProjectRepo} from '../../domain/repositories/ProjectRepo';
 import {SchemaRepo} from '../../domain/repositories/SchemaRepo';
 import {SettingsRepo} from '../../domain/repositories/SettingsRepo';
+import {GetAllVariantIds} from '../../domain/stateQueries/GetAllVariantIds';
 import {EditorState} from '../../domain/states/EditorState';
 import {ProjectState} from '../../domain/states/ProjectState';
 import {SettingsState} from '../../domain/states/SettingsState';
@@ -72,5 +73,8 @@ container.bind<OpenCreateVariant>(OpenCreateVariant).toSelf().inSingletonScope()
 container.bind<OpenProject>(OpenProject).toSelf().inSingletonScope();
 container.bind<Reload>(Reload).toSelf().inSingletonScope();
 container.bind<SearchInFile>(SearchInFile).toSelf().inSingletonScope();
+
+// queries
+container.bind<GetAllVariantIds>(GetAllVariantIds).toSelf().inSingletonScope();
 
 export {container};

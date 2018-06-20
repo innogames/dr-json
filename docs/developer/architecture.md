@@ -14,6 +14,7 @@ dr-json/
        └─ domain/            ← The domain layer
             ├─ useCases/
             ├─ states/
+            ├─ stateQueries/
             └─ ...
 ```
 
@@ -29,6 +30,8 @@ Use Cases are executed asynchronously and just return a `Promise<void>`. Interna
 The application **state** consists of observable objects (using [MobX](https://mobx.js.org)) and contains all information about the current state
 (like current project, opened file and entries, UI states, etc.).
 Everyone can subscribe and get notified when the state changes.
+The application layer can read/fetch data either directly from the state objects or by using **stateQueries**.
+A state query contains reading logic that doesn't fit into a state object.
 
 ![Domain Layer](../img/layers.png)
 
