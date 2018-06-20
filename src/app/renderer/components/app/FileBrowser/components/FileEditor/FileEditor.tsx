@@ -6,6 +6,7 @@ import {bySearch} from '../../../../../../../domain/context/data/filter/bySearch
 import {ActiveFile} from '../../../../../../../domain/states/objects/editor/ActiveFile';
 import {DataEntry, EntryId} from '../../../../../../../domain/states/objects/editor/DataEntry';
 import {VariantTypeConfig} from '../../../../../../../domain/states/objects/ProjectConfig';
+import {closeEditEntry} from '../../../../../actions/entries/closeEditEntry';
 import {confirmDeleteEntry} from '../../../../../actions/entries/confirmDeleteEntry';
 import {createEntry} from '../../../../../actions/entries/createEntry';
 import {openCreateEntry} from '../../../../../actions/entries/openCreateEntry';
@@ -202,9 +203,7 @@ export class FileEditor extends React.Component<Props, State> {
 
     private onClickAdd = (): void => {
         if (!this.props.showFormInline) {
-            this.props.activeFile.entries.all.forEach((entry: DataEntry) => {
-                entry.toggleEditMode(false);
-            });
+            closeEditEntry();
         }
         openCreateEntry();
     };

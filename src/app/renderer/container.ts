@@ -9,31 +9,33 @@ import {ProjectRepo} from '../../domain/repositories/ProjectRepo';
 import {SchemaRepo} from '../../domain/repositories/SchemaRepo';
 import {SettingsRepo} from '../../domain/repositories/SettingsRepo';
 import {GetAllVariantIds} from '../../domain/stateQueries/GetAllVariantIds';
+import {IsEditing} from '../../domain/stateQueries/IsEditing';
 import {EditorState} from '../../domain/states/EditorState';
 import {ProjectState} from '../../domain/states/ProjectState';
 import {SettingsState} from '../../domain/states/SettingsState';
 import {CloseCreateEntry} from '../../domain/useCases/entries/CloseCreateEntry';
-import {CloseCreateVariant} from '../../domain/useCases/variants/CloseCreateVariant';
-import {CloseProject} from '../../domain/useCases/project/CloseProject';
+import {CloseEditEntry} from '../../domain/useCases/entries/CloseEditEntry';
 import {CreateEntry} from '../../domain/useCases/entries/CreateEntry';
-import {CreateVariant} from '../../domain/useCases/variants/CreateVariant';
 import {DeleteEntry} from '../../domain/useCases/entries/DeleteEntry';
+import {OpenCreateEntry} from '../../domain/useCases/entries/OpenCreateEntry';
+import {SearchInFile} from '../../domain/useCases/entries/SearchInFile';
 import {ToggleCollapseEntries} from '../../domain/useCases/entries/ToggleCollapseEntries';
+import {UpdateEntry} from '../../domain/useCases/entries/UpdateEntry';
 import {CollapseAllDirs} from '../../domain/useCases/fileTree/CollapseAllDirs';
 import {ExpandAllDirs} from '../../domain/useCases/fileTree/ExpandAllDirs';
-import {ToggleCollapseDir} from '../../domain/useCases/fileTree/ToggleCollapseDir';
-import {OpenCreateEntry} from '../../domain/useCases/entries/OpenCreateEntry';
-import {OpenCreateVariant} from '../../domain/useCases/variants/OpenCreateVariant';
-import {OpenProject} from '../../domain/useCases/project/OpenProject';
-import {Reload} from '../../domain/useCases/project/Reload';
-import {SearchInFile} from '../../domain/useCases/entries/SearchInFile';
+import {ResetFilter} from '../../domain/useCases/fileTree/ResetFilter';
 import {SelectFile} from '../../domain/useCases/fileTree/SelectFile';
 import {SelectFileVariant} from '../../domain/useCases/fileTree/SelectFileVariant';
-import {UpdateEntry} from '../../domain/useCases/entries/UpdateEntry';
+import {SelectFilter} from '../../domain/useCases/fileTree/SelectFilter';
+import {ToggleCollapseDir} from '../../domain/useCases/fileTree/ToggleCollapseDir';
+import {CloseProject} from '../../domain/useCases/project/CloseProject';
+import {OpenProject} from '../../domain/useCases/project/OpenProject';
+import {Reload} from '../../domain/useCases/project/Reload';
+import {CloseCreateVariant} from '../../domain/useCases/variants/CloseCreateVariant';
+import {CreateVariant} from '../../domain/useCases/variants/CreateVariant';
+import {OpenCreateVariant} from '../../domain/useCases/variants/OpenCreateVariant';
 import {FilesystemImpl} from './services/FilesystemImpl';
 import {SettingsStorageImpl} from './services/SettingsStorageImpl';
-import {SelectFilter} from '../../domain/useCases/fileTree/SelectFilter';
-import {ResetFilter} from '../../domain/useCases/fileTree/ResetFilter';
 
 let container: Container = new Container();
 
@@ -56,6 +58,7 @@ container.bind<SettingsStorageInterface>(SettingsStorageId).to(SettingsStorageIm
 // use cases
 // - entries
 container.bind<CloseCreateEntry>(CloseCreateEntry).toSelf().inSingletonScope();
+container.bind<CloseEditEntry>(CloseEditEntry).toSelf().inSingletonScope();
 container.bind<CreateEntry>(CreateEntry).toSelf().inSingletonScope();
 container.bind<DeleteEntry>(DeleteEntry).toSelf().inSingletonScope();
 container.bind<OpenCreateEntry>(OpenCreateEntry).toSelf().inSingletonScope();
@@ -81,5 +84,6 @@ container.bind<OpenCreateVariant>(OpenCreateVariant).toSelf().inSingletonScope()
 
 // queries
 container.bind<GetAllVariantIds>(GetAllVariantIds).toSelf().inSingletonScope();
+container.bind<IsEditing>(IsEditing).toSelf().inSingletonScope();
 
 export {container};
