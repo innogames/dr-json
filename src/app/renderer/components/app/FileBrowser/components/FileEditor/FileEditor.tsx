@@ -1,7 +1,7 @@
 import {observer} from 'mobx-react';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {filterEntriesBySearch} from '../../../../../../../domain/context/data/filterEntriesBySearch';
+import {bySearch} from '../../../../../../../domain/context/data/filter/bySearch';
 import {ActiveFile} from '../../../../../../../domain/states/objects/editor/ActiveFile';
 import {DataEntry, EntryId} from '../../../../../../../domain/states/objects/editor/DataEntry';
 import {VariantTypeConfig} from '../../../../../../../domain/states/objects/ProjectConfig';
@@ -64,7 +64,7 @@ export class FileEditor extends React.Component<Props, State> {
 
     render() {
         let entries: DataEntry[] = this.props.activeFile.entries.all;
-        entries                  = filterEntriesBySearch(entries, this.props.activeFile.searchText);
+        entries                  = entries.filter(bySearch(this.props.activeFile.searchText));
         let hasErrors: boolean   = this.props.activeFile.entries.hasErrors();
 
         return (

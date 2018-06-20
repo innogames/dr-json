@@ -3,7 +3,7 @@ import {SchemaFile} from './SchemaFile';
 import {SchemaTreeItem} from './SchemaTreeItem';
 
 type ItemMapper = (item: SchemaTreeItem) => SchemaTreeItem;
-type FileFilterFn = (file: SchemaFile) => boolean;
+export type FileFilterFn = (file: SchemaFile) => boolean;
 
 export class SchemaTree {
     private _children: SchemaTreeItem[];

@@ -1,18 +1,20 @@
 import {inject, observer} from 'mobx-react';
 import * as React from 'react';
+import {byVariantId} from '../../../../../../../domain/context/fileTree/filter/byVariantId';
 import {EditorState} from '../../../../../../../domain/states/EditorState';
 import {SchemaDir} from '../../../../../../../domain/states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../../../../../../../domain/states/objects/fileTree/SchemaFile';
 import {SchemaFileVariant} from '../../../../../../../domain/states/objects/fileTree/SchemaFileVariant';
 import {SchemaTree} from '../../../../../../../domain/states/objects/fileTree/SchemaTree';
+import {Project} from '../../../../../../../domain/states/objects/Project';
 import {ProjectState} from '../../../../../../../domain/states/ProjectState';
 import {collapseAllDirs} from '../../../../../actions/fileTree/collapseAllDirs';
 import {expandAllDirs} from '../../../../../actions/fileTree/expandAllDirs';
+import {selectFile} from '../../../../../actions/fileTree/selectFile';
+import {selectFileVariant} from '../../../../../actions/fileTree/selectFileVariant';
 import {toggleCollapseDir} from '../../../../../actions/fileTree/toggleCollapseDir';
 import {openFolderExternally} from '../../../../../actions/openFolderExternally';
 import {reload} from '../../../../../actions/project/reload';
-import {selectFile} from '../../../../../actions/fileTree/selectFile';
-import {selectFileVariant} from '../../../../../actions/fileTree/selectFileVariant';
 import {openCreateVariant} from '../../../../../actions/variants/openCreateVariant';
 import {FileTree} from '../../../../common/FileTree';
 import {FileTreeButtons} from '../../../../common/FileTreeButtons';
@@ -140,17 +142,12 @@ export class Sidebar extends React.Component<{}, {}> {
     }
 
     private getFilteredTree(): SchemaTree {
-        if (!this.injected.projectState.project.filter) {
-            return this.injected.projectState.project.schemaTree;
+        const project: Project = this.injected.projectState.project;
+
+        if (!project.filter) {
+            return project.schemaTree;
         }
 
-        return this.injected.projectState.project.schemaTree.filterFiles((file: SchemaFile) => {
-            return file.variants.reduce(
-                (keep: boolean, variant: SchemaFileVariant) => {
-                    return keep || variant.variantId == this.injected.projectState.project.filter;
-                },
-                false,
-            );
-        });
+        return project.schemaTree.filterFiles(byVariantId(project.filter));
     }
 }
