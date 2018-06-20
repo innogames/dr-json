@@ -15,7 +15,7 @@ beforeEach(() => {
 });
 
 describe('ResetFilter', () => {
-    it('reset filter', () => {
+    it('resets filter', () => {
         projectState.setLoaded(new Project('/root/projectFile', new ProjectConfig({name: ''}), new SchemaTree([])));
 
         return useCase.execute()

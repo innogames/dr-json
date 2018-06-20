@@ -54,29 +54,30 @@ container.bind<SettingsRepo>(SettingsRepo).toSelf().inSingletonScope();
 container.bind<SettingsStorageInterface>(SettingsStorageId).to(SettingsStorageImpl).inSingletonScope();
 
 // use cases
-// - fileTree
-container.bind<CollapseAllDirs>(CollapseAllDirs).toSelf().inSingletonScope();
-container.bind<ExpandAllDirs>(ExpandAllDirs).toSelf().inSingletonScope();
-container.bind<ResetFilter>(ResetFilter).toSelf().inSingletonScope();
-container.bind<SelectFilter>(SelectFilter).toSelf().inSingletonScope();
-container.bind<ToggleCollapseDir>(ToggleCollapseDir).toSelf().inSingletonScope();
 // - entries
 container.bind<CloseCreateEntry>(CloseCreateEntry).toSelf().inSingletonScope();
 container.bind<CreateEntry>(CreateEntry).toSelf().inSingletonScope();
 container.bind<DeleteEntry>(DeleteEntry).toSelf().inSingletonScope();
 container.bind<OpenCreateEntry>(OpenCreateEntry).toSelf().inSingletonScope();
-container.bind<SelectFile>(SelectFile).toSelf().inSingletonScope();
+container.bind<SearchInFile>(SearchInFile).toSelf().inSingletonScope();
 container.bind<ToggleCollapseEntries>(ToggleCollapseEntries).toSelf().inSingletonScope();
 container.bind<UpdateEntry>(UpdateEntry).toSelf().inSingletonScope();
-
-container.bind<CloseCreateVariant>(CloseCreateVariant).toSelf().inSingletonScope();
-container.bind<CloseProject>(CloseProject).toSelf().inSingletonScope();
+// - fileTree
+container.bind<CollapseAllDirs>(CollapseAllDirs).toSelf().inSingletonScope();
+container.bind<ExpandAllDirs>(ExpandAllDirs).toSelf().inSingletonScope();
+container.bind<ResetFilter>(ResetFilter).toSelf().inSingletonScope();
+container.bind<SelectFile>(SelectFile).toSelf().inSingletonScope();
 container.bind<SelectFileVariant>(SelectFileVariant).toSelf().inSingletonScope();
-container.bind<CreateVariant>(CreateVariant).toSelf().inSingletonScope();
-container.bind<OpenCreateVariant>(OpenCreateVariant).toSelf().inSingletonScope();
+container.bind<SelectFilter>(SelectFilter).toSelf().inSingletonScope();
+container.bind<ToggleCollapseDir>(ToggleCollapseDir).toSelf().inSingletonScope();
+// - project
+container.bind<CloseProject>(CloseProject).toSelf().inSingletonScope();
 container.bind<OpenProject>(OpenProject).toSelf().inSingletonScope();
 container.bind<Reload>(Reload).toSelf().inSingletonScope();
-container.bind<SearchInFile>(SearchInFile).toSelf().inSingletonScope();
+// - variants
+container.bind<CloseCreateVariant>(CloseCreateVariant).toSelf().inSingletonScope();
+container.bind<CreateVariant>(CreateVariant).toSelf().inSingletonScope();
+container.bind<OpenCreateVariant>(OpenCreateVariant).toSelf().inSingletonScope();
 
 // queries
 container.bind<GetAllVariantIds>(GetAllVariantIds).toSelf().inSingletonScope();
