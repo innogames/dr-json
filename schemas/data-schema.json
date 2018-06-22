@@ -120,6 +120,7 @@
         },
         "format": {"type": "string"},
         "$ref": {"type": "string"},
+        "dj:renderer": {"type": "string"},
         "ui:help": {"type": "string"},
         "ui:widget": {
           "type": "string",

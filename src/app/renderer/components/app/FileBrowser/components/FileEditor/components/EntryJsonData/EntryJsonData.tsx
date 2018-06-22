@@ -1,15 +1,13 @@
 import {toJS} from 'mobx';
 import * as React from 'react';
+import {ComponentClass} from 'react';
 import {SchemaConfig} from '../../../../../../../../../domain/context/schema/SchemaConfig';
 import {unique} from '../../../../../../../../../domain/helpers/value/array';
 import {isEmpty} from '../../../../../../../../../domain/helpers/value/isEmpty';
 import {DataEntry} from '../../../../../../../../../domain/states/objects/editor/DataEntry';
-import {ArrayRenderer} from '../../../../../../jsonRenderer/ArrayRenderer';
-import {BoolRenderer} from '../../../../../../jsonRenderer/BoolRenderer';
+import {FallbackRenderer} from '../../../../../../jsonRenderer/FallbackRenderer';
 import {JsonRenderProps} from '../../../../../../jsonRenderer/JsonRenderProps';
-import {NumberRenderer} from '../../../../../../jsonRenderer/NumberRenderer';
-import {ObjectRenderer} from '../../../../../../jsonRenderer/ObjectRenderer';
-import {StringRenderer} from '../../../../../../jsonRenderer/StringRenderer';
+import {getDefaultRenderer, rendererMap} from '../../../../../../jsonRenderer/rendererMap';
 import styles from './EntryJsonDataStyles.scss';
 
 interface Props {
@@ -42,47 +40,37 @@ export class EntryJsonData extends React.PureComponent<Props, {}> {
             return null;
         }
 
-        const schemaType = schema ? schema.type : null;
-        const valueType  = typeof value;
+        const schemaType: string = schema ? schema.type : '';
+        const valueType: string  = typeof value;
+
+        let rendererId: string = '';
+
+        if (schema && schema['dj:renderer']) {
+            rendererId = schema['dj:renderer'];
+        } else {
+            rendererId = getDefaultRenderer(value, schemaType, valueType);
+        }
 
         const renderProps: JsonRenderProps = {
             value:             value,
             schema:            schema,
             path:              path,
+            rendererId:        rendererId,
             renderValue:       this.renderValue,
             renderArrayItems:  this.renderArrayItems,
             renderObjectProps: this.renderObjectProps,
         };
 
-        if (schemaType == 'object' && valueType == 'object') {
-            return <ObjectRenderer {...renderProps} />;
+
+        if (!rendererMap.has(rendererId)) {
+            return (
+                <FallbackRenderer {...{...renderProps, value: `Invalid renderer "${rendererId}" configured`}}/>
+            );
         }
 
-        if (schemaType == 'array' && Array.isArray(value)) {
-            return <ArrayRenderer {...renderProps} />;
-        }
+        const RendererComponent: ComponentClass<JsonRenderProps> = rendererMap.get(rendererId)!;
 
-        if (schemaType == 'boolean' && valueType === 'boolean') {
-            return <BoolRenderer {...renderProps} />;
-        }
-
-        if ((schemaType == 'integer' || schemaType == 'number') && valueType === 'number') {
-            return <NumberRenderer {...renderProps} />;
-        }
-
-        if (schemaType == 'string' && valueType == 'string') {
-            return <StringRenderer {...renderProps} />;
-        }
-
-        if (schemaType == 'null' && value == null) {
-            return null;
-        }
-
-        // fallback - value does not mach schema or there is no schema
-
-        return (
-            <span className={styles.fallback}>{value.toString()}</span>
-        );
+        return <RendererComponent {...renderProps} />;
     };
 
     private renderArrayItems = (array: any[], schema: any, path: string): any[] => {
