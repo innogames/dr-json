@@ -42,14 +42,7 @@ export class EntryJsonData extends React.PureComponent<Props, {}> {
 
         const schemaType: string = schema ? schema.type : '';
         const valueType: string  = typeof value;
-
-        let rendererId: string = '';
-
-        if (schema && schema['dj:renderer']) {
-            rendererId = schema['dj:renderer'];
-        } else {
-            rendererId = getDefaultRenderer(value, schemaType, valueType);
-        }
+        const rendererId: string = this.getRenderer(value, schema, schemaType, valueType);
 
         const renderProps: JsonRenderProps = {
             value:             value,
@@ -61,7 +54,6 @@ export class EntryJsonData extends React.PureComponent<Props, {}> {
             renderObjectProps: this.renderObjectProps,
         };
 
-
         if (!rendererMap.has(rendererId)) {
             return (
                 <FallbackRenderer {...{...renderProps, value: `Invalid renderer "${rendererId}" configured`}}/>
@@ -71,6 +63,14 @@ export class EntryJsonData extends React.PureComponent<Props, {}> {
         const RendererComponent: ComponentClass<JsonRenderProps> = rendererMap.get(rendererId)!;
 
         return <RendererComponent {...renderProps} />;
+    };
+
+    private getRenderer = (value: any, schema: any, schemaType: string, valueType: string): string => {
+        if (schema && schema['dj:renderer']) {
+            return schema['dj:renderer'];
+        }
+
+        return getDefaultRenderer(value, schemaType, valueType);
     };
 
     private renderArrayItems = (array: any[], schema: any, path: string): any[] => {
