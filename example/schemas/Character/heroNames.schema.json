@@ -1,0 +1,24 @@
+{
+  "title": "Hero Names",
+  "schema": {
+    "title": "Hero Names",
+    "type": "object",
+    "properties": {
+      "id": {
+        "title": "Race",
+        "type": "string"
+      },
+      "names": {
+        "type": "array",
+        "dj:renderer": "list",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "id",
+      "names"
+    ]
+  }
+}

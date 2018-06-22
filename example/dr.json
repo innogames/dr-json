@@ -1,6 +1,6 @@
 {
   "name": "Example Project",
-  "minVersion": "0.7",
+  "minVersion": "0.14.1",
   "directories": {
     "schemas": "schemas",
     "data": "data",

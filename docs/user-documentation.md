@@ -26,5 +26,6 @@ Further reading:
 - [The project file](./user/project-file.md)
 - [JSON Schemas](./user/json-schema.md)
 - [Split up JSON Schemas](./user/split-up-schema.md)
+- [Change how data is rendered](./user/renderer.md)
 - [File variants](./user/file-variants.md)
 - [How to modify the form UI](./user/modify-form-ui.md)

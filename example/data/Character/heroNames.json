@@ -1,0 +1,21 @@
+[
+    {
+        "id": "elves",
+        "names": [
+            "Abadda",
+            "Cohnal",
+            "Elanjar",
+            "Falael",
+            "Iolas"
+        ]
+    },
+    {
+        "id": "orcs",
+        "names": [
+            "Furbog",
+            "Zurgug",
+            "Malthu",
+            "Gulm"
+        ]
+    }
+]
