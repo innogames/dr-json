@@ -80,7 +80,7 @@
     "concurrently": "3.5.1",
     "css-loader": "0.28.10",
     "dependency-rules-webpack-plugin": "^0.1.1",
-    "electron": "1.8.4",
+    "electron": "1.8.8",
     "electron-builder": "20.4.1",
     "electron-icon-maker": "0.0.4",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
