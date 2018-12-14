@@ -1,0 +1,11 @@
+{
+  "title": "Origin",
+  "type": "string",
+  "list": [
+    "Lothlorien",
+    "Dale",
+    "Gondor",
+    "Rohan",
+    "Mordor"
+  ]
+}

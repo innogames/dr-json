@@ -14,6 +14,22 @@
         "items": {
           "type": "string"
         }
+      },
+      "origin": {
+        "title": "Origin",
+        "type": "string",
+        "ui:widget": "AutocompleteWidget",
+        "options": {
+          "title": "Origin",
+          "type": "string",
+          "list": [
+            "Lothlorien",
+            "Dale",
+            "Gondor",
+            "Rohan",
+            "Mordor"
+          ]
+        }
       }
     },
     "required": [

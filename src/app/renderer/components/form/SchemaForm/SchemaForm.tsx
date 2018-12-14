@@ -5,12 +5,14 @@ import {setRequiredBoolDefaultValues} from '../../../../../domain/helpers/jsonSc
 import {Button} from '../../common/Button';
 import styles from './SchemaFormStyles.scss';
 import {SelectWidget} from './widgets/SelectWidget';
+import {AutocompleteWidget} from './widgets/AutocompleteWidget';
 
 // import icon component so icon font is available
 require('../../common/Icon');
 
 const widgets = {
     SelectWidget: SelectWidget,
+    AutocompleteWidget: AutocompleteWidget,
 };
 
 interface Props {

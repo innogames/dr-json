@@ -1,0 +1,12 @@
+@import "../../../config/config";
+
+:local {
+  .suggest {
+    background-color: transparent;
+  }
+
+  .suggestHover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+}
