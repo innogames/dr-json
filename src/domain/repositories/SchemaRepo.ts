@@ -175,6 +175,8 @@ export class SchemaRepo {
             uiSchema.items           = mapped.uiSchema;
         }
 
+        schema = this.resolveAutocomplete(schema, currentFile, schemaFolder);
+
         Object.keys(schema).forEach((key: string) => {
             if (key.indexOf('ui:') === 0) {
                 uiSchema[key] = schema[key];
@@ -186,5 +188,21 @@ export class SchemaRepo {
             schema,
             uiSchema,
         };
+    }
+
+    private resolveAutocomplete(schema: any, currentFile: string, schemaFolder: string): any {
+        const autocompleteConfig: any = schema['dj:autocomplete'];
+        if (!autocompleteConfig) {
+            return schema;
+        }
+
+        if (autocompleteConfig.$ref) {
+            let refFile = getAbsolutePath(autocompleteConfig.$ref, schemaFolder, dirname(currentFile));
+            schema['dj:autocomplete'] = this.filesystem.readJsonSync(refFile);
+        }
+
+        schema['ui:widget'] = 'AutocompleteWidget';
+
+        return schema;
     }
 }

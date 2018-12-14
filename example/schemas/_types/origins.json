@@ -1,7 +1,7 @@
 {
   "title": "Origin",
   "type": "string",
-  "list": [
+  "enum": [
     "Lothlorien",
     "Dale",
     "Gondor",

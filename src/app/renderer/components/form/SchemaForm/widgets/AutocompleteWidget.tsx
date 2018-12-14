@@ -5,9 +5,13 @@ import {Autocomplete} from '../../Autocomplete';
 export function AutocompleteWidget(props: any) {
     // See possible props here: https://github.com/mozilla-services/react-jsonschema-form#custom-widget-components
 
-    let options: Options = [];
+    let autocompleteConfig = props.schema['dj:autocomplete'];
+    if (!autocompleteConfig || !autocompleteConfig.enum) {
+        throw new Error('autocomplete config has no enum configured');
+    }
 
-    let enumValues: string[] = props.schema.options.list;
+    let options: Options = [];
+    let enumValues: string[] = autocompleteConfig.enum;
     if (enumValues && Array.isArray(enumValues)) {
         options = enumValues.map((value: string): Option => {
             return {
@@ -26,7 +30,7 @@ export function AutocompleteWidget(props: any) {
             }}
             onNewOptionClick={(option: Option) => {
                 options.push(option);
-                props.schema.options.list.push(option.value);
+                autocompleteConfig.enum.push(option.value);
                 props.onChange(option? option.value : null);
             }}
         />
