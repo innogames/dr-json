@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Option, Options} from 'react-select';
 import {VariantTypeConfig} from '../../../../../../../../../domain/states/objects/ProjectConfig';
 import {Checkbox} from '../../../../../../form/Checkbox';
 import {SchemaForm} from '../../../../../../form/SchemaForm';
@@ -75,8 +74,8 @@ export class VariantWindow extends React.PureComponent<Props, State> {
         );
     };
 
-    private getOptions(): Options {
-        return this.props.variantTypes.map((type: VariantTypeConfig): Option => {
+    private getOptions(): any[] {
+        return this.props.variantTypes.map((type: VariantTypeConfig): any => {
             return {
                 label: type.name,
                 value: type.variantId,
@@ -94,7 +93,8 @@ export class VariantWindow extends React.PureComponent<Props, State> {
         return null;
     }
 
-    private onTypeChange = (option: Option<string>): void => {
+    private onTypeChange = (option: any): void => {
+        console.log(option);
         this.setState(() => ({
             selectedType: option ? option.value as string : null,
         }));

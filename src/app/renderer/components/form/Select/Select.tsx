@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ReactSelect, {OnChangeHandler, Option, Options} from 'react-select';
+import ReactSelect from 'react-select';
 
 require('./SelectStyles.scss');
 
@@ -8,8 +8,8 @@ interface Props {
     value?: string;
     placeholder?: string;
     disabled?: boolean;
-    onChange?: (value: Option<any> | Options<any>) => void;
-    options?: Options;
+    onChange?: (value: any | any[]) => void;
+    options?: any[];
     sort?: boolean;
     clearable?: boolean;
 }
@@ -21,13 +21,13 @@ export class Select extends React.Component<Props, {}> {
             <ReactSelect
                 value={this.props.value === null ? '' : this.props.value}
                 placeholder={this.props.placeholder || ''}
-                disabled={this.props.disabled}
+                isDisabled={this.props.disabled}
                 options={this.props.options || []}
-                onChange={this.props.onChange as OnChangeHandler}
-                noResultsText={this.props.placeholder}
-                clearable={this.props.clearable}
-                onOpen={this.onOpen}
-                onClose={this.onClose}
+                onChange={this.props.onChange}
+                noOptionsMessage={() => this.props.placeholder || ''}
+                isClearable={this.props.clearable}
+                onMenuOpen={this.onOpen}
+                onMenuClose={this.onClose}
             />
         );
     }

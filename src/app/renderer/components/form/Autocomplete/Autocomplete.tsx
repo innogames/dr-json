@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {Creatable, OnChangeHandler, Option, Options} from 'react-select';
+import Creatable from 'react-select/lib/Creatable';
 
 interface Props {
     value?: string;
-    onChange?: (value: Option<any> | Options<any>) => void;
-    options?: Options;
-    onNewOptionClick?: (value: Option<any>) => void;
+    onChange?: (value: any | any[]) => void;
+    options?: string[];
+    onCreateOption?: (value: any) => void;
 }
 
 export class Autocomplete extends React.Component<Props, {}> {
@@ -15,10 +15,10 @@ export class Autocomplete extends React.Component<Props, {}> {
             <Creatable
                 value={this.props.value === null ? '' : this.props.value}
                 options={this.props.options || []}
-                onChange={this.props.onChange as OnChangeHandler}
-                onOpen={this.onOpen}
-                onClose={this.onClose}
-                onNewOptionClick={this.props.onNewOptionClick}
+                onChange={this.props.onChange}
+                onMenuOpen={this.onOpen}
+                onMenuClose={this.onClose}
+                onCreateOption={this.props.onCreateOption}
             />
         );
     }
