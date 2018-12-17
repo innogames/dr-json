@@ -124,7 +124,7 @@
         "ui:help": {"type": "string"},
         "ui:widget": {
           "type": "string",
-          "enum": ["radio", "select", "textarea", "password", "color", "updown", "range", "hidden", "file", "checkboxes", "AutocompleteWidget"]
+          "enum": ["radio", "select", "textarea", "password", "color", "updown", "range", "hidden", "file", "checkboxes", "dj:autcomplete"]
         },
         "ui:disabled": {"type": "boolean", "default": true},
         "ui:readonly": {"type": "boolean", "default": true},

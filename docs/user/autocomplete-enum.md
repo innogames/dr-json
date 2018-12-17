@@ -9,15 +9,13 @@ To define the autocomplete field in your schema, use the custom field "dj:autoco
 ```json
 {
     "dj:autocomplete": {
-      "title": "Origin",
-        "type": "string",
-        "enum": [
-          "Lothlorien",
-          "Dale",
-          "Gondor",
-          "Rohan",
-          "Mordor"
-        ]
+      "enum": [
+        "Lothlorien",
+        "Dale",
+        "Gondor",
+        "Rohan",
+        "Mordor"
+      ]
     }
 }
 ```
