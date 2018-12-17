@@ -5,7 +5,6 @@ import ReactSelect from 'react-select';
 require('./SelectStyles.scss');
 
 interface Props {
-    value?: string;
     placeholder?: string;
     disabled?: boolean;
     onChange?: (value: any | any[]) => void;
@@ -19,7 +18,6 @@ export class Select extends React.Component<Props, {}> {
     render() {
         return (
             <ReactSelect
-                value={this.props.value === null ? '' : this.props.value}
                 placeholder={this.props.placeholder || ''}
                 isDisabled={this.props.disabled}
                 options={this.props.options || []}

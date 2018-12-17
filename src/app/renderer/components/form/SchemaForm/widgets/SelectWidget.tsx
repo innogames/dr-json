@@ -18,11 +18,10 @@ export function SelectWidget(props: any) {
 
     return (
         <Select
-            value={props.value}
             options={options}
             disabled={props.disabled}
             onChange={(option: any) => {
-                props.onChange(option ? option : null);
+                props.onChange(option ? option.value : null);
             }}
         />
     );

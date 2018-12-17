@@ -22,15 +22,14 @@ export function AutocompleteWidget(props: any) {
 
     return (
         <Autocomplete
-            value={props.value}
             options={options}
-            onChange={(option: any) => {
-                props.onChange(option ? option : null);
-            }}
-            onCreateOption={(option: any) => {
-                options.push({ label: option, value: option });
-                autocompleteConfig.enum.push(option);
-                props.onChange(option ? option : null);
+            onChange={(option: {value: string, label: string}) => {
+                props.onChange(option ? option.value : null);
+
+                if (enumValues.indexOf(option.value) < 0) {
+                    options.push({ label: option.value, value: option.value });
+                    autocompleteConfig.enum.push(option.value);
+                }
             }}
         />
     );

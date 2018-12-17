@@ -51,7 +51,6 @@ export class VariantWindow extends React.PureComponent<Props, State> {
                             placeholder='Select Type...'
                             options={this.getOptions()}
                             onChange={this.onTypeChange}
-                            value={this.state.selectedType || undefined}
                         />
                     </div>
 
@@ -94,7 +93,6 @@ export class VariantWindow extends React.PureComponent<Props, State> {
     }
 
     private onTypeChange = (option: any): void => {
-        console.log(option);
         this.setState(() => ({
             selectedType: option ? option.value as string : null,
         }));
