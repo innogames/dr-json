@@ -124,7 +124,7 @@
         "ui:help": {"type": "string"},
         "ui:widget": {
           "type": "string",
-          "enum": ["radio", "select", "textarea", "password", "color", "updown", "range", "hidden", "file", "checkboxes", "dj:autcomplete"]
+          "enum": ["radio", "select", "textarea", "password", "color", "updown", "range", "hidden", "file", "checkboxes"]
         },
         "ui:disabled": {"type": "boolean", "default": true},
         "ui:readonly": {"type": "boolean", "default": true},
@@ -141,6 +141,29 @@
             "label": {"type": "boolean", "default": false}
           },
           "additionalProperties": false
+        },
+        "dj:autocomplete": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "enum": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "$ref": {
+                  "type": "string"
+                }
+              },
+              "required": ["$ref"]
+            }
+          ]
         }
       },
       "dependencies": {
