@@ -18,6 +18,7 @@ export function SelectWidget(props: any) {
 
     return (
         <Select
+            value={{value: props.value, label: props.value}}
             options={options}
             disabled={props.disabled}
             onChange={(option: any) => {
