@@ -1,14 +1,19 @@
 import * as React from 'react';
 import Creatable from 'react-select/lib/Creatable';
 
+interface SelectValue {
+    value: any;
+    label: string;
+}
+
 interface Props {
     onChange?: (value: any | any[]) => void;
     options?: string[];
-    value?: any | any[]
+    value?: SelectValue | SelectValue[]
 }
 
 interface State {
-    value?: any
+    value?: any;
 }
 
 export class Autocomplete extends React.Component<Props, State> {
@@ -23,7 +28,7 @@ export class Autocomplete extends React.Component<Props, State> {
     render() {
         return (
             <Creatable
-                value={this.state.value === null ? '' : this.state.value}
+                value={this.state.value}
                 defaultValue={this.state.value}
                 options={this.props.options || []}
                 onChange={this.handleChange}

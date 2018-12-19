@@ -1,9 +1,14 @@
 import * as React from 'react';
 import ReactSelect from 'react-select';
 
+interface SelectValue {
+    value: any;
+    label: string;
+}
+
 interface Props {
     placeholder?: string;
-    value?: any | any[];
+    value?: SelectValue | SelectValue[];
     disabled?: boolean;
     onChange?: (value: any | any[]) => void;
     options?: any[];

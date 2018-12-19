@@ -22,7 +22,12 @@ export function AutocompleteWidget(props: any) {
 
     return (
         <Autocomplete
-            value={{value: props.value, label: props.value}}
+            value={
+                {
+                    label: props.value === undefined ? '' : props.value,
+                    value: props.value === undefined ? '' : props.value
+                }
+            }
             options={options}
             onChange={(option: {value: string, label: string}) => {
                 props.onChange(option ? option.value : null);
