@@ -141,6 +141,29 @@
             "label": {"type": "boolean", "default": false}
           },
           "additionalProperties": false
+        },
+        "dj:autocomplete": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "enum": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true
+                }
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "$ref": {
+                  "type": "string"
+                }
+              },
+              "required": ["$ref"]
+            }
+          ]
         }
       },
       "dependencies": {

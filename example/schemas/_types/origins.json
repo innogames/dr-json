@@ -1,0 +1,11 @@
+{
+  "title": "Origin",
+  "type": "string",
+  "enum": [
+    "Lothlorien",
+    "Dale",
+    "Gondor",
+    "Rohan",
+    "Mordor"
+  ]
+}

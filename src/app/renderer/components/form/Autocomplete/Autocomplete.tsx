@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReactSelect from 'react-select';
+import Creatable from 'react-select/lib/Creatable';
 
 interface SelectValue {
     value: any;
@@ -7,20 +7,16 @@ interface SelectValue {
 }
 
 interface Props {
-    placeholder?: string;
-    value?: SelectValue | SelectValue[];
-    disabled?: boolean;
     onChange?: (value: any | any[]) => void;
-    options?: any[];
-    sort?: boolean;
-    clearable?: boolean;
+    options?: string[];
+    value?: SelectValue | SelectValue[]
 }
 
 interface State {
     value?: any;
 }
 
-export class Select extends React.Component<Props, State> {
+export class Autocomplete extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
@@ -31,13 +27,11 @@ export class Select extends React.Component<Props, State> {
 
     render() {
         return (
-            <ReactSelect
-                placeholder={this.props.placeholder || ''}
-                isDisabled={this.props.disabled}
+            <Creatable
+                value={this.state.value}
+                defaultValue={this.state.value}
                 options={this.props.options || []}
                 onChange={this.handleChange}
-                isClearable={this.props.clearable}
-                defaultValue={this.state.value}
             />
         );
     }
