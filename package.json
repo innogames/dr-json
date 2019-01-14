@@ -62,7 +62,7 @@
     "mobx-react": "5.0.0",
     "query-string": "5.0.1",
     "react": "16.2.0",
-    "react-dom": "16.2.0",
+    "react-dom": "16.7.0",
     "react-jsonschema-form": "1.0.3",
     "react-select": "^2.1.2",
     "reflect-metadata": "^0.1.12",
@@ -98,7 +98,7 @@
     "wait-on": "2.1.0",
     "webpack": "4.1.1",
     "webpack-cli": "2.0.10",
-    "webpack-dev-server": "3.1.1"
+    "webpack-dev-server": "3.1.14"
   },
   "electronWebpack": {
     "title": true
