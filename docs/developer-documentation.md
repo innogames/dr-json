@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- node.js (developed with node version 8.5.0)
+- node.js (developed with node version 8.12.0)
 - [yarn](https://yarnpkg.com/en/docs/install)
 
 
