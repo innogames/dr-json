@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 import styles from './TextFieldStyles.scss';
 
 interface Props {
@@ -38,13 +38,13 @@ export class TextField extends React.Component<Props, {}> {
         );
     }
 
-    private handleKeyPress = (event: KeyboardEvent) => {
+    private handleKeyPress = (event: KeyboardEvent<any>) => {
         if (event.key === 'Enter' && this.props.onPressEnter) {
             this.props.onPressEnter();
         }
     };
 
-    private handleChange = (event: Event) => {
+    private handleChange = (event: ChangeEvent<any>) => {
         if (this.props.onChange) {
             this.props.onChange((event.target as HTMLInputElement).value);
         }

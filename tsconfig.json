@@ -17,6 +17,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "types": ["reflect-metadata"],
     "lib": ["es6", "dom"]
   },
