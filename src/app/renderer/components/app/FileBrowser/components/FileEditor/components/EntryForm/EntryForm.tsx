@@ -41,7 +41,7 @@ export class EntryForm extends React.Component<Props, {}> {
         let entryId: any            = typeof data.id === 'string' ? data.id.trim() : data.id;
         const isCreateMode: boolean = !this.props.entry || !this.props.entry.id;
 
-        if (entryId
+        if ((entryId || entryId === 0)
             && isCreateMode
             && this.props.activeFile.entries.getById(entryId)
         ) {
@@ -64,7 +64,7 @@ export class EntryForm extends React.Component<Props, {}> {
     };
 
     private onClose = () => {
-        if (this.props.entry && this.props.entry.id) {
+        if (this.props.entry && (this.props.entry.id || this.props.entry.id === 0)) {
             this.props.entry.toggleEditMode(false);
         } else {
             closeCreateEntry();
