@@ -24,7 +24,7 @@ export class Entry extends React.Component<Props, {}> {
     render() {
         return (
             <EntryWrapper
-                headline={this.props.entry.id as string || '0'}
+                headline={this.props.entry.id === 0 ? '0' : this.props.entry.id as string || ''}
                 hasError={this.props.entry.error}
                 collapsible
                 collapsed={this.props.entry.collapsed}

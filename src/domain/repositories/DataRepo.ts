@@ -18,7 +18,7 @@ export class DataRepo {
                 }
 
                 const entries: DataEntry[] = jsonContent.map((data: any, idx: number) => {
-                    if (!data && data.id !== 0) {
+                    if (!data || (!data.id && data.id !== 0)) {
                         throw new Error(`entry should have an id property in ${file} at index #${idx}`);
                     }
 
