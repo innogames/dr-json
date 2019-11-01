@@ -115,7 +115,7 @@ export class FileEditor extends React.Component<Props, State> {
     private renderEntry = (entry: DataEntry, idx: number) => {
         if (entry.editMode && this.props.showFormInline) {
             return (
-                <EntryWrapper key={idx} headline={entry.id as string || ''}>
+                <EntryWrapper key={idx} headline={entry.id === 0 ? '0' : entry.id as string || ''}>
                     {this.renderEditForm(entry, styles.inlineForm)}
                 </EntryWrapper>
             );
