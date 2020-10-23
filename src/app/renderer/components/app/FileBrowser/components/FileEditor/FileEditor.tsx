@@ -242,15 +242,15 @@ export class FileEditor extends React.Component<Props, State> {
     };
 
     private scrollToCreateForm = () => {
-        let container: Element = ReactDOM.findDOMNode(this.refs.container);
-        let form: Element      = ReactDOM.findDOMNode(this.refs.createForm);
+        let container: Element = ReactDOM.findDOMNode(this.refs.container) as Element;
+        let form: Element      = ReactDOM.findDOMNode(this.refs.createForm) as Element;
         if (container && form) {
             container.scrollTop = container.scrollHeight - form.scrollHeight;
         }
     };
 
     private scrollToBottom = () => {
-        let container: Element = ReactDOM.findDOMNode(this.refs.container);
+        let container: Element = ReactDOM.findDOMNode(this.refs.container) as Element;
         if (container) {
             container.scrollTop = container.scrollHeight;
         }

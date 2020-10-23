@@ -37,7 +37,7 @@ interface State {
  * If fixed, remove this component and use Form directly
  */
 class ReactJsonSchemaForm<T> extends Form<T> {
-    validate(formData: any, schema: any) {
+    validate = (formData: any, schema: any) => {
         formData = removeOptionalEmptyValues(formData, this.props.schema);
         formData = setRequiredBoolDefaultValues(formData, this.props.schema);
         //@ts-ignore
