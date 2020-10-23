@@ -39,7 +39,7 @@ export class SideWindow extends React.PureComponent<Props, State> {
     componentDidMount() {
         window.addEventListener('resize', this.handleResize);
 
-        this.parentNode = ReactDOM.findDOMNode(this).parentElement as HTMLElement;
+        this.parentNode = ReactDOM.findDOMNode(this)!.parentElement as HTMLElement;
         this.handleResize();
     }
 
