@@ -7,24 +7,32 @@ import {DataEntries} from '../../../states/objects/editor/DataEntries';
 import {DataEntry} from '../../../states/objects/editor/DataEntry';
 import {UpdateEntry} from '../UpdateEntry';
 
+jest.mock('../../../repositories/DataRepo', () => {
+    return {
+        DataRepo: jest.fn().mockImplementation(() => {
+            return {
+                load: jest.fn(() => {
+                    return Promise.resolve(new DataEntries([
+                        new DataEntry('one', {key: 'value1'}),
+                        new DataEntry('two', {key: 'value2'}),
+                    ]));
+                }),
+                save: jest.fn((_file: string, entries: DataEntry[]) => {
+                    return new DataEntries(entries);
+                }),
+            }
+        })
+    }
+});
+
 let useCase: UpdateEntry;
 let editorState: EditorState;
 let dataRepo: DataRepo;
 
 beforeEach(() => {
+    // @ts-ignore
+    dataRepo = new DataRepo();
     editorState = new EditorState();
-    dataRepo    = new (jest.fn<DataRepo>(() => ({
-        load: jest.fn().mockImplementation(() => {
-            return Promise.resolve(new DataEntries([
-                new DataEntry('one', {key: 'value1'}),
-                new DataEntry('two', {key: 'value2'}),
-            ]));
-        }),
-        save: jest.fn().mockImplementation((_file: string, entries: DataEntry[]) => {
-            return new DataEntries(entries);
-        }),
-    })));
-
     useCase = new UpdateEntry(editorState, dataRepo);
 });
 

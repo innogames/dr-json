@@ -1,10 +1,8 @@
 import {injectable} from 'inversify';
-import {SchemaConfig} from '../../context/schema/SchemaConfig';
 import {DataRepo} from '../../repositories/DataRepo';
 import {SchemaRepo} from '../../repositories/SchemaRepo';
 import {EditorState} from '../../states/EditorState';
 import {ActiveFile} from '../../states/objects/editor/ActiveFile';
-import {DataEntries} from '../../states/objects/editor/DataEntries';
 import {SchemaFile} from '../../states/objects/fileTree/SchemaFile';
 import {ProjectState} from '../../states/ProjectState';
 
@@ -33,7 +31,7 @@ export class SelectFileVariant {
         let activeFile: ActiveFile = new ActiveFile(basename, dataFile, variantId);
         this.editorState.open(activeFile);
 
-        return Promise.all<SchemaConfig, DataEntries>([
+        return Promise.all([
             this.schemaRepo.load(file.schemaFile, this.projectState.project.schemaPath),
             this.dataRepo.load(dataFile),
         ])

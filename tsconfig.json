@@ -18,7 +18,7 @@
     "sourceMap": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["reflect-metadata"],
+    "types": ["reflect-metadata", "jest", "node"],
     "lib": ["es6", "dom"]
   },
   "include": [

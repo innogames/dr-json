@@ -13,6 +13,47 @@ import {ProjectConfig} from '../../../states/objects/ProjectConfig';
 import {ProjectState} from '../../../states/ProjectState';
 import {SelectFile} from '../SelectFile';
 
+jest.mock('../../../repositories/DataRepo', () => {
+    return {
+        DataRepo: jest.fn().mockImplementation(() => {
+            return {
+                load: jest.fn(() => {
+                    return Promise.resolve(new DataEntries([
+                        new DataEntry('one', {key: 'value1'}),
+                        new DataEntry('two', {key: 'value2'}),
+                    ]));
+                }),
+            }
+        })
+    }
+});
+
+jest.mock('../../../repositories/SchemaRepo', () => {
+    return {
+        SchemaRepo: jest.fn().mockImplementation(() => {
+            return {
+                load: jest.fn(() => {
+                    return Promise.resolve({
+                        schema: {},
+                    });
+                }),
+            }
+        })
+    }
+});
+
+jest.mock('../../../context/data/EntryValidator', () => {
+    return {
+        EntryValidator: jest.fn().mockImplementation(() => {
+            return {
+                validate: jest.fn((entries: DataEntry[]) => {
+                    return Promise.resolve(entries);
+                }),
+            }
+        })
+    }
+});
+
 let useCase: SelectFile;
 let editorState: EditorState;
 let projectState: ProjectState;
@@ -23,29 +64,12 @@ let entryValidator: EntryValidator;
 beforeEach(() => {
     editorState  = new EditorState();
     projectState = new ProjectState();
-
-    dataRepo = new (jest.fn<DataRepo>(() => ({
-        load: jest.fn().mockImplementation(() => {
-            return Promise.resolve(new DataEntries([
-                new DataEntry('one', {key: 'value1'}),
-                new DataEntry('two', {key: 'value2'}),
-            ]));
-        }),
-    })));
-
-    schemaRepo = new (jest.fn<SchemaRepo>(() => ({
-        load: jest.fn().mockImplementation(() => {
-            return Promise.resolve({
-                schema: {},
-            });
-        }),
-    })));
-
-    entryValidator = new (jest.fn<EntryValidator>(() => ({
-        validate: jest.fn().mockImplementation((entries: DataEntry[]) => {
-            return Promise.resolve(entries);
-        }),
-    })));
+    // @ts-ignore
+    dataRepo = new DataRepo();
+    // @ts-ignore
+    schemaRepo = new SchemaRepo();
+    // @ts-ignore
+    entryValidator = new EntryValidator();
 
     useCase = new SelectFile(editorState, projectState, dataRepo, schemaRepo, entryValidator);
 });

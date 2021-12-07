@@ -11,6 +11,33 @@ import {ProjectState} from '../../../states/ProjectState';
 import {CreateVariant} from '../CreateVariant';
 import {SelectFileVariant} from '../../fileTree/SelectFileVariant';
 
+jest.mock('../../../repositories/DataRepo', () => {
+    return {
+        DataRepo: jest.fn().mockImplementation(() => {
+            return {
+                load: jest.fn(() => {
+                    return Promise.resolve(new DataEntries([
+                        new DataEntry('one', {key: 'value1'}),
+                    ]));
+                }),
+                save: jest.fn(() => {
+                    return Promise.resolve();
+                }),
+            }
+        })
+    }
+});
+
+jest.mock('../../fileTree/SelectFileVariant', () => {
+    return {
+        SelectFileVariant: jest.fn().mockImplementation(() => {
+            return {
+                execute: jest.fn().mockImplementation(() => {}),
+            }
+        })
+    }
+});
+
 let useCase: CreateVariant;
 let projectState: ProjectState;
 let dataRepo: DataRepo;
@@ -18,21 +45,10 @@ let selectFileVariant: SelectFileVariant;
 
 beforeEach(() => {
     projectState = new ProjectState();
-
-    dataRepo = new (jest.fn<DataRepo>(() => ({
-        load: jest.fn().mockImplementation(() => {
-            return Promise.resolve(new DataEntries([
-                new DataEntry('one', {key: 'value1'}),
-            ]));
-        }),
-        save: jest.fn().mockImplementation(() => {
-            return Promise.resolve();
-        }),
-    })));
-
-    selectFileVariant = new (jest.fn<SelectFileVariant>(() => ({
-        execute: jest.fn(),
-    })));
+    // @ts-ignore
+    dataRepo = new DataRepo();
+    // @ts-ignore
+    selectFileVariant = new SelectFileVariant();
 
     useCase = new CreateVariant(projectState, dataRepo, selectFileVariant);
 });
