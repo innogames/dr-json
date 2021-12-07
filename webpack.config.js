@@ -1,14 +1,13 @@
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CheckDependencyRulesPlugin = require('dependency-rules-webpack-plugin');
 
 const outDir = path.resolve(__dirname, 'dist', 'compiled');
 
 function baseConfig(isDev, devServerPort, name) {
-    let extractSass = new ExtractTextPlugin({
+    let extractSass = new MiniCssExtractPlugin({
         filename: `${name}.css`
     });
 
@@ -18,16 +17,15 @@ function baseConfig(isDev, devServerPort, name) {
             path: outDir,
             filename: `${name}.js`
         },
-
         node: {
             __filename: false,
             __dirname: false
         },
-
         resolve: {
             extensions: ['.ts', '.tsx', '.js'],
         },
-
+        mode: isDev ? 'development' : 'production',
+        devtool: isDev ? 'source-map' : 'nosources-source-map',
         module: {
             rules: [
                 {
@@ -39,31 +37,31 @@ function baseConfig(isDev, devServerPort, name) {
                 },
                 {
                     test: /(\.scss|\.css)$/,
-                    use: extractSass.extract({
-                        fallback: 'style-loader',
-                        use: [
-                            {
-                                loader: 'css-loader',
-                                options: {
-                                    sourceMap: true,
+                    use: [
+                        isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true,
+                                modules: {
                                     localIdentName: '[path][name]_[local]_[hash:base64:5]',
                                 }
-                            },
-                            {
-                                loader: 'sass-loader',
-                                options: {
-                                    sourceMap: true,
-                                },
                             }
-                        ]
-                    })
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true,
+                            },
+                        }
+                    ]
                 },
                 {
                     test: /\.(png)$/,
                     use: [
                         {
                             loader: 'file-loader',
-                            query: {
+                            options: {
                                 outputPath: 'img/',
                                 name: '[name]-[hash:8].[ext]',
                             }
@@ -75,7 +73,7 @@ function baseConfig(isDev, devServerPort, name) {
                     use: [
                         {
                             loader: 'file-loader',
-                            query: {
+                            options: {
                                 outputPath: 'font/',
                                 name: '[name]-[hash:8].[ext]',
                             }
@@ -84,9 +82,6 @@ function baseConfig(isDev, devServerPort, name) {
                 },
             ],
         },
-
-        devtool: isDev ? 'source-map' : 'nosources-source-map',
-
         plugins: [
             new CheckDependencyRulesPlugin({
                 rules: [
@@ -124,14 +119,8 @@ function baseConfig(isDev, devServerPort, name) {
                     },
                 ]
             }),
-            new webpack.NamedModulesPlugin(),
             extractSass,
-            new webpack.DefinePlugin({
-                'process.env.NODE_ENV': JSON.stringify(isDev ? 'development' : 'production'),
-                'process.env.DEV_SERVER_PORT': devServerPort
-            })
         ],
-
         stats: {
             // no long output
             children: false
@@ -163,13 +152,7 @@ function rendererConfig(isDev, devServerPort) {
             port: devServerPort,
             historyApiFallback: true,
             hot: true,
-            overlay: true,
-            stats: {
-                children: false
-            }
         };
-
-        config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
 
     return config;
