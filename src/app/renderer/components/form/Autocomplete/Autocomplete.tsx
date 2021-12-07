@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Creatable from 'react-select/lib/Creatable';
+import Creatable from 'react-select/Creatable';
 
 interface SelectValue {
     value: any;

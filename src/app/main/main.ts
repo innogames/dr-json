@@ -5,6 +5,7 @@ import {isDev, isMacOS} from '../shared/environment';
 import {packageJson} from '../shared/package';
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 import WebContents = Electron.WebContents;
+import IpcMainEvent = Electron.IpcMainEvent;
 
 const electronSettings = require('electron-settings');
 
@@ -79,12 +80,12 @@ function createMenu() {
             label:   'View',
             submenu: [
                 {role: 'reload'},
-                {role: 'forcereload'},
-                {role: 'toggledevtools'},
+                {role: 'forceReload'},
+                {role: 'toggleDevTools'},
                 {type: 'separator'},
-                {role: 'resetzoom'},
-                {role: 'zoomin'},
-                {role: 'zoomout'},
+                {role: 'resetZoom'},
+                {role: 'zoomIn'},
+                {role: 'zoomOut'},
                 {type: 'separator'},
                 {role: 'togglefullscreen'},
             ],
@@ -176,7 +177,7 @@ app.on('activate', () => {
     }
 });
 
-ipcMain.on('open-select-project-dialog', (event: Event): void => {
+ipcMain.on('open-select-project-dialog', (event: IpcMainEvent): void => {
     openSelectProjectDialog(event.sender);
 });
 
@@ -186,13 +187,15 @@ ipcMain.on('handle-error', (_event: Event, error: any) => {
 
 function openSelectProjectDialog(webContents: WebContents) {
     dialog.showOpenDialog({
-        properties: ['openFile'],
-        filters:    [
+        properties: [
+          'openFile'
+        ],
+        filters: [
             {name: 'Project Files', extensions: ['json']},
         ],
-    }, function (files: string[]) {
-        if (files) {
-            webContents.send('project-selected', files[0]);
+    }).then(result => {
+        if (result.filePaths) {
+            webContents.send('project-selected', result.filePaths[0]);
         }
     });
 }

@@ -35,7 +35,10 @@ export class FilesystemImpl implements FilesystemInterface {
                 try {
                     data = JSON.parse(content);
                 } catch (jsonErr) {
-                    jsonErr.message = file + ': ' + jsonErr.message;
+                    if (jsonErr instanceof SyntaxError) {
+                        jsonErr.message = file + ': ' + jsonErr.message;
+                    }
+
                     reject(jsonErr);
                     return;
                 }
