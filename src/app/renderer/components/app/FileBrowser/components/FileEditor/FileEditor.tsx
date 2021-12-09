@@ -82,7 +82,6 @@ export class FileEditor extends React.Component<Props, State> {
 
                 <div className={styles.entries} ref="container">
                     {this.renderEntries(entries, hasErrors)}
-
                     {this.renderSidebarEditForm(entries)}
                     {this.renderCreate()}
                 </div>

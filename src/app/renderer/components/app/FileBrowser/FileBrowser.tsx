@@ -34,7 +34,7 @@ export class FileBrowser extends React.Component<Props, {}> {
     render() {
         return (
             <div className={styles.wrap}>
-                <Head projectName={this.props.project.config.name}>
+                <Head projectName={this.props.project.config.name} version={this.props.appVersion}>
                     <title>
                         {this.props.project.config.name}
                     </title>
@@ -43,9 +43,6 @@ export class FileBrowser extends React.Component<Props, {}> {
                     <Sidebar/>
 
                     {this.renderContent()}
-                </div>
-                <div className={styles.footer}>
-                    v{this.props.appVersion}
                 </div>
             </div>
         );
