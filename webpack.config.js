@@ -6,10 +6,6 @@ const CheckDependencyRulesPlugin = require('dependency-rules-webpack-plugin');
 const outDir = path.resolve(__dirname, 'dist', 'compiled');
 
 function baseConfig(isDev, devServerPort, name) {
-    let extractSass = new MiniCssExtractPlugin({
-        filename: `${name}.css`
-    });
-
     return {
         name: name,
         output: {
@@ -24,7 +20,7 @@ function baseConfig(isDev, devServerPort, name) {
             extensions: ['.ts', '.tsx', '.js'],
         },
         mode: isDev ? 'development' : 'production',
-        devtool: isDev ? 'source-map' : 'nosources-source-map',
+        devtool: isDev ? 'inline-source-map' : 'nosources-source-map',
         module: {
             rules: [
                 {
@@ -35,7 +31,7 @@ function baseConfig(isDev, devServerPort, name) {
                     include: [/src/]
                 },
                 {
-                    test: /(\.scss|\.css)$/,
+                    test: /(\.scss|\.css)$/i,
                     use: [
                         isDev ? "style-loader" : MiniCssExtractPlugin.loader,
                         {
@@ -56,32 +52,25 @@ function baseConfig(isDev, devServerPort, name) {
                     ]
                 },
                 {
-                    test: /\.(png)$/,
-                    use: [
-                        {
-                            loader: 'file-loader',
-                            options: {
-                                outputPath: 'img/',
-                                name: '[name]-[hash:8].[ext]',
-                            }
-                        }
-                    ]
+                    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                    type: 'asset/resource',
+                    generator: {
+                        filename: 'img/[name][hash:8][ext]'
+                    }
                 },
                 {
-                    test: /\.(eot|woff2|woff|ttf|svg)$/,
-                    use: [
-                        {
-                            loader: 'file-loader',
-                            options: {
-                                outputPath: 'font/',
-                                name: '[name]-[hash:8].[ext]',
-                            }
-                        }
-                    ]
+                    test: /\.(eot|woff2|woff|ttf|svg|otf)$/i,
+                    type: 'asset/resource',
+                    generator: {
+                        filename: 'font/[name][hash:8][ext]'
+                    }
                 },
             ],
         },
         plugins: [
+            new MiniCssExtractPlugin({
+                filename: `${name}.css`
+            }),
             new CheckDependencyRulesPlugin({
                 rules: [
                     {
@@ -118,12 +107,7 @@ function baseConfig(isDev, devServerPort, name) {
                     },
                 ]
             }),
-            extractSass,
         ],
-        stats: {
-            // no long output
-            children: false
-        }
     };
 }
 
