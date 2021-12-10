@@ -7,7 +7,11 @@ import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 import WebContents = Electron.WebContents;
 import IpcMainEvent = Electron.IpcMainEvent;
 
-const electronSettings = require('electron-settings');
+const remoteMain = require('@electron/remote/main');
+remoteMain.initialize()
+
+const Store = require('electron-store');
+const store = new Store();
 
 let win: BrowserWindow | null;
 const isDevelopment = isDev();
@@ -16,10 +20,18 @@ process.on('uncaughtException', handleError);
 process.on('unhandledRejection', handleError);
 
 function createWindow() {
-    win = new BrowserWindow({width: 1000, height: 800});
+    win = new BrowserWindow({
+        width: 1000,
+        height: 800,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        },
+    });
 
+    remoteMain.enable(win.webContents)
     const url: string = isDevelopment
-        ? `http://localhost:${process.env.DEV_SERVER_PORT}`
+        ? `http://localhost:3000`
         : `file://${__dirname}/index.html`;
 
     win.loadURL(url);
@@ -40,7 +52,7 @@ function createWindow() {
 }
 
 function createMenu() {
-    const globalSettings: GlobalSettings = electronSettings.get('globalSettings') || {
+    const globalSettings: GlobalSettings = store.get('globalSettings') || {
         inlineForms: false,
     };
 
@@ -109,7 +121,7 @@ function createMenu() {
             {
                 label: 'Open Settings Folder',
                 click: function () {
-                    shell.showItemInFolder(electronSettings.file());
+                    shell.showItemInFolder(store.path);
                 },
             },
         ],
@@ -183,6 +195,16 @@ ipcMain.on('open-select-project-dialog', (event: IpcMainEvent): void => {
 
 ipcMain.on('handle-error', (_event: Event, error: any) => {
     handleError(error);
+});
+
+ipcMain.handle('getStoreValue', async(_event, key, defaultValue) => {
+    let data = await store.get(key);
+
+    return data || defaultValue;
+});
+
+ipcMain.handle('setStoreValue', (_event, key, data) => {
+    store.set(key, data);
 });
 
 function openSelectProjectDialog(webContents: WebContents) {
