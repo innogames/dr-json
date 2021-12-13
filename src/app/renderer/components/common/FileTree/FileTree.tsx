@@ -25,10 +25,12 @@ interface Props {
 export class FileTree extends React.Component<Props> {
 
     render() {
+        const files = this.props.tree.children.sort();
+
         return (
             <div className={[styles.tree, this.props.className].join(' ')}>
                 <ul>
-                    {this.props.tree.children.map(this.renderItem)}
+                    {files.map(this.renderItem)}
                 </ul>
             </div>
         );

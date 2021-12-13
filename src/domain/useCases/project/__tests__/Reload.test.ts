@@ -13,6 +13,43 @@ import {Reload} from '../Reload';
 import {SelectFile} from '../../fileTree/SelectFile';
 import {SelectFileVariant} from '../../fileTree/SelectFileVariant';
 
+jest.mock('../OpenProject', () => {
+    return {
+        OpenProject: jest.fn().mockImplementation(() => {
+            return {
+                execute: jest.fn().mockImplementation(() => {
+                    return Promise.resolve();
+                }),
+            }
+        })
+    }
+});
+
+jest.mock('../../fileTree/SelectFile', () => {
+    return {
+        SelectFile: jest.fn().mockImplementation(() => {
+            return {
+                execute: jest.fn().mockImplementation(() => {
+                    return Promise.resolve();
+                }),
+            }
+        })
+    }
+});
+
+jest.mock('../../fileTree/SelectFileVariant', () => {
+    return {
+        SelectFileVariant: jest.fn().mockImplementation(() => {
+            return {
+                execute: jest.fn().mockImplementation(() => {
+                    return Promise.resolve();
+                }),
+            }
+        })
+    }
+});
+
+
 let useCase: Reload;
 let editorState: EditorState;
 let projectState: ProjectState;
@@ -21,23 +58,12 @@ let selectFile: SelectFile;
 let selectFileVariant: SelectFileVariant;
 
 beforeEach(() => {
-    openProject = new (jest.fn<OpenProject>(() => ({
-        execute: jest.fn().mockImplementation(() => {
-            return Promise.resolve();
-        }),
-    })));
-
-    selectFile = new (jest.fn<SelectFile>(() => ({
-        execute: jest.fn().mockImplementation(() => {
-            return Promise.resolve();
-        }),
-    })));
-
-    selectFileVariant = new (jest.fn<SelectFileVariant>(() => ({
-        execute: jest.fn().mockImplementation(() => {
-            return Promise.resolve();
-        }),
-    })));
+    // @ts-ignore
+    openProject = new OpenProject();
+    // @ts-ignore
+    selectFile = new SelectFile();
+    // @ts-ignore
+    selectFileVariant = new SelectFileVariant();
 
     editorState  = new EditorState();
     projectState = new ProjectState();

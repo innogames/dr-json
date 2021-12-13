@@ -53,7 +53,6 @@ export class EntryForm extends React.Component<Props, {}> {
 
     private onSubmit = (data: any) => {
         const entryId: EntryId | null = this.props.entry ? this.props.entry.id : null;
-
         let entry: DataEntry = new DataEntry(trim(data.id), trim(data, true));
 
         if (this.props.onSubmit) {

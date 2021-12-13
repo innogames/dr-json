@@ -5,6 +5,7 @@ import styles from './HeadStyles.scss';
 
 interface Props {
     projectName: string;
+    version: string | undefined;
 }
 
 @observer
@@ -14,7 +15,10 @@ export class Head extends React.Component<Props, {}> {
         return (
             <div className={styles.head}>
                 <div className={styles.left}>
-                    {packageJson.appName} ({this.props.projectName})
+                    {this.props.projectName}
+                </div>
+                <div className={styles.right}>
+                  {packageJson.appName} v{this.props.version}
                 </div>
             </div>
         );

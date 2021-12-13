@@ -26,7 +26,7 @@ window.addEventListener('unhandledrejection', (event: Event): void => {
 });
 
 configure({
-    enforceActions: true,
+    enforceActions: "never",
 });
 
 ipcRenderer.on('project-selected', (_event: any, path: string) => {

@@ -13,6 +13,35 @@ import {ProjectConfig} from '../../../states/objects/ProjectConfig';
 import {ProjectState} from '../../../states/ProjectState';
 import {SelectFileVariant} from '../SelectFileVariant';
 
+jest.mock('../../../repositories/DataRepo', () => {
+  return {
+    DataRepo: jest.fn().mockImplementation(() => {
+      return {
+        load: jest.fn(() => {
+          return Promise.resolve(new DataEntries([
+            new DataEntry('one', {key: 'value1'}),
+            new DataEntry('two', {key: 'value2'}),
+          ]));
+        }),
+      }
+    })
+  }
+});
+
+jest.mock('../../../repositories/SchemaRepo', () => {
+  return {
+    SchemaRepo: jest.fn().mockImplementation(() => {
+      return {
+        load: jest.fn(() => {
+          return Promise.resolve({
+            schema: {},
+          });
+        }),
+      }
+    })
+  }
+});
+
 let useCase: SelectFileVariant;
 let editorState: EditorState;
 let projectState: ProjectState;
@@ -22,23 +51,10 @@ let schemaRepo: SchemaRepo;
 beforeEach(() => {
     editorState  = new EditorState();
     projectState = new ProjectState();
-
-    dataRepo = new (jest.fn<DataRepo>(() => ({
-        load: jest.fn().mockImplementation(() => {
-            return Promise.resolve(new DataEntries([
-                new DataEntry('one', {key: 'value1'}),
-                new DataEntry('two', {key: 'value2'}),
-            ]));
-        }),
-    })));
-
-    schemaRepo = new (jest.fn<SchemaRepo>(() => ({
-        load: jest.fn().mockImplementation(() => {
-            return Promise.resolve({
-                schema: {},
-            });
-        }),
-    })));
+    // @ts-ignore
+    dataRepo = new DataRepo();
+    // @ts-ignore
+    schemaRepo = new SchemaRepo();
 
     useCase = new SelectFileVariant(editorState, projectState, dataRepo, schemaRepo);
 });

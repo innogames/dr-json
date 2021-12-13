@@ -1,4 +1,4 @@
-import {remote} from 'electron';
+import {dialog} from '@electron/remote';
 import {EntryId} from '../../../../domain/states/objects/editor/DataEntry';
 import {DeleteEntry} from '../../../../domain/useCases/entries/DeleteEntry';
 import {container} from '../../container';
@@ -6,7 +6,7 @@ import {container} from '../../container';
 const useCase: DeleteEntry = container.get(DeleteEntry);
 
 export function confirmDeleteEntry(dataFile: string, entryId: EntryId) {
-    remote.dialog.showMessageBox(
+    dialog.showMessageBox(
         {
             type:      'warning',
             title:     'Delete entry',
@@ -15,10 +15,9 @@ export function confirmDeleteEntry(dataFile: string, entryId: EntryId) {
             cancelId:  0,
             defaultId: 1,
         },
-        (buttonId: number) => {
-            if (buttonId == 1) {
-                useCase.execute(dataFile, entryId);
-            }
-        },
-    );
+    ).then(result => {
+      if (result.response == 1) {
+        useCase.execute(dataFile, entryId);
+      }
+    });
 }

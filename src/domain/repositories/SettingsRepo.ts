@@ -23,7 +23,7 @@ export class SettingsRepo {
     }
 
     public loadLastProjectFile(): Promise<string | null> {
-        return Promise.resolve(this.storage.load<string | null>('projectFile', null));
+        return this.storage.load<string | null>('projectFile', null);
     }
 
     public saveGlobalSettings(settings: GlobalSettings): Promise<void> {
@@ -32,39 +32,38 @@ export class SettingsRepo {
     }
 
     public loadGlobalSettings(): Promise<GlobalSettings> {
-        const settings: GlobalSettings = this.storage.load<GlobalSettings>('globalSettings', {
+        return this.storage.load<GlobalSettings>('globalSettings', {
             inlineForms: false,
         });
-
-        return Promise.resolve(settings);
     }
 
     public saveProjectSettings(projectName: string, projectFile: string, settings: ProjectSettings): Promise<void> {
-        let allSettings: ProjectSetting[] = this.loadAllProjectSettings()
-            .filter((s: ProjectSetting) => s.projectFile != projectFile);
+        this.loadAllProjectSettings()
+          .then(result => {
+              let allSettings = result.filter((s: ProjectSetting) => s.projectFile != projectFile);
+              allSettings.push({
+                  projectName: projectName,
+                  projectFile: projectFile,
+                  settings:    settings,
+              });
 
-        allSettings.push({
-            projectName: projectName,
-            projectFile: projectFile,
-            settings:    settings,
-        });
-
-        this.storage.save('projectSettings', allSettings);
+              this.storage.save('projectSettings', allSettings);
+          });
 
         return Promise.resolve();
     }
 
     public loadProjectSettings(projectFile: string): Promise<ProjectSettings> {
-        let allSettings: ProjectSetting[] = this.loadAllProjectSettings();
-
-        for (let setting of allSettings) {
-            if (setting.projectFile == projectFile) {
-                return Promise.resolve(setting.settings);
+        return this.loadAllProjectSettings().then(result => {
+            for (let setting of result) {
+                if (setting.projectFile == projectFile) {
+                    return setting.settings;
+                }
             }
-        }
 
-        return Promise.resolve({
-            collapsedDirs: [],
+            return {
+                collapsedDirs: [],
+            };
         });
     }
 
@@ -84,13 +83,7 @@ export class SettingsRepo {
             .then((settings: ProjectSettings) => this.saveProjectSettings(projectName, projectFile, settings));
     }
 
-    private loadAllProjectSettings(): ProjectSetting[] {
-        let allSettings: ProjectSetting[] = this.storage.load<ProjectSetting[]>('projectSettings', []);
-
-        if (!Array.isArray(allSettings)) {
-            allSettings = [];
-        }
-
-        return allSettings;
+    private loadAllProjectSettings(): Promise<ProjectSetting[]> {
+        return this.storage.load<ProjectSetting[]>('projectSettings', []);
     }
 }

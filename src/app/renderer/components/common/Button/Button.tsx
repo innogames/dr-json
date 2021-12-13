@@ -4,7 +4,7 @@ import styles from './ButtonStyles.scss';
 
 interface Props {
     label?: string;
-    type?: string;
+    type?: "button" | "submit" | "reset" | undefined;
     icon?: string;
     primary?: boolean;
     danger?: boolean;

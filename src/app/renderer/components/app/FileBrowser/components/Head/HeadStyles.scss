@@ -12,5 +12,11 @@
   .left {
     flex: 1;
     align-self: center;
+    text-align: left;
+  }
+  .right {
+    flex: 1;
+    align-self: center;
+    text-align: right;
   }
 }
