@@ -6,7 +6,7 @@
   "author": {
     "name": "Innogames GmbH"
   },
-  "version": "0.18.0",
+  "version": "0.20.0",
   "private": true,
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
