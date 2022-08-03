@@ -1,6 +1,5 @@
 import {injectable} from 'inversify';
 import {EntryValidator} from '../../context/data/EntryValidator';
-import {SchemaConfig} from '../../context/schema/SchemaConfig';
 import {DataRepo} from '../../repositories/DataRepo';
 import {SchemaRepo} from '../../repositories/SchemaRepo';
 import {EditorState} from '../../states/EditorState';
@@ -30,7 +29,7 @@ export class SelectFile {
         let activeFile: ActiveFile = new ActiveFile(basename, file.dataFile);
         this.editorState.open(activeFile);
 
-        return Promise.all<SchemaConfig, DataEntries>([
+        return Promise.all([
             this.schemaRepo.load(file.schemaFile, this.projectState.project.schemaPath),
             this.dataRepo.load(file.dataFile),
         ])

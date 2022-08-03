@@ -11,7 +11,6 @@ interface Props {
 
 interface State {
     parentTop: number;
-    parentBottom: number;
     parentLeft: number;
     parentRight: number;
     parentWidth: number;
@@ -28,7 +27,6 @@ export class SideWindow extends React.PureComponent<Props, State> {
         super(props);
         this.state = {
             parentTop:    0,
-            parentBottom: 0,
             parentLeft:   0,
             parentRight:  0,
             parentWidth:  0,
@@ -39,7 +37,7 @@ export class SideWindow extends React.PureComponent<Props, State> {
     componentDidMount() {
         window.addEventListener('resize', this.handleResize);
 
-        this.parentNode = ReactDOM.findDOMNode(this).parentElement as HTMLElement;
+        this.parentNode = ReactDOM.findDOMNode(this)!.parentElement as HTMLElement;
         this.handleResize();
     }
 
@@ -55,7 +53,7 @@ export class SideWindow extends React.PureComponent<Props, State> {
                         className={styles.overlay}
                         style={{
                             top:    this.state.parentTop,
-                            bottom: this.state.parentBottom,
+                            bottom: 0,
                             left:   this.state.parentLeft,
                             right:  this.state.parentRight,
                         }}
@@ -65,9 +63,10 @@ export class SideWindow extends React.PureComponent<Props, State> {
                      style={{
                          width:    this.state.width,
                          maxWidth: this.state.parentWidth,
-                         top:      this.state.parentTop,
-                         bottom:   this.state.parentBottom,
                          right:    this.state.parentRight,
+                         top:      this.state.parentTop,
+                         bottom:   0,
+
                      }}
                 >
                     <ResizeHandle
@@ -92,7 +91,6 @@ export class SideWindow extends React.PureComponent<Props, State> {
     private handleResize = () => {
         this.setState(() => ({
             parentTop:    this.parentNode.offsetTop,
-            parentBottom: window.innerHeight - this.parentNode.offsetTop - this.parentNode.offsetHeight,
             parentLeft:   this.parentNode.offsetLeft,
             parentRight:  window.innerWidth - this.parentNode.offsetLeft - this.parentNode.offsetWidth,
             parentWidth:  this.parentNode.offsetWidth,

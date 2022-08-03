@@ -9,6 +9,18 @@ import {ProjectConfig} from '../../../states/objects/ProjectConfig';
 import {ProjectState} from '../../../states/ProjectState';
 import {CloseProject} from '../CloseProject';
 
+jest.mock('../../../repositories/SettingsRepo', () => {
+  return {
+    SettingsRepo: jest.fn().mockImplementation(() => {
+      return {
+        saveLastProjectFile: jest.fn().mockImplementation(() => {
+          return Promise.resolve();
+        }),
+      }
+    })
+  }
+});
+
 let useCase: CloseProject;
 let projectState: ProjectState;
 let editorState: EditorState;
@@ -17,11 +29,8 @@ let settingsRepo: SettingsRepo;
 beforeEach(() => {
     projectState = new ProjectState();
     editorState  = new EditorState();
-    settingsRepo = new (jest.fn<SettingsRepo>(() => ({
-        saveLastProjectFile: jest.fn().mockImplementation(() => {
-            return Promise.resolve();
-        }),
-    })));
+    // @ts-ignore
+    settingsRepo = new SettingsRepo()
 
     useCase = new CloseProject(projectState, editorState, settingsRepo);
 });

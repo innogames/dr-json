@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from './IconStyles.scss';
+import icomoon from './icomoon/style.scss';
 
 interface Props {
     value: string;
@@ -41,8 +42,8 @@ export class Icon extends React.Component<Props, {}> {
 
     render() {
         let classNames = [
-            'icon',
-            `icon-${this.props.value}`,
+            icomoon.icon,
+            icomoon[`icon-${this.props.value}`],
             this.props.className,
             this.props.color,
         ];

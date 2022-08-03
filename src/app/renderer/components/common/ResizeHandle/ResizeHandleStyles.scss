@@ -4,4 +4,7 @@
   flex: 0 0 2px;
   background-color: $color-border;
   cursor: col-resize;
+  width: 5px;
+  height: 100%;
+  position: fixed;
 }

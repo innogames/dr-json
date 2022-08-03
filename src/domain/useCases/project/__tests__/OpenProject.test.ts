@@ -13,6 +13,57 @@ import {SettingsState} from '../../../states/SettingsState';
 import {CloseProject} from '../CloseProject';
 import {OpenProject} from '../OpenProject';
 
+jest.mock('../CloseProject', () => {
+    return {
+        CloseProject: jest.fn().mockImplementation(() => {
+            return {
+                execute: jest.fn().mockImplementation(() => {
+                    return Promise.resolve();
+                }),
+            }
+        })
+    }
+});
+
+jest.mock('../../../repositories/ProjectRepo', () => {
+    return {
+        ProjectRepo: jest.fn().mockImplementation(() => {
+            return {
+                loadConfig: jest.fn().mockImplementation(() => {
+                    return Promise.resolve(new ProjectConfig({name: 'Test'}));
+                }),
+            }
+        })
+    }
+});
+
+jest.mock('../../../repositories/SettingsRepo', () => {
+    return {
+        SettingsRepo: jest.fn().mockImplementation(() => {
+            return {
+                saveLastProjectFile: jest.fn().mockImplementation(() => {
+                    return Promise.resolve();
+                }),
+                loadProjectSettings: jest.fn().mockImplementation((): Promise<ProjectSettings> => {
+                    return Promise.resolve({
+                        collapsedDirs: ['collapsedFolder'],
+                    });
+                }),
+            }
+        })
+    }
+});
+
+jest.mock('../../../repositories/SchemaRepo', () => {
+    return {
+        SchemaRepo: jest.fn().mockImplementation(() => {
+            return {
+                loadFileTree: jest.fn().mockImplementation(() => {}),
+            }
+        })
+    }
+});
+
 let useCase: OpenProject;
 let closeProject: CloseProject;
 let projectRepo: ProjectRepo;
@@ -22,28 +73,14 @@ let projectState: ProjectState;
 let settingsState: SettingsState;
 
 beforeEach(() => {
-    closeProject = new (jest.fn<CloseProject>(() => ({
-        execute: () => Promise.resolve(),
-    })));
-
-    projectRepo = new (jest.fn<ProjectRepo>(() => ({
-        loadConfig: () => Promise.resolve(new ProjectConfig({name: 'Test'})),
-    })));
-
-    settingsRepo = new (jest.fn<SettingsRepo>(() => ({
-        saveLastProjectFile: jest.fn().mockImplementation(() => {
-            return Promise.resolve();
-        }),
-        loadProjectSettings: jest.fn().mockImplementation((): Promise<ProjectSettings> => {
-            return Promise.resolve({
-                collapsedDirs: ['collapsedFolder'],
-            });
-        }),
-    })));
-
-    schemaRepo = new (jest.fn<SchemaRepo>(() => ({
-        loadFileTree: jest.fn(),
-    })));
+    // @ts-ignore
+    closeProject = new CloseProject()
+    // @ts-ignore
+    projectRepo = new ProjectRepo();
+    // @ts-ignore
+    settingsRepo = new SettingsRepo();
+    // @ts-ignore
+    schemaRepo = new SchemaRepo();
 
     projectState  = new ProjectState();
     settingsState = new SettingsState();

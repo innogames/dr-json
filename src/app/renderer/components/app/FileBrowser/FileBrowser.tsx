@@ -34,14 +34,11 @@ export class FileBrowser extends React.Component<Props, {}> {
     render() {
         return (
             <div className={styles.wrap}>
-                <Head projectName={this.props.project.config.name}/>
+                <Head projectName={this.props.project.config.name} version={this.props.appVersion}/>
                 <div className={styles.main}>
                     <Sidebar/>
 
                     {this.renderContent()}
-                </div>
-                <div className={styles.footer}>
-                    v{this.props.appVersion}
                 </div>
             </div>
         );

@@ -30,7 +30,7 @@ export class SchemaRepo {
     }
 
     public loadFileTree(schemaDir: string, dataDir: string, variantDir: string): Promise<SchemaTree> {
-        return Promise.all<FileInfo, FileToVariantIds>([
+        return Promise.all([
             this.fetchFileTree(schemaDir),
             this.fetchFileVariantIds(variantDir),
         ]).then(([schemaTree, fileVariantIds]) => {
