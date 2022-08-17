@@ -13,7 +13,6 @@ interface Props {
     onChange?: (value: any | any[]) => void;
     options?: any[];
     sort?: boolean;
-    clearable?: boolean;
 }
 
 interface State {
@@ -36,7 +35,7 @@ export class Select extends React.Component<Props, State> {
                 isDisabled={this.props.disabled}
                 options={this.props.options || []}
                 onChange={this.handleChange}
-                isClearable={this.props.clearable}
+                isClearable={true}
                 defaultValue={this.state.value}
             />
         );
