@@ -80,7 +80,7 @@ export class FileEditor extends React.Component<Props, State> {
                     onToggleErrors={this.onToggleErrors}
                 />
 
-                <div className={styles.entries} ref="container">
+                <div className={styles.entries} ref="container" id="editorContainer">
                     {this.renderEntries(entries, hasErrors)}
                     {this.renderSidebarEditForm(entries)}
                     {this.renderCreate()}
