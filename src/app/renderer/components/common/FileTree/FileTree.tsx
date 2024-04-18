@@ -9,6 +9,7 @@ import {Icon} from '../Icon';
 import {Link} from '../Link';
 import styles from './FileTreeStyles.scss';
 import {SchemaFileVariant} from "../../../../../domain/states/objects/fileTree/SchemaFileVariant";
+import {byFileSearch} from "../../../../../domain/context/fileTree/filter/byFileSearch";
 
 interface Props {
     tree: SchemaTree;
@@ -19,13 +20,29 @@ interface Props {
     onSelectFileVariant?: (basename: string, file: SchemaFileVariant) => void;
     onSelectDir?: (dir: SchemaDir) => void;
     onClickAddVariant: () => void;
+    filterText?: string | null;
 }
 
 @observer
 export class FileTree extends React.Component<Props> {
 
     render() {
-        const files = this.props.tree.children.sort();
+        let files : SchemaTreeItem[] = this.props.tree.children.sort();
+        if(this.props.filterText)
+        {
+            files = files.filter(byFileSearch(this.props.filterText));
+        }
+
+        if(files.length === 0)
+        {
+            return (
+                <div className={[styles.tree, this.props.className].join(' ')}>
+                    <ul>
+                        <p>No files matching</p>
+                    </ul>
+                </div>
+            );
+        }
 
         return (
             <div className={[styles.tree, this.props.className].join(' ')}>
@@ -36,7 +53,7 @@ export class FileTree extends React.Component<Props> {
         );
     };
 
-    private renderItem = (file: SchemaTreeItem): JSX.Element => {
+    private renderItem = (file: SchemaTreeItem): JSX.Element | null => {
         return file instanceof SchemaDir ? this.renderDir(file as SchemaDir) : this.renderFile(file as SchemaFile);
     };
 
@@ -95,10 +112,20 @@ export class FileTree extends React.Component<Props> {
         );
     };
 
-    private renderDir = (dir: SchemaDir): JSX.Element => {
+    private renderDir = (dir: SchemaDir): JSX.Element | null => {
         let icon: string = Icon.FOLDER;
         if (dir.collapsed) {
             icon = Icon.FOLDER_COLLAPSED;
+        }
+        let children : SchemaTreeItem[] = dir.children;
+        if(this.props.filterText)
+        {
+            children = children.filter(byFileSearch(this.props.filterText));
+        }
+
+        if(children.length === 0)
+        {
+            return null;
         }
 
         return (
@@ -108,7 +135,7 @@ export class FileTree extends React.Component<Props> {
                 </Link>
                 <If cond={!dir.collapsed}>
                     <ul>
-                        {dir.children.map(this.renderItem)}
+                        {children.map(this.renderItem)}
                     </ul>
                 </If>
             </li>
