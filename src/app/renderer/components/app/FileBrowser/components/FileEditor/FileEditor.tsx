@@ -78,6 +78,7 @@ export class FileEditor extends React.Component<Props, State> {
                     onExpandAll={this.onExpandAll}
                     hasErrors={hasErrors}
                     onToggleErrors={this.onToggleErrors}
+                    searchText={this.props.activeFile.searchText}
                 />
 
                 <div className={styles.entries} ref="container" id="editorContainer">

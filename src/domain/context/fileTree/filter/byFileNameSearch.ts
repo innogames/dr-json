@@ -1,7 +1,7 @@
 import {SchemaDir} from '../../../states/objects/fileTree/SchemaDir';
 import {SchemaTreeItem} from '../../../states/objects/fileTree/SchemaTreeItem';
 
-export function byFileSearch(search: string): (item: SchemaTreeItem) => boolean {
+export function byFileNameSearch(search: string): (item: SchemaTreeItem) => boolean {
     if (!search) {
         return () => true;
     }

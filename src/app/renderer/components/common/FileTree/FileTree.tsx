@@ -8,8 +8,10 @@ import {If} from '../../helper/If';
 import {Icon} from '../Icon';
 import {Link} from '../Link';
 import styles from './FileTreeStyles.scss';
-import {SchemaFileVariant} from "../../../../../domain/states/objects/fileTree/SchemaFileVariant";
-import {byFileSearch} from "../../../../../domain/context/fileTree/filter/byFileSearch";
+import {SchemaFileVariant} from '../../../../../domain/states/objects/fileTree/SchemaFileVariant';
+import {byFileNameSearch} from '../../../../../domain/context/fileTree/filter/byFileNameSearch';
+import {byFileContentSearch} from '../../../../../domain/context/fileTree/filter/byFileContentSearch';
+import {FilesystemImpl} from "../../../services/FilesystemImpl";
 
 interface Props {
     tree: SchemaTree;
@@ -20,17 +22,31 @@ interface Props {
     onSelectFileVariant?: (basename: string, file: SchemaFileVariant) => void;
     onSelectDir?: (dir: SchemaDir) => void;
     onClickAddVariant: () => void;
-    filterText?: string | null;
+    fileNameSearchText?: string;
+    fileContentSearchText?: string;
 }
 
 @observer
 export class FileTree extends React.Component<Props> {
 
+    constructor(
+        props: Props,
+        public filesystem: FilesystemImpl
+    ) {
+        super(props);
+        this.filesystem = new FilesystemImpl();
+    }
+
     render() {
         let files : SchemaTreeItem[] = this.props.tree.children.sort();
-        if(this.props.filterText)
+        if(this.props.fileNameSearchText)
         {
-            files = files.filter(byFileSearch(this.props.filterText));
+            files = files.filter(byFileNameSearch(this.props.fileNameSearchText));
+        }
+
+        if(this.props.fileContentSearchText)
+        {
+            files = files.filter(byFileContentSearch(this.props.fileContentSearchText, this.filesystem));
         }
 
         if(files.length === 0)
@@ -38,7 +54,7 @@ export class FileTree extends React.Component<Props> {
             return (
                 <div className={[styles.tree, this.props.className].join(' ')}>
                     <ul>
-                        <p>No files matching</p>
+                        <p>No matching files found...</p>
                     </ul>
                 </div>
             );
@@ -118,9 +134,14 @@ export class FileTree extends React.Component<Props> {
             icon = Icon.FOLDER_COLLAPSED;
         }
         let children : SchemaTreeItem[] = dir.children;
-        if(this.props.filterText)
+        if(this.props.fileNameSearchText)
         {
-            children = children.filter(byFileSearch(this.props.filterText));
+            children = children.filter(byFileNameSearch(this.props.fileNameSearchText));
+        }
+
+        if(this.props.fileContentSearchText)
+        {
+            children = children.filter(byFileContentSearch(this.props.fileContentSearchText, this.filesystem));
         }
 
         if(children.length === 0)

@@ -2,7 +2,7 @@ import {injectable} from 'inversify';
 import {EditorState} from '../../states/EditorState';
 
 @injectable()
-export class SearchForFile {
+export class SearchForFileName {
 
     constructor(
         private editorState: EditorState,
@@ -10,7 +10,7 @@ export class SearchForFile {
     }
 
     execute(text: string): Promise<void> {
-        this.editorState.setFileSearchText(text);
+        this.editorState.setFileNameSearchText(text);
         return Promise.resolve();
     }
 }

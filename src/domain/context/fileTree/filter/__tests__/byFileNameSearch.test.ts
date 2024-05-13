@@ -2,9 +2,9 @@ import 'jest';
 import {SchemaDir} from '../../../../states/objects/fileTree/SchemaDir';
 import {SchemaFile} from '../../../../states/objects/fileTree/SchemaFile';
 import {SchemaTreeItem} from '../../../../states/objects/fileTree/SchemaTreeItem';
-import {byFileSearch} from '../byFileSearch';
+import {byFileNameSearch} from '../byFileNameSearch';
 
-describe('byFileSearch()', () => {
+describe('byFileNameSearch()', () => {
 
     const entries: SchemaTreeItem[] = [
         new SchemaDir("firstDir", "Folder", [
@@ -21,13 +21,13 @@ describe('byFileSearch()', () => {
     ];
 
     it('filters entries by search text', () => {
-        const filteredRewards: SchemaTreeItem[] = entries.filter(byFileSearch('Rewards'));
+        const filteredRewards: SchemaTreeItem[] = entries.filter(byFileNameSearch('Rewards'));
 
         expect(filteredRewards.length).toEqual(3);
         expect(filteredRewards[0] instanceof SchemaDir).toEqual(true);
         expect(filteredRewards[1] instanceof SchemaFile).toEqual(true);
 
-        const filteredFolders: SchemaTreeItem[] = entries.filter(byFileSearch('Nonsense'));
+        const filteredFolders: SchemaTreeItem[] = entries.filter(byFileNameSearch('Nonsense'));
 
         expect(filteredFolders.length).toEqual(2);
         expect(filteredFolders[0] instanceof SchemaDir).toEqual(true);
@@ -35,7 +35,7 @@ describe('byFileSearch()', () => {
     });
 
     it('does not search when no search text', () => {
-        const filtered: SchemaTreeItem[] = entries.filter(byFileSearch(''));
+        const filtered: SchemaTreeItem[] = entries.filter(byFileNameSearch(''));
 
         expect(filtered.length).toEqual(5);
     });

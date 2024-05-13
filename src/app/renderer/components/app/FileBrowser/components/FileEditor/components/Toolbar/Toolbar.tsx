@@ -14,6 +14,7 @@ interface Props {
     onCollapseAll?: () => void;
     hasErrors?: boolean;
     onToggleErrors?: () => void;
+    searchText?: string;
 }
 
 @observer
@@ -28,6 +29,7 @@ export class Toolbar extends React.Component<Props, {}> {
                         placeholder='Search'
                         onChange={this.props.onSearch}
                         selectAllOnFocus
+                        value={this.props.searchText}
                     />
 
                     <Link title='Expand All' onClick={this.props.onExpandAll} className={styles.btn}>

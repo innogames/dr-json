@@ -7,7 +7,7 @@ interface Props {
     disabled?: boolean;
     value?: string;
     onChange?: (value: string) => void;
-    onPressEnter?: () => void;
+    onPressEnter?: (value: string) => void;
     className?: string;
     maxLength?: number;
     selectAllOnFocus?: boolean;
@@ -40,7 +40,7 @@ export class TextField extends React.Component<Props, {}> {
 
     private handleKeyPress = (event: KeyboardEvent<any>) => {
         if (event.key === 'Enter' && this.props.onPressEnter) {
-            this.props.onPressEnter();
+            this.props.onPressEnter(this.refs.input.value);
         }
     };
 

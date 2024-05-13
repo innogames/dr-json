@@ -19,11 +19,12 @@ import {CreateEntry} from '../../domain/useCases/entries/CreateEntry';
 import {DeleteEntry} from '../../domain/useCases/entries/DeleteEntry';
 import {OpenCreateEntry} from '../../domain/useCases/entries/OpenCreateEntry';
 import {SearchInFile} from '../../domain/useCases/entries/SearchInFile';
+import {SearchForFileContent} from '../../domain/useCases/project/SearchforFileContent';
 import {ToggleCollapseEntries} from '../../domain/useCases/entries/ToggleCollapseEntries';
 import {UpdateEntry} from '../../domain/useCases/entries/UpdateEntry';
 import {CollapseAllDirs} from '../../domain/useCases/fileTree/CollapseAllDirs';
 import {ExpandAllDirs} from '../../domain/useCases/fileTree/ExpandAllDirs';
-import {SearchForFile} from '../../domain/useCases/fileTree/SearchForFile';
+import {SearchForFileName} from '../../domain/useCases/fileTree/SearchForFileName';
 import {ResetFilter} from '../../domain/useCases/fileTree/ResetFilter';
 import {SelectFile} from '../../domain/useCases/fileTree/SelectFile';
 import {SelectFileVariant} from '../../domain/useCases/fileTree/SelectFileVariant';
@@ -74,11 +75,12 @@ container.bind<SelectFile>(SelectFile).toSelf().inSingletonScope();
 container.bind<SelectFileVariant>(SelectFileVariant).toSelf().inSingletonScope();
 container.bind<SelectFilter>(SelectFilter).toSelf().inSingletonScope();
 container.bind<ToggleCollapseDir>(ToggleCollapseDir).toSelf().inSingletonScope();
-container.bind<SearchForFile>(SearchForFile).toSelf().inSingletonScope();
+container.bind<SearchForFileName>(SearchForFileName).toSelf().inSingletonScope();
 // - project
 container.bind<CloseProject>(CloseProject).toSelf().inSingletonScope();
 container.bind<OpenProject>(OpenProject).toSelf().inSingletonScope();
 container.bind<Reload>(Reload).toSelf().inSingletonScope();
+container.bind<SearchForFileContent>(SearchForFileContent).toSelf().inSingletonScope();
 // - variants
 container.bind<CloseCreateVariant>(CloseCreateVariant).toSelf().inSingletonScope();
 container.bind<CreateVariant>(CreateVariant).toSelf().inSingletonScope();
