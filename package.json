@@ -66,7 +66,8 @@
     "react-jsonschema-form": "1.8.1",
     "react-select": "5.2.1",
     "reflect-metadata": "0.1.13",
-    "source-map-support": "0.5.21"
+    "source-map-support": "0.5.21",
+    "json-2-csv": "^5.5.1"
   },
   "devDependencies": {
     "@electron/remote": "^2.0.1",

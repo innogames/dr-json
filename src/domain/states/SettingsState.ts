@@ -11,6 +11,7 @@ export class SettingsState {
 
     @observable private _projectSettings: ProjectSettings = {
         collapsedDirs: [],
+        rewardDirs: [],
     };
 
     get globalSettings(): GlobalSettings {

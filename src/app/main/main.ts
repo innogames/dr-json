@@ -80,6 +80,17 @@ function createMenu() {
                     type: 'separator',
                 },
                 {
+                    label: 'Export Rewards',
+                    click: function (): void {
+                        if(win) {
+                            onExportRewards(win.webContents);
+                        }
+                    },
+                },
+                {
+                    type: 'separator',
+                },
+                {
                     label: 'Quit',
                     role:  'quit',
                 },
@@ -206,6 +217,18 @@ ipcMain.handle('getStoreValue', async(_event, key, defaultValue) => {
 ipcMain.handle('setStoreValue', (_event, key, data) => {
     store.set(key, data);
 });
+
+function onExportRewards(webContents: WebContents): void {
+    dialog.showSaveDialog({
+        filters: [
+            {name: 'Rewards', extensions: ['csv']},
+        ],
+    }).then(result => {
+        if (result.filePath) {
+            webContents.send('rewards-export', result.filePath);
+        }
+    });
+}
 
 function openSelectProjectDialog(webContents: WebContents) {
     dialog.showOpenDialog({

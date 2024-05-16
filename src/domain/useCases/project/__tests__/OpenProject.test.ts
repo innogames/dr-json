@@ -47,6 +47,7 @@ jest.mock('../../../repositories/SettingsRepo', () => {
                 loadProjectSettings: jest.fn().mockImplementation((): Promise<ProjectSettings> => {
                     return Promise.resolve({
                         collapsedDirs: ['collapsedFolder'],
+                        rewardDirs: [],
                     });
                 }),
             }

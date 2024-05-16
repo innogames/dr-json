@@ -63,6 +63,7 @@ export class SettingsRepo {
 
             return {
                 collapsedDirs: [],
+                rewardDirs: [],
             };
         });
     }

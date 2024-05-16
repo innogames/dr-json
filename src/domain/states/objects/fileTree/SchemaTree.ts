@@ -34,6 +34,10 @@ export class SchemaTree {
         this.forEachDirRecursive(this._children, fn);
     }
 
+    public forEachFile(fn: (file: SchemaFile) => void): void {
+        this.forEachFileRecursive(this._children, fn);
+    }
+
     private reduceFiles = (value: SchemaFile[], child: SchemaTreeItem): SchemaFile[] => {
         if (child instanceof SchemaFile) {
             return [...value, child];
@@ -84,6 +88,19 @@ export class SchemaTree {
                 const dir: SchemaDir = child as SchemaDir;
                 this.forEachDirRecursive(dir.children, fn);
                 fn(dir);
+            }
+        }
+    }
+
+    private forEachFileRecursive(children: SchemaTreeItem[], fn: (dir: SchemaFile) => void): void {
+        for (const child of children) {
+            if (child instanceof SchemaDir) {
+                const dir: SchemaDir = child as SchemaDir;
+                this.forEachFileRecursive(dir.children, fn);
+            }
+            else if (child instanceof SchemaFile) {
+                const file: SchemaFile = child as SchemaFile;
+                fn(file);
             }
         }
     }

@@ -1,9 +1,10 @@
-import {action} from 'mobx';
+import {action, observable} from 'mobx';
 import {SchemaFileVariant} from './SchemaFileVariant';
 import {SchemaTreeItem} from './SchemaTreeItem';
 
 export class SchemaFile extends SchemaTreeItem {
     private _variants: SchemaFileVariant[] = [];
+    @observable private _isReward: boolean = false;
 
     constructor(
         label: string,
@@ -11,10 +12,21 @@ export class SchemaFile extends SchemaTreeItem {
         public readonly schemaFile: string,
         public readonly dataFile: string,
         variants: SchemaFileVariant[] = [],
+        isReward: boolean = false,
     ) {
         super(label, basename);
         this._variants = variants;
         this.sortVariants();
+        this._isReward = isReward;
+    }
+
+    public get isReward(): boolean {
+        return this._isReward;
+    }
+
+    @action
+    public setIsReward(isReward: boolean) {
+        this._isReward = isReward;
     }
 
     get variants(): SchemaFileVariant[] {

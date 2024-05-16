@@ -11,6 +11,7 @@ import {ProjectSettings} from '../../states/objects/settings/ProjectSettings';
 import {ProjectState} from '../../states/ProjectState';
 import {SettingsState} from '../../states/SettingsState';
 import {CloseProject} from './CloseProject';
+import {SchemaFile} from "../../states/objects/fileTree/SchemaFile";
 
 @injectable()
 export class OpenProject {
@@ -37,6 +38,7 @@ export class OpenProject {
                 return this.schemaRepo.loadFileTree(project.schemaPath, project.dataPath, project.variantDataPath)
                     .then((schemaTree: SchemaTree) => {
                         schemaTree = this.restoreCollapsedState(schemaTree);
+                        schemaTree = this.restoreRewardsState(schemaTree);
                         project.setSchemaTree(schemaTree);
                         return project;
                     });
@@ -56,6 +58,16 @@ export class OpenProject {
         return schemaTree.map((item: SchemaTreeItem): SchemaTreeItem => {
             if (item instanceof SchemaDir && this.settingsState.projectSettings.collapsedDirs.indexOf(item.basename) >= 0) {
                 item.setCollapsed(true);
+            }
+
+            return item;
+        });
+    }
+
+    private restoreRewardsState(schemaTree: SchemaTree): SchemaTree {
+        return schemaTree.map((item: SchemaTreeItem): SchemaTreeItem => {
+            if (item instanceof SchemaFile && this.settingsState.projectSettings.rewardDirs.indexOf(item.basename) >= 0) {
+                item.setIsReward(true);
             }
 
             return item;
