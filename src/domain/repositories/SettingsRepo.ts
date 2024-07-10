@@ -57,7 +57,18 @@ export class SettingsRepo {
         return this.loadAllProjectSettings().then(result => {
             for (let setting of result) {
                 if (setting.projectFile == projectFile) {
-                    return setting.settings;
+                    let settings = setting.settings;
+                    if(!settings.collapsedDirs)
+                    {
+                        settings.collapsedDirs = [];
+                    }
+
+                    if(!settings.rewardDirs)
+                    {
+                        settings.rewardDirs = [];
+                    }
+
+                    return settings;
                 }
             }
 
