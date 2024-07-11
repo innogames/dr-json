@@ -80,14 +80,14 @@ export class Sidebar extends React.Component<{}, {}> {
                     </IconDropdown>
                     <TextField
                         className={styles.searchFiles}
-                        placeholder='Search files...'
+                        placeholder='Filter by name...'
                         onChange={(value: string) => {
                             debounce(this.onSearchForFile, 500)(value);
                         }}
                     />
                     <TextField
                         className={styles.searchProject}
-                        placeholder='Search in project...'
+                        placeholder='Search for content...'
                         onPressEnter={(value: string) => {
                             this.onSearchProject(value);
                         }}
