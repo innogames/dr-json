@@ -11,6 +11,7 @@ import {FileEditor} from './components/FileEditor';
 import {Head} from './components/Head';
 import {Sidebar} from './components/Sidebar';
 import styles from './FileBrowserStyles.scss';
+import {SchemaFile} from "../../../../../domain/states/objects/fileTree/SchemaFile";
 
 interface Props {
     appVersion?: string;
@@ -63,12 +64,21 @@ export class FileBrowser extends React.Component<Props, {}> {
             return <ErrorHint error={activeFile.error}/>;
         }
 
+        let isRewardFile: boolean = false;
+        this.props.project.schemaTree.forEachFile((file: SchemaFile) => {
+            if(file.basename === activeFile.basename) {
+                isRewardFile = file.isReward;
+                return;
+            }
+        })
+
         return (
             <FileEditor
                 activeFile={activeFile}
                 variantTypes={this.props.project.config.variantTypes}
                 isAddVariantMode={this.injected.editorState.isAddVariantMode}
                 showFormInline={this.injected.settingsState.globalSettings.inlineForms}
+                isReward={isRewardFile}
             />
         );
     }

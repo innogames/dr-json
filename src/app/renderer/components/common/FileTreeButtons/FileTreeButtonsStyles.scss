@@ -5,6 +5,7 @@ $btnSize: 25px;
 :local .buttons {
   flex: 0 30px;
   display: flex;
+  flex-wrap: wrap;
   background-color: $color-primary-dark;
   border-bottom: 1px solid $color-secondary;
 

@@ -24,12 +24,14 @@ import {EntryWrapper} from './components/EntryWrapper';
 import {Toolbar} from './components/Toolbar';
 import {VariantWindow} from './components/VariantWindow';
 import styles from './FileEditorStyles.scss';
+import {toggleIsRewardFile} from "../../../../../actions/fileTree/toggleIsRewardFile";
 
 interface Props {
     activeFile: ActiveFile;
     variantTypes: VariantTypeConfig[];
     isAddVariantMode?: boolean;
     showFormInline?: boolean;
+    isReward?: boolean;
 }
 
 interface State {
@@ -78,9 +80,12 @@ export class FileEditor extends React.Component<Props, State> {
                     onExpandAll={this.onExpandAll}
                     hasErrors={hasErrors}
                     onToggleErrors={this.onToggleErrors}
+                    searchText={this.props.activeFile.searchText}
+                    isReward={this.props.isReward}
+                    onIsRewardsToggle={this.onIsRewardToggle}
                 />
 
-                <div className={styles.entries} ref="container">
+                <div className={styles.entries} ref="container" id="editorContainer">
                     {this.renderEntries(entries, hasErrors)}
                     {this.renderSidebarEditForm(entries)}
                     {this.renderCreate()}
@@ -194,6 +199,10 @@ export class FileEditor extends React.Component<Props, State> {
                 onSubmit={this.onSubmitEditForm}
             />
         );
+    }
+
+    private onIsRewardToggle = (): void => {
+        toggleIsRewardFile(this.props.activeFile.basename);
     }
 
     private onSearch = (value: string) => {

@@ -24,4 +24,17 @@
       text-decoration-color: $color-text;
     }
   }
+
+  .searchFiles {
+    width: 124px;
+    height: 26px;
+    font-size: 0.9rem;
+  }
+
+  .searchProject {
+    width: calc(100% - 2px);
+    margin: 1px;
+    height: 26px;
+    font-size: 0.9rem;
+  }
 }

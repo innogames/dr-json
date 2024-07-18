@@ -6,6 +6,7 @@ import {ActiveFile} from './objects/editor/ActiveFile';
 export class EditorState {
     @observable private _activeFiles: ActiveFile[] = [];
     @observable private _isAddVariantMode: boolean = false;
+    @observable private _fileNameSearchText: string = '';
 
     get currentFile(): ActiveFile | null {
         return this._activeFiles.length > 0 ? this._activeFiles[0] : null;
@@ -29,5 +30,14 @@ export class EditorState {
     @action
     setAddVariantMode(active: boolean): void {
         this._isAddVariantMode = active;
+    }
+
+    get fileNameSearchText(): string {
+        return this._fileNameSearchText;
+    }
+
+    @action
+    setFileNameSearchText(text: string): void {
+        this._fileNameSearchText = text;
     }
 }

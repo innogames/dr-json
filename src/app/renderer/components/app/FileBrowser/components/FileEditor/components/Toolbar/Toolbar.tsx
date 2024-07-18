@@ -5,6 +5,7 @@ import {Icon} from '../../../../../../common/Icon';
 import {Link} from '../../../../../../common/Link';
 import {TextField} from '../../../../../../form/TextField';
 import {If} from '../../../../../../helper/If';
+import {Checkbox} from "../../../../../../form/Checkbox";
 import styles from './ToolbarStyles.scss';
 
 interface Props {
@@ -14,6 +15,9 @@ interface Props {
     onCollapseAll?: () => void;
     hasErrors?: boolean;
     onToggleErrors?: () => void;
+    searchText?: string;
+    isReward?: boolean;
+    onIsRewardsToggle?: (status: boolean) => void;
 }
 
 @observer
@@ -28,6 +32,7 @@ export class Toolbar extends React.Component<Props, {}> {
                         placeholder='Search'
                         onChange={this.props.onSearch}
                         selectAllOnFocus
+                        value={this.props.searchText}
                     />
 
                     <Link title='Expand All' onClick={this.props.onExpandAll} className={styles.btn}>
@@ -36,6 +41,12 @@ export class Toolbar extends React.Component<Props, {}> {
                     <Link title='Collapse All' onClick={this.props.onCollapseAll} className={styles.btn}>
                         <Icon value={Icon.COLLAPSE}/>
                     </Link>
+
+                    <Checkbox
+                        label={"Are Rewards"}
+                        checked={this.props.isReward}
+                        onChange={this.props.onIsRewardsToggle}
+                    />
 
                     <If cond={this.props.hasErrors}>
                         <Link title='Show/Hide Errors Only' onClick={this.props.onToggleErrors} className={styles.btn}>

@@ -17,6 +17,8 @@ import {toggleSettingInlineForms} from './actions/settings/toggleSettingInlineFo
 import {App} from './components/app/App';
 import {container} from './container';
 import {rememberSchemaTreeCollapsedState} from './reactions/rememberSchemaTreeCollapsedState';
+import {rememberRewardFilesState} from "./reactions/rememberRewardFilesState";
+import {exportRewards} from "./actions/project/exportRewards";
 
 window.addEventListener('error', (event: ErrorEvent): void => {
     ipcRenderer.send('handle-error', errorToString(event.error));
@@ -29,7 +31,11 @@ configure({
     enforceActions: "never",
 });
 
-ipcRenderer.on('project-selected', (_event: any, path: string) => {
+ipcRenderer.on('rewards-export', (_event: any, path: string): void => {
+    exportRewards(path);
+});
+
+ipcRenderer.on('project-selected', (_event: any, path: string): void => {
     openProject(path);
 });
 
@@ -47,6 +53,7 @@ loadGlobalSettings();
 
 // install mobx reactions
 rememberSchemaTreeCollapsedState();
+rememberRewardFilesState();
 
 const states: any = {
     editorState:   container.get(EditorState),

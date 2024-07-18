@@ -12,4 +12,6 @@ export interface FilesystemInterface {
     readJsonSync<R = any>(file: string): R;
 
     writeJson(file: string, data: any): Promise<void>;
+
+    writeCsv(file: string, data: string): Promise<void>;
 }

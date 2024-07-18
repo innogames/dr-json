@@ -4,9 +4,19 @@ import {Project} from './objects/Project';
 
 @injectable()
 export class ProjectState {
-    @observable private _project: Project | null = null;
-    @observable private _isLoading: boolean      = false;
-    @observable private _error: any              = null;
+    @observable private _project: Project | null   = null;
+    @observable private _isLoading: boolean        = false;
+    @observable private _fileContentSearchText: string = '';
+    @observable private _error: any                = null;
+
+    get fileContentSearchText(): string {
+        return this._fileContentSearchText;
+    }
+
+    @action
+    setFileContentSearchText(text: string): void {
+        this._fileContentSearchText = text;
+    }
 
     @action
     setLoading(): void {
