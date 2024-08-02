@@ -13,14 +13,19 @@ Clone this repository, go to the root folder of this project and run `yarn` to i
 
 ## Commands
 
-| Command         | Description
-| --------------- | -----------
-| `yarn run dev`  | Start app in development mode
-| `yarn run test` | Execute tests
-| `yarn run dist` | Create executable binaries for Mac and Windows
+| Command             | Description
+|---------------------| -----------
+| `yarn run dev`      | Start app in development mode
+| `yarn run test`     | Execute tests
+| `yarn run dist`     | Create executable binaries for Mac and Linux
+| `yarn run dist-win` | Create executable binaries for Windows
 
 
 ## Create new release
+
+You will need a mac/linux machine for the mac/linux build and a windows machine for the windows build.
+Sadly electron-builder can not create builds for all platforms from all platforms.
+Also our TravisCI automated build pipeline is no longer functional and deactivated.
 
 1. Update the version by executing one of the following commands:
   ```bash
@@ -31,10 +36,13 @@ Clone this repository, go to the root folder of this project and run `yarn` to i
 
   > This will update the version in **package.json** as well as creating a new **git tag**.
 
-2. Run `git push` to push to master and then `git push --tags` to also include the new tags. Now the new version will be created by [TravisCI](https://travis-ci.org/innogames/dr-json) automatically.
+2. Run `git push` to push to master and then `git push --tags` to also include the new tags.
 
-3. When the build is done, add the changelog to the release description of the [latest release here](https://github.com/innogames/dr-json/releases)
-(You need to write the changelog manually by checking the commits. There is no automatic solution right now).
+3. Run `yarn run dist` from your mac/linux machine
+
+4. Run `yarn run dist-win` from your windows machine 
+
+5. When all builds are done, create new release ([latest release here](https://github.com/innogames/dr-json/releases)) and append all build files to the release as well as a zip file containing the source code.
 
 
 ## Tech stack
