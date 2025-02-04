@@ -83,8 +83,9 @@ export class ExportRewards {
         try{
             extractedData = [...extractedData, ...this.extractFileData(file.dataFile, file.label)]
         } catch(error) {
-            console.warn(`Failed to read file "${file.dataFile}": ${error}`)
+            console.warn(error)
             file.setIsReward(false);
+            return extractedData;
         }
 
         try{
@@ -96,7 +97,7 @@ export class ExportRewards {
                 }
             })
         } catch(error) {
-            console.warn(`Failed to read variant file "${file.dataFile}": ${error}`)
+            console.warn(error)
         }
 
         return extractedData;

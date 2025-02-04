@@ -54,9 +54,22 @@ function checkFile(file: SchemaFile, search: string, filesystem: FilesystemImpl)
 {
     try{
         const haystack: string = JSON.stringify(filesystem.readJsonSync(file.dataFile)).replace('\\', '').toLowerCase();
-        return haystack.includes(search);
+        if(haystack.includes(search))
+        {
+            return true;
+        }
     } catch(error) {
-        console.warn(`Failed to read file "${file.dataFile}": ${error}`)
+        console.warn(error)
+        return false;
+    }
+
+    for(let i: number = 0; i < file.variants.length; i++)
+    {
+        const haystack: string = JSON.stringify(filesystem.readJsonSync(file.variants[i].variantFile)).replace('\\', '').toLowerCase();
+        if(haystack.includes(search))
+        {
+            return true;
+        }
     }
 
     return false;
