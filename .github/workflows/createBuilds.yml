@@ -28,6 +28,9 @@
           run: yarn run dist-win
 
         - name: check for file
+          run: ls
+
+        - name: check for file
           run: cd dist/upload && ls
 
         - name: Upload file as artifact
@@ -42,6 +45,7 @@
             compression-level: 0
 
     buildMac:
+      needs: [buildWin]
       runs-on: macos-14
 
       steps:
