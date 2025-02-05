@@ -1,0 +1,62 @@
+  name: Create windows build
+
+  on:
+    workflow_dispatch:
+
+  jobs:
+    buildWin:
+      runs-on: windows-latest
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '20.5.1'
+
+        - name: Install dependencies
+          run: yarn install
+
+        - name: Build the project
+          run: yarn run dist-win
+
+        - name: Upload path as artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: windows-build
+            path: dist/
+            if-no-files-found: error
+            retention-days: 1
+            overwrite: true
+            include-hidden-files: true
+            compression-level: 0
+
+    retrieveArtifacts:
+      needs: [buildWin]
+      runs-on: macos-14
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Download win dir artifact
+          uses: actions/download-artifact@v4
+          with:
+            name: windows-build
+            path: dist
+
+        - name: Zip windows build
+          run: ./build/scripts/zip-files.sh
+
+        - name: Upload zip file as artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: windows-build
+            path: dist/upload/Dr.Json-windows.zip
+            if-no-files-found: error
+            retention-days: 1
+            overwrite: true
+            include-hidden-files: true
+            compression-level: 0
