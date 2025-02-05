@@ -17,7 +17,7 @@
     "dev-renderer": "webpack-dev-server --config-name renderer --mode=development --env env=dev --env devServerPort=3000",
     "compile": "webpack --mode=production",
     "create-icons": "electron-icon-maker --input=./build/icons/icon-src.png --output=./build/",
-    "dist-win": "rimraf dist && yarn run compile && electron-builder -w && bash ./build/scripts/zip-files.sh",
+    "dist-win": "rimraf dist && yarn run compile && electron-builder -w",
     "dist": "rimraf dist && yarn run compile && electron-builder -m && bash ./build/scripts/zip-files.sh"
   },
   "main": "./dist/compiled/main.js",
