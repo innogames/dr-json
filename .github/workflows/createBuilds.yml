@@ -3,9 +3,13 @@
   on:
     workflow_dispatch:
       inputs:
+        updateNotes:
+          type: string
+          required: false
+          description: 'What changed with this version'
         isMajorUpdate:
           description: 'Versioning should be increased by a major version'
-          required: true
+          required: false
           type: boolean
 
   jobs:
@@ -32,6 +36,38 @@
           with:
             name: windows-build
             path: dist/
+            if-no-files-found: error
+            retention-days: 1
+            overwrite: true
+            include-hidden-files: true
+            compression-level: 0
+
+    buildMac:
+      runs-on: macos-14
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '20.5.1'
+
+        - name: Install Yarn
+          run: npm install --global yarn
+
+        - name: Install dependencies
+          run: yarn install
+
+        - name: Build the project
+          run: yarn run dist
+
+        - name: Upload file as artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: mac-build
+            path: dist/upload/Dr.Json-arm64.zip
             if-no-files-found: error
             retention-days: 1
             overwrite: true
