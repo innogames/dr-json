@@ -28,7 +28,7 @@
           run: yarn run dist-win
 
         - name: check for file
-          run: ls
+          run: cd dist && ls
 
         - name: check for file
           run: cd dist/upload && ls
