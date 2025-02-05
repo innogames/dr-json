@@ -33,7 +33,7 @@
             include-hidden-files: true
             compression-level: 0
 
-    retrieveArtifacts:
+    zipAndUploadAsArtifact:
       needs: [buildWin]
       runs-on: macos-14
 
