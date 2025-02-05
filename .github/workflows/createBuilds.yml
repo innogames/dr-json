@@ -25,7 +25,8 @@
           run: yarn install
 
         - name: Build the project
-          shell: yarn run dist-win
+          shell: bash
+          run: yarn run dist-win
 
         - name: check for file
           run: cd dist && ls
