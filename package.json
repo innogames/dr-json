@@ -17,7 +17,7 @@
     "dev-renderer": "webpack-dev-server --config-name renderer --mode=development --env env=dev --env devServerPort=3000",
     "compile": "webpack --mode=production",
     "create-icons": "electron-icon-maker --input=./build/icons/icon-src.png --output=./build/",
-    "dist-win": "rimraf dist && yarn run compile && electron-builder -w && ./build/scripts/zip-files.sh",
+    "dist-win": "rimraf dist && yarn run compile && electron-builder -w",
     "dist": "rimraf dist && yarn run compile && electron-builder -m && ./build/scripts/zip-files.sh"
   },
   "main": "./dist/compiled/main.js",
@@ -68,6 +68,7 @@
     "react-jsonschema-form": "1.8.1",
     "react-select": "5.2.1",
     "reflect-metadata": "0.1.13",
+    "sass": "^1.83.4",
     "source-map-support": "0.5.21"
   },
   "devDependencies": {
@@ -89,7 +90,6 @@
     "html-webpack-plugin": "5.5.0",
     "jest": "27.4.3",
     "mini-css-extract-plugin": "^2.4.5",
-    "node-sass": "9.0.0",
     "rimraf": "3.0.2",
     "sass-loader": "12.3.0",
     "style-loader": "3.3.1",
