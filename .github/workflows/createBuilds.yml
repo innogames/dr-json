@@ -1,4 +1,4 @@
-  name: Create windows build
+  name: Create builds
 
   on:
     workflow_dispatch:
@@ -19,10 +19,7 @@
         - name: Set up Node.js
           uses: actions/setup-node@v2
           with:
-            node-version: '8.12.0'
-
-        - name: Install Yarn
-          run: npm install --global yarn
+            node-version: '20.5.1'
 
         - name: Install dependencies
           run: yarn install
@@ -47,7 +44,7 @@
         - name: Set up Node.js
           uses: actions/setup-node@v2
           with:
-            node-version: '8.12.0'
+            node-version: '20.5.1'
 
         - name: Install Yarn
           run: npm install --global yarn
@@ -66,6 +63,7 @@
             compression-level: 0
 
     retrieveArtifacts:
+      needs: [buildWin, buildMac]
       runs-on: macos-14
 
       steps:
