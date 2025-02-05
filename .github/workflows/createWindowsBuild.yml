@@ -65,23 +65,23 @@
             path: dist/upload/Dr.Json-arm64.zip
             compression-level: 0
 
-      buildMac:
-        runs-on: macos-14
+    retrieveArtifacts:
+      runs-on: macos-14
 
-        steps:
-          - name: Checkout repository
-            uses: actions/checkout@v2
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
 
-          - name: Download win file artifact
-            uses: actions/download-artifact@v4
-            with:
-              name: windows-build
-              path: dist/upload/Dr.Json-windows.zip
+        - name: Download win file artifact
+          uses: actions/download-artifact@v4
+          with:
+            name: windows-build
+            path: dist/upload/Dr.Json-windows.zip
 
-          - name: Download mac file artifact
-            uses: actions/download-artifact@v4
-            with:
-              name: mac-build
-              path: dist/upload/Dr.Json-arm64.zip
+        - name: Download mac file artifact
+          uses: actions/download-artifact@v4
+          with:
+            name: mac-build
+            path: dist/upload/Dr.Json-arm64.zip
 
-          - run: cd dist/upload && ls -la
+        - run: cd dist/upload && ls -la
