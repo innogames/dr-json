@@ -1,0 +1,87 @@
+  name: Create windows build
+
+  on:
+    workflow_dispatch:
+      inputs:
+        isMajorUpdate:
+          description: 'Versioning should be increased by a major version'
+          required: true
+          type: boolean
+
+  jobs:
+    buildWin:
+      runs-on: windows-latest
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '8.12.0'
+
+        - name: Install Yarn
+          run: npm install --global yarn
+
+        - name: Install dependencies
+          run: yarn install
+
+        - name: Build the project
+          run: yarn run dist-win
+
+        - name: Upload file as artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: windows-build
+            path: dist/upload/Dr.Json-windows.zip
+            compression-level: 0
+
+    buildMac:
+      runs-on: macos-14
+
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '8.12.0'
+
+        - name: Install Yarn
+          run: npm install --global yarn
+
+        - name: Install dependencies
+          run: yarn install
+
+        - name: Build the project
+          run: yarn run dist
+
+        - name: Upload file as artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: mac-build
+            path: dist/upload/Dr.Json-arm64.zip
+            compression-level: 0
+
+      buildMac:
+        runs-on: macos-14
+
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v2
+
+          - name: Download win file artifact
+            uses: actions/download-artifact@v4
+            with:
+              name: windows-build
+              path: dist/upload/Dr.Json-windows.zip
+
+          - name: Download mac file artifact
+            uses: actions/download-artifact@v4
+            with:
+              name: mac-build
+              path: dist/upload/Dr.Json-arm64.zip
+
+          - run: cd dist/upload && ls -la

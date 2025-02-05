@@ -15,6 +15,15 @@ PRODUCT_NAME=$(getPackageJsonVal productName)
 
 echo "Zip files..."
 mkdir dist/upload
-zip -j dist/upload/Dr.Json-${PACKAGE_VERSION}-mac.zip "dist/Dr. Json-${PACKAGE_VERSION}.dmg"
-zip -j dist/upload/Dr.Json-${PACKAGE_VERSION}-arm64.zip "dist/Dr. Json-${PACKAGE_VERSION}-arm64.dmg"
-zip -j dist/upload/Dr.Json-${PACKAGE_VERSION}-windows.zip "dist/Dr. Json ${PACKAGE_VERSION}.exe"
+
+if [ -f "dist/Dr. Json-${PACKAGE_VERSION}.dmg" ]; then
+  zip -j dist/upload/Dr.Json-mac.zip "dist/Dr. Json-${PACKAGE_VERSION}.dmg"
+fi
+
+if [ -f "dist/Dr. Json-${PACKAGE_VERSION}-arm64.dmg" ]; then
+  zip -j dist/upload/Dr.Json-arm64.zip "dist/Dr. Json-${PACKAGE_VERSION}-arm64.dmg"
+fi
+
+if [ -f "dist/Dr. Json ${PACKAGE_VERSION}.exe" ]; then
+  zip -j dist/upload/Dr.Json-windows.zip "dist/Dr. Json ${PACKAGE_VERSION}.exe"
+fi
