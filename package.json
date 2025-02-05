@@ -18,7 +18,7 @@
     "compile": "webpack --mode=production",
     "create-icons": "electron-icon-maker --input=./build/icons/icon-src.png --output=./build/",
     "dist-win": "rimraf dist && yarn run compile && electron-builder -w",
-    "dist": "rimraf dist && yarn run compile && electron-builder -m && bash ./build/scripts/zip-files.sh"
+    "dist": "rimraf dist && yarn run compile && electron-builder -m && ./build/scripts/zip-files.sh"
   },
   "main": "./dist/compiled/main.js",
   "build": {
