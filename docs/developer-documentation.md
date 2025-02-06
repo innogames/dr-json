@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- node.js (developed with node version 8.12.0)
+- node.js (developed with node version v20.5.1)
 - [yarn](https://yarnpkg.com/en/docs/install)
 
 
@@ -34,15 +34,15 @@ Also our TravisCI automated build pipeline is no longer functional and deactivat
   yarn version --patch
   ```
 
-  > This will update the version in **package.json** as well as creating a new **git tag**.
+> This will update the version in **package.json** as well as creating a new **git tag**.
 
 2. Run `git push` to push to master and then `git push --tags` to also include the new tags.
 
-3. Run `yarn run dist` from your mac/linux machine
+3. Run `yarn run dist` from your mac
 
-4. Run `yarn run dist-win` from your windows machine 
+4. Run the github action `createWindowsBuild` and download the file from the action
 
-5. When all builds are done, create new release ([latest release here](https://github.com/innogames/dr-json/releases)) and append all build files to the release as well as a zip file containing the source code.
+5. Create new release ([latest release here](https://github.com/innogames/dr-json/releases)) and append all build files to the release as well as a zip file containing the source code.
 
 
 ## Tech stack
